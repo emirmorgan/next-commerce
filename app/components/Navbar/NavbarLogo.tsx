@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export default function NavbarLogo() {
   return (
-    <Link href="./">
-      <div className="relative w-40 h-10">
+    <Link className="mx-3" href="./">
+      <div className="relative w-36 h-10 my-2 sm:my-0">
         <Image
           fill
           src="/assets/logo.png"
