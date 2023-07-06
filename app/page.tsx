@@ -1,3 +1,4 @@
+import HomePromotions from "./components/Home/HomePromotions";
 import HomeScrollable from "./components/Home/HomeScrollable";
 import Navbar from "./components/Navbar/Index";
 
@@ -6,6 +7,10 @@ export default function Home() {
     <main className="min-h-screen">
       <Navbar />
       <div className="container mx-auto">
+        <h1 className="text-gray-700 font-bold text-xl select-none mx-6">
+          Promotions
+        </h1>
+        <HomePromotions />
         <HomeScrollable title="Example cards">
           {Array.from({ length: 20 }, (_, i) => (
             <div

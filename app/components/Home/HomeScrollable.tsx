@@ -21,7 +21,7 @@ export default function HomeScrollable({
   const [isLeftArrowVisible, setLeftArrowVisible] = useState<boolean>(false);
   const [isRightArrowVisible, setRightArrowVisible] = useState<boolean>(true);
 
-  const mouseMove = (e: MouseEvent) => {
+  const mouseMove = (e: React.MouseEvent) => {
     arrowVisibilityControl();
     if (isDragging) {
       const x = e.pageX - listRef.current.offsetLeft;
@@ -32,7 +32,7 @@ export default function HomeScrollable({
     }
   };
 
-  const startDragging = (e: MouseEvent) => {
+  const startDragging = (e: React.MouseEvent) => {
     setDragging(true);
 
     setStartX(e.pageX - listRef.current.offsetLeft);
