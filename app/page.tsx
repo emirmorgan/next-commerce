@@ -1,6 +1,9 @@
 import HomePromotions from "./components/Home/HomePromotions";
 import HomeScrollable from "./components/Home/HomeScrollable";
 import Navbar from "./components/Navbar/Index";
+import ProductCard from "./components/ProductCard";
+
+import { dummyProducts } from "./constants/Index";
 
 export default function Home() {
   return (
@@ -12,13 +15,17 @@ export default function Home() {
         </h1>
         <HomePromotions />
         <HomeScrollable title="Example cards">
-          {Array.from({ length: 20 }, (_, i) => (
-            <div
-              key={i}
-              className="flex items-center justify-center text-gray-500 border border-dashed w-44 h-72 shrink-0 bg-neutral-100 border-negative-300"
-            >
-              {i + 1}
-            </div>
+          {dummyProducts.map((product: any, index: any) => (
+            <ProductCard
+              brand={product.brand}
+              name={product.name}
+              src={product.src}
+              price={product.price}
+              discount={product.discount}
+              fastDelivery={product.fastDelivery}
+              freeShipment={product.freeShipment}
+              key={index}
+            />
           ))}
         </HomeScrollable>
       </div>

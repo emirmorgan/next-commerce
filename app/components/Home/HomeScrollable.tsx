@@ -83,7 +83,7 @@ export default function HomeScrollable({
         {isLeftArrowVisible && (
           <div
             onClick={() => arrowMovementControl("left")}
-            className="absolute left-[-14px] w-10 h-10 flex items-center justify-center border-2 border-gray-300 bg-gray-100 text-black hover:bg-gray-200 hover:shadow rounded-full cursor-pointer transition-all ease-linear"
+            className="absolute z-10 left-[-14px] w-10 h-10 flex items-center justify-center border-2 border-gray-300 bg-gray-100 text-black hover:bg-gray-200 hover:shadow rounded-full cursor-pointer transition-all ease-linear"
           >
             <AiOutlineLeft />
           </div>
@@ -105,7 +105,7 @@ export default function HomeScrollable({
         {isRightArrowVisible && (
           <div
             onClick={() => arrowMovementControl("right")}
-            className="absolute right-[-14px] w-10 h-10 flex items-center justify-center border-2 border-gray-300 bg-gray-100 text-black hover:bg-gray-200 hover:shadow rounded-full cursor-pointer transition-all ease-linear"
+            className="absolute z-10 right-[-14px] w-10 h-10 flex items-center justify-center border-2 border-gray-300 bg-gray-100 text-black hover:bg-gray-200 hover:shadow rounded-full cursor-pointer transition-all ease-linear"
           >
             <AiOutlineRight />
           </div>
