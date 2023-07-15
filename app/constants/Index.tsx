@@ -157,4 +157,51 @@ export const dummyProducts = [
     freeShipment: true,
     fastDelivery: true,
   },
+  {
+    brand: "ABC",
+    name: "Product ABD With Red Color Bla Bla",
+    src: "/assets/exampleProduct.webp",
+    price: 13.44,
+    discount: {
+      isAvailable: true,
+      discountPrice: 16.22,
+    },
+    freeShipment: true,
+    fastDelivery: true,
+  },
+  {
+    brand: "ABC",
+    name: "Product ABD With Red Color Bla Bla",
+    src: "/assets/exampleProduct.webp",
+    price: 13.44,
+    discount: {
+      isAvailable: true,
+      discountPrice: 16.22,
+    },
+    freeShipment: true,
+    fastDelivery: true,
+  },
+];
+
+export const carouselItems = [
+  {
+    hrf: "./",
+    src: "/assets/carousel/1.jpg",
+    alt: "1",
+  },
+  {
+    hrf: "./",
+    src: "/assets/carousel/2.jpg",
+    alt: "2",
+  },
+  {
+    hrf: "./",
+    src: "/assets/carousel/3.jpg",
+    alt: "3",
+  },
+  {
+    hrf: "./",
+    src: "/assets/carousel/4.jpg",
+    alt: "4",
+  },
 ];
