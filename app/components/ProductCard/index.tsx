@@ -28,7 +28,7 @@ export default function ProductCard(userProps: ProductCardProps) {
         </div>
         <div className="flex gap-1 mt-6">
           {props.discount.isAvailable && (
-            <span className="text-gray-600 line-through">
+            <span className="font-bold text-black/30 line-through">
               {props.discount.discountPrice} $
             </span>
           )}

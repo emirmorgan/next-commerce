@@ -1,7 +1,7 @@
 export const categories = [
   "Best Sellers",
-  "Woman",
-  "Man",
+  "Womens",
+  "Mens",
   "Kids",
   "Grocery & Essentials",
   "Electronics",
@@ -34,7 +34,7 @@ export const dummyProducts = [
   {
     brand: "ABC",
     name: "Product ABD With Red Color Bla Bla",
-    src: "/assets/exampleProduct.webp",
+    src: "/assets/exampleProduct.jpg",
     price: 13.44,
     discount: {
       isAvailable: false,
@@ -47,7 +47,7 @@ export const dummyProducts = [
   {
     brand: "ABC",
     name: "Product ABD With Red Color Bla Bla",
-    src: "/assets/exampleProduct.webp",
+    src: "/assets/exampleProduct.jpg",
     price: 13.44,
     discount: {
       isAvailable: true,
@@ -60,7 +60,7 @@ export const dummyProducts = [
   {
     brand: "ABC",
     name: "Product ABD With Red Color Bla Bla",
-    src: "/assets/exampleProduct.webp",
+    src: "/assets/exampleProduct.jpg",
     price: 13.44,
     discount: {
       isAvailable: true,
@@ -72,7 +72,7 @@ export const dummyProducts = [
   {
     brand: "ABC",
     name: "Product ABD With Red Color Bla Bla",
-    src: "/assets/exampleProduct.webp",
+    src: "/assets/exampleProduct.jpg",
     price: 13.44,
     discount: {
       isAvailable: true,
@@ -84,7 +84,7 @@ export const dummyProducts = [
   {
     brand: "ABC",
     name: "Product ABD With Red Color Bla Bla",
-    src: "/assets/exampleProduct.webp",
+    src: "/assets/exampleProduct.jpg",
     price: 13.44,
     discount: {
       isAvailable: true,
@@ -96,46 +96,7 @@ export const dummyProducts = [
   {
     brand: "ABC",
     name: "Product ABD With Red Color Bla Bla",
-    src: "/assets/exampleProduct.webp",
-    price: 13.44,
-    discount: {
-      isAvailable: true,
-      discountPrice: 16.22,
-    },
-    freeShipment: false,
-    fastDelivery: false,
-    newProduct: false,
-  },
-  {
-    brand: "ABC",
-    name: "Product ABD With Red Color Bla Bla",
-    src: "/assets/exampleProduct.webp",
-    price: 13.44,
-    discount: {
-      isAvailable: true,
-      discountPrice: 16.22,
-    },
-    freeShipment: true,
-    fastDelivery: true,
-    newProduct: false,
-  },
-  {
-    brand: "ABC",
-    name: "Product ABD With Red Color Bla Bla",
-    src: "/assets/exampleProduct.webp",
-    price: 13.44,
-    discount: {
-      isAvailable: true,
-      discountPrice: 16.22,
-    },
-    freeShipment: false,
-    fastDelivery: true,
-    newProduct: false,
-  },
-  {
-    brand: "ABC",
-    name: "Product ABD With Red Color Bla Bla",
-    src: "/assets/exampleProduct.webp",
+    src: "/assets/exampleProduct.jpg",
     price: 13.44,
     discount: {
       isAvailable: true,
@@ -148,7 +109,46 @@ export const dummyProducts = [
   {
     brand: "ABC",
     name: "Product ABD With Red Color Bla Bla",
-    src: "/assets/exampleProduct.webp",
+    src: "/assets/exampleProduct.jpg",
+    price: 13.44,
+    discount: {
+      isAvailable: true,
+      discountPrice: 16.22,
+    },
+    freeShipment: true,
+    fastDelivery: true,
+    newProduct: false,
+  },
+  {
+    brand: "ABC",
+    name: "Product ABD With Red Color Bla Bla",
+    src: "/assets/exampleProduct.jpg",
+    price: 13.44,
+    discount: {
+      isAvailable: true,
+      discountPrice: 16.22,
+    },
+    freeShipment: false,
+    fastDelivery: true,
+    newProduct: false,
+  },
+  {
+    brand: "ABC",
+    name: "Product ABD With Red Color Bla Bla",
+    src: "/assets/exampleProduct.jpg",
+    price: 13.44,
+    discount: {
+      isAvailable: true,
+      discountPrice: 16.22,
+    },
+    freeShipment: false,
+    fastDelivery: false,
+    newProduct: false,
+  },
+  {
+    brand: "ABC",
+    name: "Product ABD With Red Color Bla Bla",
+    src: "/assets/exampleProduct.jpg",
     price: 13.44,
     discount: {
       isAvailable: true,
@@ -160,7 +160,7 @@ export const dummyProducts = [
   {
     brand: "ABC",
     name: "Product ABD With Red Color Bla Bla",
-    src: "/assets/exampleProduct.webp",
+    src: "/assets/exampleProduct.jpg",
     price: 13.44,
     discount: {
       isAvailable: true,
@@ -172,7 +172,7 @@ export const dummyProducts = [
   {
     brand: "ABC",
     name: "Product ABD With Red Color Bla Bla",
-    src: "/assets/exampleProduct.webp",
+    src: "/assets/exampleProduct.jpg",
     price: 13.44,
     discount: {
       isAvailable: true,
