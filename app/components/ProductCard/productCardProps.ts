@@ -7,8 +7,9 @@ export interface ProductCardProps {
     isAvailable: boolean;
     discountPrice: number;
   };
-  freeShipment: boolean;
-  fastDelivery: boolean;
+  freeShipment?: boolean;
+  fastDelivery?: boolean;
+  isFavorite?: boolean;
 }
 
 export const ProductCardPropsDefault: Required<ProductCardProps> = {
@@ -22,4 +23,5 @@ export const ProductCardPropsDefault: Required<ProductCardProps> = {
   },
   freeShipment: false,
   fastDelivery: false,
+  isFavorite: false,
 };

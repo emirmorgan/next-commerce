@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar/Index";
 import ProductCard from "./components/ProductCard";
 import PromotionCard from "./components/PromotionCard";
 import Footer from "./components/Footer/Index";
+import ScrollUp from "./components/ScrollUp";
 
 export default function Home() {
   return (
@@ -44,7 +45,7 @@ export default function Home() {
             <h1 className="text-gray-700 font-bold text-xl select-none mb-2">
               Promotions
             </h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 content-center place-items-center gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 content-center gap-3">
               {promotions.map((item, index) => (
                 <PromotionCard
                   key={index}
@@ -72,16 +73,19 @@ export default function Home() {
                 />
               ))}
             </div>
-            <Link href="./" className="flex justify-center items-center my-5">
-              <div className="flex justify-center items-center text-lg font-bold p-5 h-8 border-2 border-gray-200 text-green-600 gap-2 rounded-lg hover:bg-gray-100 hover:border-gray-300 transition-all ease-linear">
-                <span>Explore All</span>
-                <AiOutlineArrowRight />
-              </div>
-            </Link>
+            <div className="my-5 flex items-center justify-center">
+              <Link href="./">
+                <div className="flex justify-center items-center text-lg font-bold p-5 h-8 border-2 border-gray-200 text-green-600 gap-2 rounded-lg hover:bg-gray-100 hover:border-gray-300 transition-all ease-linear">
+                  <span>Explore All</span>
+                  <AiOutlineArrowRight />
+                </div>
+              </Link>
+            </div>
           </article>
         </section>
       </div>
       <Footer />
+      <ScrollUp />
     </main>
   );
 }

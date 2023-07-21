@@ -5,7 +5,7 @@ import { categories } from "@/app/constants/Index";
 export default function NavbarCategories() {
   return (
     <nav>
-      <ul className="flex overflow-auto">
+      <ul className="flex justify-between overflow-x-auto">
         {categories.map((category, index) => {
           return (
             <li

@@ -160,7 +160,7 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-      <div className="flex items-center justify-center w-full h-6 bg-black/90 text-white/90  text-xs">
+      <div className="flex items-center justify-center w-full h-6 bg-black/90 text-white/90 text-xs">
         <span>© 2023 ESHOP LLC - All Rights Reserved</span>
       </div>
     </>

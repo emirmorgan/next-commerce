@@ -1,16 +1,18 @@
 "use client";
 
+import { useRef } from "react";
+
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { useRef } from "react";
-import Slider from "react-slick";
 import Image from "next/image";
+import Link from "next/link";
 
 import { carouselItems } from "@/app/constants/Index";
 import { CarouselProps, CarouselPropsDefault } from "./carouselProps";
 
-import { NextArrow, PrevArrow } from "./Arrow";
+import { CarouselArrow } from "./Arrow";
 
 export default function Carousel(userProps: CarouselProps) {
   const props: Required<CarouselProps> = {
@@ -31,21 +33,20 @@ export default function Carousel(userProps: CarouselProps) {
         speed={props.speed}
         slidesToShow={props.slidesToShow}
         slidesToScroll={props.slidesToScroll}
-        prevArrow={<PrevArrow carousel={carousel} />}
-        nextArrow={<NextArrow carousel={carousel} />}
+        prevArrow={<CarouselArrow carousel={carousel} direction="left" />}
+        nextArrow={<CarouselArrow carousel={carousel} direction="right" />}
       >
         {carouselItems.map((item, index) => (
-          <div
-            key={index}
-            className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] xl:h-[550px]"
-          >
-            <Image
-              fill
-              src={item.src}
-              alt={item.alt}
-              className="object-cover overflow-hidden"
-            />
-          </div>
+          <Link key={index} href={item.href}>
+            <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] 2xl:h-[550px]">
+              <Image
+                fill
+                src={item.src}
+                alt={item.alt}
+                className="object-cover overflow-hidden"
+              />
+            </div>
+          </Link>
         ))}
       </Slider>
     </div>
