@@ -5,11 +5,12 @@ import { dummyProducts, promotions } from "./constants/Index";
 
 import Carousel from "./components/Carousel";
 import Scrollable from "./components/Scrollable";
-import Navbar from "./components/Navbar/Index";
+import Navbar from "./components/Layout/Navbar/Index";
 import ProductCard from "./components/ProductCard";
 import PromotionCard from "./components/PromotionCard";
-import Footer from "./components/Footer/Index";
-import ScrollUp from "./components/ScrollUp";
+import Footer from "./components/Layout/Footer";
+import ScrollUp from "./components/Layout/ScrollUp";
+import MobileNav from "./components/Layout/Navbar/MobileNav";
 
 export default function Home() {
   return (
@@ -86,6 +87,7 @@ export default function Home() {
       </div>
       <Footer />
       <ScrollUp />
+      <MobileNav />
     </main>
   );
 }

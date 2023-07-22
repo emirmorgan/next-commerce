@@ -21,7 +21,11 @@ export default function ScrollUp() {
 
   return (
     <Link href="#">
-      <div className={visible ? "fixed bottom-5 right-5 z-50" : "hidden"}>
+      <div
+        className={
+          visible ? "z-50 fixed right-5 bottom-20 md:bottom-5" : "hidden"
+        }
+      >
         <div className="bg-white border-2 border-gray-300 rounded-full cursor-pointer p-2 hover:border-green-400 hover:shadow-md transition-all ease-linear">
           <AiOutlineArrowUp size={24} />
         </div>
