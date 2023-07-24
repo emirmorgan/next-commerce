@@ -1,4 +1,9 @@
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
+
+import { useState } from "react";
 
 import {
   AiOutlineHeart,
@@ -8,10 +13,12 @@ import {
   AiOutlineUser,
 } from "react-icons/ai";
 
-import Image from "next/image";
 import { categories } from "@/app/constants/Index";
+import MobileCategories from "../MobileCategories";
 
 export default function Navbar() {
+  const [isCategoriesVisible, setCategoriesVisible] = useState<boolean>(false);
+
   return (
     <header className="bg-white border-b border-gray-200 mb-5">
       <div className="container mx-auto px-1">
@@ -28,11 +35,16 @@ export default function Navbar() {
           </div>
           <div className="flex flex-col md:flex-row justify-between my-2">
             <div className="flex flex-row justify-between items-center my-1">
-              <Link href="">
-                <div className="flex md:hidden items-center justify-center">
-                  <AiOutlineMenu size={28} />
-                </div>
-              </Link>
+              <div
+                onClick={() => setCategoriesVisible(true)}
+                className="flex md:hidden items-center justify-center cursor-pointer"
+              >
+                <AiOutlineMenu size={28} />
+              </div>
+              <MobileCategories
+                isCategoriesVisible={isCategoriesVisible}
+                setCategoriesVisible={setCategoriesVisible}
+              />
               <Link className="mx-3" href="./">
                 <div className="relative w-36 h-8 my-2 sm:my-0">
                   <Image
@@ -43,11 +55,9 @@ export default function Navbar() {
                   />
                 </div>
               </Link>
-              <Link href="">
-                <div className="flex md:hidden items-center justify-center">
-                  <AiOutlineShopping size={28} />
-                </div>
-              </Link>
+              <div className="flex md:hidden items-center justify-center cursor-pointer">
+                <AiOutlineShopping size={28} />
+              </div>
             </div>
             <div className="flex items-center justify-center w-full md:max-w-[500px] bg-slate-50 border-2 border-gray-100 px-1 py-2 rounded-lg focus-within:border-gray-300 transition-all ease-linear group mt-1 md:mt-0">
               <AiOutlineSearch
@@ -76,7 +86,7 @@ export default function Navbar() {
             </div>
           </div>
           <nav>
-            <ul className="flex justify-between overflow-x-auto">
+            <ul className="hidden md:flex justify-between overflow-x-auto">
               {categories.map((category, index) => {
                 return (
                   <li

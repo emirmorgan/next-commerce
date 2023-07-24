@@ -9,7 +9,7 @@ import {
 
 export default function MobileNav() {
   return (
-    <div className="z-50 fixed md:hidden bottom-0 w-full bg-white shadow-xl border-t-2 border-gray-300">
+    <div className="z-20 fixed md:hidden bottom-0 w-full bg-white shadow-xl border-t-2 border-gray-300">
       <ul className="flex w-full justify-between whitespace-nowrap px-5 py-1">
         <li className="p-2 text-gray-800 hover:text-green-600">
           <Link
