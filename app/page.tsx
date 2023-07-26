@@ -10,7 +10,7 @@ import ProductCard from "./components/ProductCard";
 import PromotionCard from "./components/PromotionCard";
 import Footer from "./components/Layout/Footer";
 import ScrollUp from "./components/Layout/ScrollUp";
-import MobileNav from "./components/Layout/Navbar/MobileNav";
+import MobileNav from "./components/Layout/MobileNav";
 
 export default function Home() {
   return (

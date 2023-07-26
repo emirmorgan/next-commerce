@@ -1,10 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-
-import { useState } from "react";
-
 import {
   AiOutlineHeart,
   AiOutlineMenu,
@@ -13,11 +8,19 @@ import {
   AiOutlineUser,
 } from "react-icons/ai";
 
-import { categories } from "@/app/constants/Index";
+import { useState } from "react";
+
+import Link from "next/link";
+import Image from "next/image";
+
 import MobileCategories from "../MobileCategories";
+import Shopcart from "../Shopcart";
+
+import { categories } from "@/app/constants/Index";
 
 export default function Navbar() {
   const [isCategoriesVisible, setCategoriesVisible] = useState<boolean>(false);
+  const [isShopcartVisible, setShopcartVisible] = useState<boolean>(false);
 
   return (
     <header className="bg-white border-b border-gray-200 mb-5">
@@ -55,9 +58,16 @@ export default function Navbar() {
                   />
                 </div>
               </Link>
-              <div className="flex md:hidden items-center justify-center cursor-pointer">
+              <div
+                onClick={() => setShopcartVisible(true)}
+                className="flex md:hidden items-center justify-center cursor-pointer"
+              >
                 <AiOutlineShopping size={28} />
               </div>
+              <Shopcart
+                isShopcartVisible={isShopcartVisible}
+                setShopcartVisible={setShopcartVisible}
+              />
             </div>
             <div className="flex items-center justify-center w-full md:max-w-[500px] bg-slate-50 border-2 border-gray-100 px-1 py-2 rounded-lg focus-within:border-gray-300 transition-all ease-linear group mt-1 md:mt-0">
               <AiOutlineSearch
