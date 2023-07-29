@@ -1,11 +1,4 @@
-import {
-  useState,
-  useRef,
-  useEffect,
-  Dispatch,
-  SetStateAction,
-  MutableRefObject,
-} from "react";
+import { useRef, useEffect, MutableRefObject } from "react";
 
 import {
   AiOutlineClose,
@@ -15,40 +8,43 @@ import {
   AiOutlineShopping,
 } from "react-icons/ai";
 
-import { shopcartItems } from "@/app/constants/Index";
-
 import Image from "next/image";
 
 import useClickOutside from "@/app/hooks/useClickOutside";
+import { useShoppingCart } from "@/app/context/ShoppingCartContext";
 
-interface ShopcartProps {
-  isShopcartVisible: boolean;
-  setShopcartVisible: Dispatch<SetStateAction<boolean>>;
-}
+type ShoppingCartProps = {
+  isOpen: boolean;
+};
 
-export default function Shopcart({
-  isShopcartVisible,
-  setShopcartVisible,
-}: ShopcartProps) {
+export default function ShoppingCart({ isOpen }: ShoppingCartProps) {
   const elRef = useRef() as MutableRefObject<HTMLDivElement>;
 
-  const [total, setTotal] = useState<number>(0);
+  const {
+    cartItems,
+    closeCart,
+    increaseQuantity,
+    decreaseQuantity,
+    removeItem,
+    getQuantity,
+    getSubtotal,
+  } = useShoppingCart();
 
   const handleClickOutside = () => {
-    setShopcartVisible(false);
+    closeCart();
   };
 
   useClickOutside(elRef, handleClickOutside);
 
   useEffect(() => {
-    if (isShopcartVisible) {
+    if (isOpen) {
       document.body.style.overflow = "hidden";
     }
 
     return () => {
       document.body.style.overflow = "visible";
     };
-  }, [isShopcartVisible]);
+  }, [isOpen]);
 
   return (
     <>
@@ -56,20 +52,20 @@ export default function Shopcart({
         ref={elRef}
         className={
           "fixed z-[998] top-0 left-0 w-full h-full bg-black/40" +
-          (isShopcartVisible ? " block md:hidden" : " hidden")
+          (isOpen ? " block" : " hidden")
         }
       />
       <div
         className={
-          "absolute z-[999] top-0 right-0 h-full w-full max-w-[500px] bg-white shadow-lg transition-all ease-linear" +
-          (isShopcartVisible ? " flex flex-col md:hidden" : " hidden")
+          "fixed z-[999] top-0 right-0 h-full w-full max-w-[500px] bg-white shadow-lg transition-all ease-linear" +
+          (isOpen ? " flex flex-col" : " hidden")
         }
       >
         <div className="flex flex-col justify-start items-start w-full h-full p-5">
           <div className="flex w-full justify-between items-center">
             <div className="font-bold text-lg">My Cart</div>
             <div
-              onClick={() => setShopcartVisible(false)}
+              onClick={closeCart}
               className="border p-1 group hover:border-gray-800 hover:bg-black/5 cursor-pointer transition-all ease-linear"
             >
               <AiOutlineClose
@@ -78,13 +74,13 @@ export default function Shopcart({
               />
             </div>
           </div>
-          {shopcartItems.length !== 0 ? (
+          {cartItems?.length !== 0 ? (
             <>
-              <ul className="flex flex-col w-full h-full min-h-[400px] my-2 overflow-auto">
-                {shopcartItems.map((item, index) => (
+              <ul className="flex flex-col w-full h-full min-h-[400px] my-2 overflow-y-scroll scrollbar-cart">
+                {cartItems?.map((item, index) => (
                   <li
                     key={index}
-                    className="flex justify-center items-center w-[90%] mx-auto py-3 overflow-hidden border-b border-neutral-300"
+                    className="flex justify-center items-center w-[90%] min-h-[120px] mx-auto py-3 overflow-hidden border-b border-neutral-300 select-none"
                   >
                     <div className="relative w-28 h-24 border overflow-hidden mr-5">
                       <Image
@@ -98,28 +94,41 @@ export default function Shopcart({
                       <div className="flex justify-between items-start w-full">
                         <div className="flex flex-col break-all mr-3">
                           <span className="font-bold text-sm">{item.name}</span>
-                          <span>{item.brand}</span>
+                          <span>
+                            {item.brand}
+                            {item.size ? " / " + item.size : ""}
+                            {item.color ? " / " + item.color : ""}
+                          </span>
                         </div>
                         <div className="whitespace-nowrap">
                           <span>${item.price} USD</span>
                         </div>
                       </div>
                       <div className="flex justify-between items-end w-full">
-                        <div className="border p-1 cursor-pointer hover:border-red-500 hover:bg-red-500/10 transition-all ease-linear">
+                        <div
+                          onClick={() => removeItem(item.id)}
+                          className="border p-1 cursor-pointer hover:border-red-500 hover:bg-red-500/10 transition-all ease-linear"
+                        >
                           <AiOutlineDelete />
                         </div>
                         <div className="flex gap-1">
-                          <div className="border p-1 cursor-pointer hover:border-gray-800 hover:bg-black/5 transition-all ease-linear">
+                          <div
+                            onClick={() => decreaseQuantity(item.id)}
+                            className="border p-1 cursor-pointer hover:border-gray-800 hover:bg-black/5 transition-all ease-linear"
+                          >
                             <AiOutlineMinus />
                           </div>
                           <div className="border pointer-events-none">
                             <input
                               disabled={true}
-                              defaultValue={3}
+                              value={getQuantity(item.id)}
                               className="max-w-[40px] text-center focus:outline-none px-1"
                             ></input>
                           </div>
-                          <div className="border p-1 cursor-pointer hover:border-gray-800 hover:bg-black/5 transition-all ease-linear">
+                          <div
+                            onClick={() => increaseQuantity(item.id)}
+                            className="border p-1 cursor-pointer hover:border-gray-800 hover:bg-black/5 transition-all ease-linear"
+                          >
                             <AiOutlinePlus />
                           </div>
                         </div>
@@ -128,11 +137,19 @@ export default function Shopcart({
                   </li>
                 ))}
               </ul>
-              <div className="flex flex-col w-full">
-                <div className="flex flex-col mb-3">
+              <div className="flex flex-col w-full select-none">
+                <div className="flex flex-col py-2 border-b">
+                  <div className="flex justify-between items-center">
+                    <span>Shipping</span>
+                    <span className="text-gray-700 font-light">
+                      Calculated at checkout
+                    </span>
+                  </div>
+                </div>
+                <div className="flex flex-col py-2 mb-1">
                   <div className="flex justify-between items-center">
                     <span>Subtotal</span>
-                    <span>${total} USD</span>
+                    <span>${getSubtotal?.toFixed(2)} USD</span>
                   </div>
                 </div>
                 <div className="flex justify-center items-center w-full h-10 bg-black/90 hover:bg-black text-white font-bold text-sm cursor-pointer">
@@ -141,7 +158,7 @@ export default function Shopcart({
               </div>
             </>
           ) : (
-            <div className="flex flex-col justify-center items-center w-full h-full text-xl font-bold gap-2">
+            <div className="flex flex-col justify-center items-center w-full h-full text-xl font-bold gap-2 select-none">
               <AiOutlineShopping size={64} />
               <h1>Your cart is empty</h1>
             </div>

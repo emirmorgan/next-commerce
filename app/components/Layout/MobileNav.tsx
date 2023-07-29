@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+
+import { useShoppingCart } from "@/app/context/ShoppingCartContext";
 
 import {
   AiOutlineFire,
@@ -8,6 +12,7 @@ import {
 } from "react-icons/ai";
 
 export default function MobileNav() {
+  const { openCart } = useShoppingCart();
   return (
     <div className="z-20 fixed md:hidden bottom-0 w-full bg-white shadow-xl border-t-2 border-gray-300">
       <ul className="flex w-full justify-between whitespace-nowrap px-5 py-1">
@@ -30,13 +35,13 @@ export default function MobileNav() {
           </Link>
         </li>
         <li className="p-2 text-gray-800 hover:text-green-600">
-          <Link
-            href=""
-            className="flex flex-col justify-center items-center text-center "
+          <div
+            onClick={openCart}
+            className="flex flex-col justify-center items-center text-center cursor-pointer"
           >
             <AiOutlineShopping size={22} />
             <span className="text-xs">Shop Cart</span>
-          </Link>
+          </div>
         </li>
         <li className="p-2 text-gray-800 hover:text-green-600">
           <Link

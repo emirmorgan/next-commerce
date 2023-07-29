@@ -16,3 +16,21 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+.scrollbar-cart::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scrollbar-cart::-webkit-scrollbar-thumb {
+  background: #aaaaaa;
+  border-radius: 999px;
+}
+
+.scrollbar-cart::-webkit-scrollbar-thumb:hover {
+  background: #919191;
+  border-radius: 999px;
+}
+
+.scrollbar-cart::-webkit-scrollbar-track {
+  background: transparent;
+}

@@ -14,11 +14,14 @@ import Link from "next/link";
 import Image from "next/image";
 
 import MobileCategories from "../MobileCategories";
-import Shopcart from "../Shopcart";
+import Shopcart from "../ShoppingCart";
 
 import { categories } from "@/app/constants/Index";
+import { useShoppingCart } from "@/app/context/ShoppingCartContext";
 
 export default function Navbar() {
+  const { openCart, cartQuantity } = useShoppingCart();
+
   const [isCategoriesVisible, setCategoriesVisible] = useState<boolean>(false);
   const [isShopcartVisible, setShopcartVisible] = useState<boolean>(false);
 
@@ -59,15 +62,16 @@ export default function Navbar() {
                 </div>
               </Link>
               <div
-                onClick={() => setShopcartVisible(true)}
-                className="flex md:hidden items-center justify-center cursor-pointer"
+                onClick={openCart}
+                className="relative flex md:hidden items-center justify-center cursor-pointer"
               >
+                {cartQuantity > 0 && (
+                  <div className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-[8px] bg-green-500 text-white font-bold rounded-full">
+                    <span>{cartQuantity > 9 ? "9+" : cartQuantity}</span>
+                  </div>
+                )}
                 <AiOutlineShopping size={28} />
               </div>
-              <Shopcart
-                isShopcartVisible={isShopcartVisible}
-                setShopcartVisible={setShopcartVisible}
-              />
             </div>
             <div className="flex items-center justify-center w-full md:max-w-[500px] bg-slate-50 border-2 border-gray-100 px-1 py-2 rounded-lg focus-within:border-gray-300 transition-all ease-linear group mt-1 md:mt-0">
               <AiOutlineSearch
@@ -89,7 +93,10 @@ export default function Navbar() {
                 <AiOutlineHeart size={24} />
                 <b className="text-xs">Favorites</b>
               </div>
-              <div className="w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600">
+              <div
+                onClick={() => setShopcartVisible(true)}
+                className="w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600"
+              >
                 <AiOutlineShopping size={24} />
                 <b className="text-xs">Shop Cart</b>
               </div>

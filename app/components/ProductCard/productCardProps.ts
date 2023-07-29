@@ -3,8 +3,7 @@ export interface ProductCardProps {
   name: string;
   src: string;
   price: number;
-  discount: {
-    isAvailable: boolean;
+  discount?: {
     discountPrice: number;
   };
   freeShipment?: boolean;
@@ -18,7 +17,6 @@ export const ProductCardPropsDefault: Required<ProductCardProps> = {
   src: "",
   price: 0,
   discount: {
-    isAvailable: false,
     discountPrice: 0,
   },
   freeShipment: false,

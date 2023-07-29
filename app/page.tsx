@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
-import { dummyProducts, promotions } from "./constants/Index";
-
+//Components
 import Carousel from "./components/Carousel";
 import Scrollable from "./components/Scrollable";
 import Navbar from "./components/Layout/Navbar/Index";
@@ -11,6 +10,8 @@ import PromotionCard from "./components/PromotionCard";
 import Footer from "./components/Layout/Footer";
 import ScrollUp from "./components/Layout/ScrollUp";
 import MobileNav from "./components/Layout/MobileNav";
+
+import { dummyProducts, promotions } from "./constants/Index";
 
 export default function Home() {
   return (

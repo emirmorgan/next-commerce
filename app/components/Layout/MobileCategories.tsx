@@ -47,13 +47,13 @@ export default function MobileCategories({
         ref={elRef}
         className={
           "fixed z-[998] top-0 left-0 w-full h-full bg-black/50 backdrop-blur-md" +
-          (isCategoriesVisible ? " block md:hidden" : " hidden")
+          (isCategoriesVisible ? " block" : " hidden")
         }
       />
       <div
         className={
           "absolute z-[999] top-0 left-0 h-full w-[85%] max-w-[350px] bg-white shadow-lg transition-all ease-linear" +
-          (isCategoriesVisible ? " flex flex-col md:hidden" : " hidden")
+          (isCategoriesVisible ? " flex flex-col" : " hidden")
         }
       >
         <div className="flex w-full justify-between items-center border-b py-2 px-3">

@@ -1,3 +1,4 @@
+import { ShoppingCartProvider } from "./context/ShoppingCartContext";
 import "./globals.css";
 import { Montserrat } from "next/font/google";
 
@@ -16,7 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={montserrat.className}>{children}</body>
+      <body className={montserrat.className}>
+        <ShoppingCartProvider>{children}</ShoppingCartProvider>
+      </body>
     </html>
   );
 }

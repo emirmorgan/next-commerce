@@ -213,18 +213,22 @@ export const carouselItems = [
 
 export const shopcartItems = [
   {
+    id: "1",
     brand: "Nike",
     name: "Air Force 1 '07",
     src: "/assets/products/1.webp",
+    size: 42,
     price: 89.99,
   },
   {
+    id: "2",
     brand: "Nivea",
     name: "Black & White Invisible Deodorant Spray",
     src: "/assets/products/5.webp",
     price: 8.99,
   },
   {
+    id: "3",
     brand: "Nivea",
     name: "After Shave Balm",
     src: "/assets/products/9.webp",
