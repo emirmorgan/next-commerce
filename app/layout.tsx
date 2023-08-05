@@ -1,10 +1,13 @@
-import { ShoppingCartProvider } from "./context/ShoppingCartContext";
-import "./globals.css";
+import { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+
+import "./globals.css";
+
+import { ShoppingCartProvider } from "@/context/ShoppingCartContext";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Full-stack eCommerce",
   description:
     "Full-stack eCommerce app that built with Next.js and ASP.NET Core",

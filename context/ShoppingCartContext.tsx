@@ -2,33 +2,25 @@
 
 import { createContext, useContext, useState } from "react";
 
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import ShoppingCart from "../components/Layout/ShoppingCart";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+
+import ShoppingCart from "@/components/Layout/ShoppingCart";
+
+import { Cart, CartItem } from "@/lib/types";
 
 type CartProvider = {
   children: React.ReactNode;
 };
 
-type CartItem = {
-  id: string;
-  brand: string;
-  name: string;
-  src: string;
-  price: number;
-  color?: string;
-  size?: string;
-  quantity: number;
-};
-
 type CartContextType = {
   openCart: () => void;
   closeCart: () => void;
-  getQuantity: (id: string) => number;
+  getQuantity: (id: number) => number;
   getSubtotal: number;
-  increaseQuantity: (id: striWng) => void;
-  decreaseQuantity: (id: string) => void;
-  removeItem: (id: string) => void;
-  cartItems: CartItem[];
+  increaseQuantity: (id: number) => void;
+  decreaseQuantity: (id: number) => void;
+  removeItem: (id: number) => void;
+  cartItems: Cart[];
   cartQuantity: number;
   addToCart: (product: CartItem) => void;
 };
@@ -41,10 +33,7 @@ export function useShoppingCart() {
 
 export function ShoppingCartProvider({ children }: CartProvider) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [cartItems, setCartItems] = useLocalStorage<CartItem[]>(
-    "shop/cart",
-    []
-  );
+  const [cartItems, setCartItems] = useLocalStorage<Cart[]>("shop/cart", []);
 
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
@@ -58,7 +47,7 @@ export function ShoppingCartProvider({ children }: CartProvider) {
     return total + item.price * item.quantity;
   }, 0);
 
-  function getQuantity(id: string) {
+  function getQuantity(id: number) {
     return cartItems.find((item) => item.id === id)?.quantity || 0;
   }
 
@@ -73,7 +62,7 @@ export function ShoppingCartProvider({ children }: CartProvider) {
     }
   }
 
-  function increaseQuantity(id: string) {
+  function increaseQuantity(id: number) {
     // @ts-ignore
     setCartItems((items) => {
       return items.map((item) => {
@@ -86,7 +75,7 @@ export function ShoppingCartProvider({ children }: CartProvider) {
     });
   }
 
-  function decreaseQuantity(id: string) {
+  function decreaseQuantity(id: number) {
     setCartItems((items) => {
       // Delete if product falls below one.
       if (items.find((item) => item.id === id)?.quantity === 1) {
@@ -103,7 +92,7 @@ export function ShoppingCartProvider({ children }: CartProvider) {
     });
   }
 
-  function removeItem(id: string) {
+  function removeItem(id: number) {
     setCartItems((items) => {
       return items.filter((item) => item.id !== id);
     });

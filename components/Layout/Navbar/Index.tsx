@@ -14,19 +14,17 @@ import Link from "next/link";
 import Image from "next/image";
 
 import MobileCategories from "../MobileCategories";
-import Shopcart from "../ShoppingCart";
 
-import { categories } from "@/app/constants/Index";
-import { useShoppingCart } from "@/app/context/ShoppingCartContext";
+import { categories } from "@/lib/constants";
+import { useShoppingCart } from "@/context/ShoppingCartContext";
 
 export default function Navbar() {
   const { openCart, cartQuantity } = useShoppingCart();
 
   const [isCategoriesVisible, setCategoriesVisible] = useState<boolean>(false);
-  const [isShopcartVisible, setShopcartVisible] = useState<boolean>(false);
 
   return (
-    <header className="bg-white border-b border-gray-200 mb-5">
+    <header className="bg-white border-b border-gray-200">
       <div className="container mx-auto px-1">
         <div className="flex flex-col mx-3">
           <div className="flex items-center justify-end mt-1">
@@ -51,7 +49,7 @@ export default function Navbar() {
                 isCategoriesVisible={isCategoriesVisible}
                 setCategoriesVisible={setCategoriesVisible}
               />
-              <Link className="mx-3" href="./">
+              <Link className="mx-3" href="/">
                 <div className="relative w-36 h-8 my-2 sm:my-0">
                   <Image
                     fill
@@ -94,7 +92,7 @@ export default function Navbar() {
                 <b className="text-xs">Favorites</b>
               </div>
               <div
-                onClick={() => setShopcartVisible(true)}
+                onClick={openCart}
                 className="w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600"
               >
                 <AiOutlineShopping size={24} />

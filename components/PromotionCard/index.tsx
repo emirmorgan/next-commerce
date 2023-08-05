@@ -1,15 +1,8 @@
 import Image from "next/image";
-import {
-  PromotionCardProps,
-  PromotionCardPropsDefault,
-} from "./promotionCardProps";
 
-export default function PromotionCard(userProps: PromotionCardProps) {
-  const props: Required<PromotionCardProps> = {
-    ...PromotionCardPropsDefault,
-    ...userProps,
-  };
+import { Promotions } from "@/lib/types";
 
+export default function PromotionCard(props: Promotions) {
   return (
     <div className="w-full cursor-pointer group overflow-hidden">
       <div className="relative h-64 sm:h-60 lg:h-72 xl:h-64 w-full overflow-hidden">

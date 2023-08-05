@@ -1,5 +1,7 @@
 "use client";
 
+import { AiOutlineClose } from "react-icons/ai";
+
 import {
   useRef,
   useEffect,
@@ -10,9 +12,8 @@ import {
 
 import Image from "next/image";
 
-import { AiOutlineClose } from "react-icons/ai";
-import { categories } from "@/app/constants/Index";
-import useClickOutside from "@/app/hooks/useClickOutside";
+import { categories } from "@/lib/constants";
+import useClickOutside from "@/hooks/useClickOutside";
 
 interface MobileCategoriesProps {
   isCategoriesVisible: boolean;

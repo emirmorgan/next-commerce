@@ -9,7 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
 import Link from "next/link";
 
-import { carouselItems } from "@/app/constants/Index";
+import { carouselItems } from "@/lib/constants";
 import { CarouselProps, CarouselPropsDefault } from "./carouselProps";
 
 import { CarouselArrow } from "./Arrow";

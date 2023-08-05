@@ -1,5 +1,3 @@
-import { useRef, useEffect, MutableRefObject } from "react";
-
 import {
   AiOutlineClose,
   AiOutlineDelete,
@@ -8,10 +6,11 @@ import {
   AiOutlineShopping,
 } from "react-icons/ai";
 
+import { useRef, useEffect, MutableRefObject } from "react";
 import Image from "next/image";
 
-import useClickOutside from "@/app/hooks/useClickOutside";
-import { useShoppingCart } from "@/app/context/ShoppingCartContext";
+import useClickOutside from "@/hooks/useClickOutside";
+import { useShoppingCart } from "@/context/ShoppingCartContext";
 
 type ShoppingCartProps = {
   isOpen: boolean;

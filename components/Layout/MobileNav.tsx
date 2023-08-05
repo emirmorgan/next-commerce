@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { useShoppingCart } from "@/app/context/ShoppingCartContext";
+import { useShoppingCart } from "@/context/ShoppingCartContext";
 
 import {
   AiOutlineFire,
