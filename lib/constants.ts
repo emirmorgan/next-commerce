@@ -353,6 +353,82 @@ export const products: Product[] = [
     tags: ["mens", "womens", "best-seller"],
     quantity: 26,
   },
+  {
+    id: 4,
+    brand: "Lacoste",
+    name: "Lacoste Polo",
+    desc: "lorem ipsum",
+    src: "/assets/products/lacoste-polo/lacoste-polo-1.webp",
+    slug: "lacoste-polo",
+    price: {
+      current: 12.99,
+    },
+    variants: [
+      {
+        color: "White",
+        image: {
+          src: "/assets/products/lacoste-polo/lacoste-polo-1.webp",
+          alt: "White Lacoste Polo",
+        },
+        options: [
+          { option: "S", quantity: 3 },
+          { option: "M", quantity: 0 },
+          { option: "L", quantity: 1 },
+          { option: "XL", quantity: 0 },
+          { option: "XXL", quantity: 1 },
+        ],
+      },
+      {
+        color: "Black",
+        image: {
+          src: "/assets/products/lacoste-polo/lacoste-polo-2.webp",
+          alt: "Black Lacoste Polo",
+        },
+        options: [
+          { option: "S", quantity: 0 },
+          { option: "M", quantity: 5 },
+          { option: "L", quantity: 2 },
+          { option: "XL", quantity: 1 },
+          { option: "XXL", quantity: 0 },
+        ],
+      },
+      {
+        color: "Red",
+        image: {
+          src: "/assets/products/lacoste-polo/lacoste-polo-3.webp",
+          alt: "Red Lacoste Polo",
+        },
+        options: [
+          { option: "S", quantity: 3 },
+          { option: "M", quantity: 3 },
+          { option: "L", quantity: 4 },
+          { option: "XL", quantity: 1 },
+          { option: "XXL", quantity: 0 },
+        ],
+      },
+      {
+        color: "Green",
+        image: {
+          src: "/assets/products/lacoste-polo/lacoste-polo-4.webp",
+          alt: "Green Lacoste Polo",
+        },
+        options: [
+          { option: "S", quantity: 5 },
+          { option: "M", quantity: 0 },
+          { option: "L", quantity: 2 },
+          { option: "XL", quantity: 4 },
+          { option: "XXL", quantity: 0 },
+        ],
+      },
+    ],
+    badges: {
+      freeShipment: false,
+      fastDelivery: false,
+      newProduct: false,
+    },
+    tags: ["mens"],
+    quantity: 33,
+  },
 ];
 
 export const carouselItems: Carousel[] = [

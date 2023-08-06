@@ -6,10 +6,10 @@ import { CartItem, Product, ProductVariant } from "@/lib/types";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
 
 type AddToCartProps = {
-  product: Product | undefined;
-  variant: ProductVariant | undefined;
-  option: string | null;
-  color: string | null;
+  product: Product;
+  variant: ProductVariant;
+  option: string;
+  color: string;
 };
 
 export default function AddToCart({
@@ -23,17 +23,12 @@ export default function AddToCart({
 
   //Validation control
   useEffect(() => {
-    if (variant !== null) {
-      if (!variant?.color && variant?.options && option !== null) {
-        setIsValid(true);
-      } else if (!variant?.color && variant?.options && option === null) {
-        setIsValid(false);
-      } else if (!variant?.color && !variant?.options) {
-        setIsValid(true);
-      }
-    } else {
-      setIsValid(false);
-    }
+    if (variant === null) return setIsValid(false);
+    if (!variant?.options) return setIsValid(true);
+    if (variant?.options && option === null) return setIsValid(false);
+    if (variant.color && color == null) return setIsValid(false);
+
+    setIsValid(true);
   }, [variant, option, color]);
 
   const handleAddToCart = () => {

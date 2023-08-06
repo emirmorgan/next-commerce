@@ -30,7 +30,6 @@ export default function ProductDetails() {
   const [product, setProduct] = useState<Product | undefined>();
   const [variant, setVariant] = useState<ProductVariant | undefined>();
   const [option, setOption] = useState<string | null>(null);
-  const [color, setColor] = useState<string | null>(null);
 
   useEffect(() => {
     const product = products.find((product) => product.slug === params.slug);
@@ -54,7 +53,7 @@ export default function ProductDetails() {
 
   return (
     <div className="flex flex-col gap-6 lg:flex-row">
-      <div className="flex-[3] border rounded-md">
+      <div className="flex-[2] border rounded-md">
         <div className="relative aspect-square w-full max-h-[550px]">
           <Image
             fill
@@ -110,7 +109,7 @@ export default function ProductDetails() {
           product={product}
           variant={variant}
           option={option}
-          color={color}
+          color={variant?.color}
         />
       </div>
     </div>
