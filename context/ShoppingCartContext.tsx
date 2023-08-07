@@ -52,18 +52,22 @@ export function ShoppingCartProvider({ children }: CartProvider) {
   }
 
   function addToCart(product: CartItem) {
-    if (cartItems.find((item) => item.id === product.id) == null) {
-      setCartItems((items) => [
-        ...items,
-        Object.assign(product, { quantity: 1 }),
-      ]);
-    } else {
-      increaseQuantity(product.id);
-    }
+    const cartItem = cartItems.find(
+      (item) =>
+        item.src === product.src &&
+        item.size === product.size &&
+        item.color === product.color
+    );
+
+    if (cartItem) return increaseQuantity(cartItem.id);
+
+    setCartItems((items) => [
+      ...items,
+      Object.assign(product, { quantity: 1 }),
+    ]);
   }
 
   function increaseQuantity(id: number) {
-    // @ts-ignore
     setCartItems((items) => {
       return items.map((item) => {
         if (item.id === id) {

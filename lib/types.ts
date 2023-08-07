@@ -31,6 +31,7 @@ export type Product = {
 
 export type Cart = {
   id: number;
+  productId: number;
   brand: string;
   name: string;
   src: string;
@@ -42,6 +43,7 @@ export type Cart = {
 
 export type CartItem = {
   id: number;
+  productId: number;
   brand: string;
   name: string;
   src: string;

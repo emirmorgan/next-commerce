@@ -19,7 +19,7 @@ export default function AddToCart({
   color,
 }: AddToCartProps) {
   const [isValid, setIsValid] = useState<boolean>(false);
-  const { addToCart } = useShoppingCart();
+  const { addToCart, cartItems } = useShoppingCart();
 
   //Validation control
   useEffect(() => {
@@ -34,7 +34,8 @@ export default function AddToCart({
   const handleAddToCart = () => {
     if (isValid) {
       const cartItem = {
-        id: product.id,
+        id: cartItems.length + 1,
+        productId: product.id,
         brand: product.brand,
         name: product.name,
         src: variant.image.src,
