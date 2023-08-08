@@ -52,7 +52,7 @@ export default function AddToCart({
     <button
       disabled={!isValid}
       onClick={handleAddToCart}
-      className="flex items-center justify-center bg-green-500 disabled:bg-green-300 text-white font-bold p-2 mt-4 rounded-full"
+      className="flex items-center justify-center bg-black disabled:bg-black/20 text-white font-bold p-2 mt-4 transition-all ease-linear"
     >
       <span>ADD TO CART</span>
     </button>

@@ -49,10 +49,8 @@ export default function VariantSelector({
             <div
               onClick={() => handleVariant(index + 1)}
               className={
-                "border-2 rounded-lg cursor-pointer overflow-hidden hover:scale-105 hover:border-green-300 transition-all ease-linear" +
-                (currentVariant === String(index + 1)
-                  ? " border-green-500"
-                  : "")
+                "border-b-2 shadow ring-1 ring-gray-100 cursor-pointer overflow-hidden transition-all ease-linear hover:border-gray-300" +
+                (currentVariant === String(index + 1) ? " border-black" : "")
               }
               key={index}
             >
@@ -78,9 +76,9 @@ export default function VariantSelector({
                 key={index}
                 onClick={() => handleVariant(index + 1)}
                 className={
-                  "bg-neutral-100 border px-2 rounded-full hover:border-neutral-400 transition-all ease-linear" +
+                  "border px-2 rounded-full hover:border-gray-700 transition-all ease-linear" +
                   (item.color == variant.color
-                    ? " border-green-600 bg-green-300/30 hover:border-green-700"
+                    ? " border-gray-600 bg-black/5 hover:border-gray-800"
                     : "")
                 }
               >
@@ -93,16 +91,16 @@ export default function VariantSelector({
       {variant?.options && (
         <div className="flex flex-col gap-2 mb-3">
           <span className="text-sm">SIZE</span>
-          <div className="flex items-center text-black font-light gap-2 select-none cursor-pointer">
+          <div className="flex items-center text-black font-light gap-2 select-none">
             {variant.options.map((option, index) => (
               <button
                 key={index}
                 disabled={option.quantity === 0}
                 onClick={() => handleOption(option.option)}
                 className={
-                  "flex items-center justify-center min-w-10 w-12 bg-neutral-100 border px-2 rounded-full enabled:hover:border-neutral-400 disabled:cursor-not-allowed disabled:ring-1 disabled:ring-neutral-300 disabled:text-neutral-400 disabled:before:absolute disabled:before:h-px disabled:before:w-[36px] disabled:before:-rotate-45 disabled:before:bg-neutral-400 transition-all ease-linear" +
+                  "flex items-center justify-center min-w-10 w-12 border px-2 enabled:hover:border-gray-700 enabled:hover:bg-black/5 disabled:cursor-not-allowed disabled:ring-1 disabled:ring-neutral-300 disabled:text-neutral-400 disabled:before:absolute disabled:before:h-px disabled:before:w-[36px] disabled:before:-rotate-45 disabled:before:bg-neutral-400 transition-all ease-linear" +
                   (option.option == currentSize
-                    ? " border-green-600 bg-green-300/30 enabled:hover:border-green-700"
+                    ? " border-gray-600 bg-black/5 enabled:hover:border-gray-800"
                     : "")
                 }
               >

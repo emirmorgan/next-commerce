@@ -70,7 +70,7 @@ export default function ProductDetails() {
                 : (product?.name as string)
             }
             className="object-contain pointer-events-none"
-            sizes="(max-width: 480px), 50vw, 100vw"
+            sizes="(max-width: 480px), 70vw, 100vw"
             priority={true}
           />
           {product?.variants && (
@@ -94,12 +94,11 @@ export default function ProductDetails() {
         </div>
       </div>
       <div className="flex flex-[1] flex-col border rounded-md p-4">
-        <h1 className="text-[36px] font-extrabold">{product?.name}</h1>
-        <div className="flex items-center justify-center bg-green-500 text-white rounded-full w-32 h-8">
-          $
+        <h1 className="text-[32px] font-extrabold">{product?.name}</h1>
+        <div className="flex items-center justify-start text-xl text-gray-700 font-semibold mt-1">
           {product?.price.discount
             ? product?.price.discount
-            : product?.price.current}
+            : product?.price.current}{" "}
           USD
         </div>
         <div className="w-full h-[1px] my-5 rounded-full bg-neutral-200" />
