@@ -37,12 +37,14 @@ export default function ProductCard(props: Product) {
         </div>
       </div>
       <div className="relative z-[-1] w-full flex overflow-hidden rounded-md pointer-events-none">
-        <div className="w-full min-h-64 h-64">
+        <div className="relative w-full min-h-64 h-64">
           <Image
             fill
             src={props.src}
             alt={props.name}
             className="object-contain w-full h-full rounded-md group-hover:scale-110 transition-all ease-linear pointer-events-none"
+            sizes="(min-width: 640px) 50vw, 100vw"
+            priority={true}
           />
         </div>
       </div>

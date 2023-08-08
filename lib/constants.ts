@@ -429,6 +429,25 @@ export const products: Product[] = [
     tags: ["mens"],
     quantity: 33,
   },
+  {
+    id: 5,
+    brand: "Nivea",
+    name: "Nivea Protect & Moisture Body Lotion",
+    desc: "Lorem Ipsum",
+    src: "/assets/products/nivea-sunscreen/nivea-sunscreen-1.webp",
+    slug: "nivea-sunscreen",
+    price: {
+      discount: 12.99,
+      current: 8.99,
+    },
+    badges: {
+      freeShipment: false,
+      fastDelivery: false,
+      newProduct: false,
+    },
+    tags: ["Beauty & Personal Care"],
+    quantity: 8,
+  },
 ];
 
 export const carouselItems: Carousel[] = [

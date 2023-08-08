@@ -62,6 +62,8 @@ export default function VariantSelector({
                   src={item.image.src}
                   alt={item.image.alt}
                   className="object-contain"
+                  sizes="96px"
+                  priority={true}
                 />
               </div>
             </div>

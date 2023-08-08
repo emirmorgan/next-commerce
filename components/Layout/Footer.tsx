@@ -131,24 +131,23 @@ export default function Footer() {
           <div className="flex flex-col justify-center items-center md:flex-row md:justify-between md:items-end gap-3">
             <div className="flex flex-col">
               <h1 className="text-lg font-bold mb-2 select-none">APPS</h1>
-              <div className="border rounded-lg relative w-36 h-12 mb-1">
-                <Link href="">
-                  <Image
-                    fill
-                    src="/assets/app-store.svg"
-                    alt="Download on the App Store"
-                  />
-                </Link>
-              </div>
-              <div className="border rounded-lg relative w-36 h-12">
-                <Link href="">
-                  <Image
-                    fill
-                    src="/assets/google-play.svg"
-                    alt="Download on the Google Play"
-                  />
-                </Link>
-              </div>
+              <Link
+                className="relative w-36 h-12 mb-1 border rounded-lg"
+                href=""
+              >
+                <Image
+                  fill
+                  src="/assets/app-store.svg"
+                  alt="Download on the App Store"
+                />
+              </Link>
+              <Link className="relative w-36 h-12 border rounded-lg" href="">
+                <Image
+                  fill
+                  src="/assets/google-play.svg"
+                  alt="Download on the Google Play"
+                />
+              </Link>
             </div>
             <div className="relative w-64 h-16">
               <Image

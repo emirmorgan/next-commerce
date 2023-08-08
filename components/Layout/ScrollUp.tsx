@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Link from "next/link";
 
@@ -9,15 +9,17 @@ import { AiOutlineArrowUp } from "react-icons/ai";
 export default function ScrollUp() {
   const [visible, setVisible] = useState<boolean>(false);
 
-  window.addEventListener("scroll", () => {
-    const scrolled = document.documentElement.scrollTop;
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      const scrolled = document.documentElement.scrollTop;
 
-    if (scrolled > 600) {
-      setVisible(true);
-    } else {
-      setVisible(false);
-    }
-  });
+      if (scrolled > 600) {
+        setVisible(true);
+      } else {
+        setVisible(false);
+      }
+    });
+  }, []);
 
   return (
     <Link href="#">

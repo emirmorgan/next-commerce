@@ -6,7 +6,6 @@ import {
   usePathname,
   useSearchParams,
   useParams,
-  notFound,
 } from "next/navigation";
 
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
@@ -47,7 +46,10 @@ export default function ProductDetails() {
       router.push("/");
     }
 
-    setVariant(product?.variants[Number(currentVariant) - 1]);
+    if (product?.variants) {
+      setVariant(product?.variants[Number(currentVariant) - 1]);
+    }
+
     setOption(null);
   }, [product, currentVariant]);
 
@@ -68,24 +70,27 @@ export default function ProductDetails() {
                 : (product?.name as string)
             }
             className="object-contain pointer-events-none"
+            sizes="(max-width: 480px), 50vw, 100vw"
             priority={true}
           />
-          <div className="absolute flex w-full items-center justify-center bottom-6">
-            <div className="flex items-center justify-center bg-neutral-100/80 border border-gray-400 text-neutral-500 rounded-full shadow-md gap-3">
-              <div className="group p-2 cursor-pointer">
-                <AiOutlineLeft
-                  size={20}
-                  className="group-hover:text-neutral-700 group-hover:scale-105  transition-all ease-linear"
-                />
-              </div>
-              <div className="group p-2 cursor-pointer">
-                <AiOutlineRight
-                  size={20}
-                  className="group-hover:text-neutral-700 group-hover:scale-105 transition-all ease-linear"
-                />
+          {product?.variants && (
+            <div className="absolute flex w-full items-center justify-center bottom-6">
+              <div className="flex items-center justify-center bg-neutral-100/80 border border-gray-400 text-neutral-500 rounded-full shadow-md gap-3">
+                <div className="group p-2 cursor-pointer">
+                  <AiOutlineLeft
+                    size={20}
+                    className="group-hover:text-neutral-700 group-hover:scale-105  transition-all ease-linear"
+                  />
+                </div>
+                <div className="group p-2 cursor-pointer">
+                  <AiOutlineRight
+                    size={20}
+                    className="group-hover:text-neutral-700 group-hover:scale-105 transition-all ease-linear"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
       <div className="flex flex-[1] flex-col border rounded-md p-4">
@@ -106,10 +111,10 @@ export default function ProductDetails() {
           setOption={setOption}
         />
         <AddToCart
-          product={product}
-          variant={variant}
-          option={option}
-          color={variant?.color}
+          product={product as Product}
+          variant={variant as ProductVariant}
+          option={option as string}
+          color={variant?.color as string}
         />
       </div>
     </div>

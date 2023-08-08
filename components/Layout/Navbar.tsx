@@ -13,7 +13,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import MobileCategories from "../MobileCategories";
+import MobileCategories from "./MobileCategories";
 
 import { categories } from "@/lib/constants";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
@@ -50,12 +50,14 @@ export default function Navbar() {
                 setCategoriesVisible={setCategoriesVisible}
               />
               <Link className="mx-3" href="/">
-                <div className="relative w-36 h-8 my-2 sm:my-0">
+                <div className="relative aspect-square w-32 h-8 overflow-hidden my-2 sm:my-0">
                   <Image
                     fill
                     src="/assets/logo.png"
                     alt="Logo"
-                    className="object-contain"
+                    className="object-contain w-full h-full"
+                    sizes="(min-width: 640px) 50vw, 100vw"
+                    priority={true}
                   />
                 </div>
               </Link>
@@ -93,8 +95,13 @@ export default function Navbar() {
               </div>
               <div
                 onClick={openCart}
-                className="w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600"
+                className="relative w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600"
               >
+                {cartQuantity > 0 && (
+                  <div className="absolute top-0 right-[16px] flex items-center justify-center w-4 h-4 text-[8px] bg-green-500 text-white font-bold rounded-full">
+                    <span>{cartQuantity > 9 ? "9+" : cartQuantity}</span>
+                  </div>
+                )}
                 <AiOutlineShopping size={24} />
                 <b className="text-xs">Shop Cart</b>
               </div>

@@ -38,7 +38,7 @@ export default function AddToCart({
         productId: product.id,
         brand: product.brand,
         name: product.name,
-        src: variant.image.src,
+        src: variant ? variant.image.src : product.src,
         price: product.price.current,
         color: color,
         size: option,

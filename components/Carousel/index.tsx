@@ -38,12 +38,14 @@ export default function Carousel(userProps: CarouselProps) {
       >
         {carouselItems.map((item, index) => (
           <Link key={index} href={item.href}>
-            <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] 2xl:h-[550px]">
+            <div className="relative aspect-square w-full h-full max-h-[450px] overflow-hidden">
               <Image
                 fill
                 src={item.src}
                 alt={item.alt}
-                className="object-cover overflow-hidden"
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="w-full h-full object-cover"
+                priority={true}
               />
             </div>
           </Link>

@@ -36,6 +36,7 @@ export default function Home() {
                 }}
                 badges={product.badges}
                 tags={product.tags}
+                quantity={product.quantity}
               />
             ))}
           </Scrollable>
@@ -76,6 +77,7 @@ export default function Home() {
                 }}
                 badges={product.badges}
                 tags={product.tags}
+                quantity={product.quantity}
               />
             ))}
           </div>
