@@ -16,6 +16,7 @@ import { Product, ProductVariant } from "@/lib/types";
 import Image from "next/image";
 import AddToCart from "./AddToCart";
 import VariantSelector from "./VariantSelector";
+import DetailsTab from "./DetailsTab";
 
 export default function ProductDetails() {
   const router = useRouter();
@@ -56,7 +57,7 @@ export default function ProductDetails() {
   return (
     <div className="flex flex-col gap-6 lg:flex-row">
       <div className="flex-[2] border rounded-md">
-        <div className="relative aspect-square w-full max-h-[550px]">
+        <div className="relative aspect-square w-full h-[550px]">
           <Image
             fill
             src={
@@ -93,28 +94,33 @@ export default function ProductDetails() {
           )}
         </div>
       </div>
-      <div className="flex flex-[1] flex-col border rounded-md p-4">
-        <h1 className="text-[32px] font-extrabold">{product?.name}</h1>
-        <div className="flex items-center justify-start text-xl text-gray-700 font-semibold mt-1">
-          {product?.price.discount
-            ? product?.price.discount
-            : product?.price.current}{" "}
-          USD
+      <div className="flex flex-[1] flex-col border rounded-md">
+        <div className="p-4">
+          <h1 className="text-[32px] font-extrabold">{product?.name}</h1>
+          <div className="flex items-center justify-start text-xl text-gray-700 font-semibold mt-1">
+            {product?.price.discount
+              ? product?.price.discount
+              : product?.price.current}{" "}
+            USD
+          </div>
         </div>
-        <div className="w-full h-[1px] my-5 rounded-full bg-neutral-200" />
-        <VariantSelector
-          product={product}
-          variant={variant}
-          currentVariant={currentVariant}
-          currentSize={currentSize}
-          setOption={setOption}
-        />
-        <AddToCart
-          product={product as Product}
-          variant={variant as ProductVariant}
-          option={option as string}
-          color={variant?.color as string}
-        />
+        <div className="w-full h-[1px] rounded-full bg-neutral-200" />
+        <div className="flex flex-col p-4">
+          <VariantSelector
+            product={product}
+            variant={variant}
+            currentVariant={currentVariant}
+            currentSize={currentSize}
+            setOption={setOption}
+          />
+          <AddToCart
+            product={product as Product}
+            variant={variant as ProductVariant}
+            option={option as string}
+            color={variant?.color as string}
+          />
+        </div>
+        <DetailsTab product={product} />
       </div>
     </div>
   );

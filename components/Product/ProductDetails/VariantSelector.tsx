@@ -49,8 +49,10 @@ export default function VariantSelector({
             <div
               onClick={() => handleVariant(index + 1)}
               className={
-                "border-b-2 shadow ring-1 ring-gray-100 cursor-pointer overflow-hidden transition-all ease-linear hover:border-gray-300" +
-                (currentVariant === String(index + 1) ? " border-black" : "")
+                "border-b-2 shadow ring-1 ring-gray-100 cursor-pointer overflow-hidden" +
+                (currentVariant === String(index + 1)
+                  ? " border-black"
+                  : " hover:border-gray-300")
               }
               key={index}
             >
