@@ -26,7 +26,7 @@ export default function ProductCard(props: Product) {
   return (
     <div
       onClick={handleNavigate}
-      className="relative z-0 group flex flex-col items-center flex-shrink-0 w-56 h-[360px] border rounded-md cursor-pointer bg-white border-gray-300 hover:shadow-md transition-all ease-linear overflow-hidden"
+      className="relative z-0 group flex flex-col items-center flex-shrink-0 w-56 h-[360px] border cursor-pointer bg-white border-gray-300 hover:shadow-md transition-all ease-linear overflow-hidden"
     >
       <div className="absolute top-2 right-2 z-[2]">
         <div
@@ -69,24 +69,6 @@ export default function ProductCard(props: Product) {
             </span>
           )}
         </div>
-      </div>
-      <div className="absolute flex flex-col top-2 left-2 gap-1">
-        {props.badges.freeShipment && (
-          <div className="flex items-center justify-start p-1 gap-2 w-[80px] bg-cyan-400/90 text-black font-bold rounded">
-            <div className="min-w-[16px] ml-1">
-              <BsTruck size={16} />
-            </div>
-            <span className="text-[8px]">FREE SHIPMENT</span>
-          </div>
-        )}
-        {props.badges.fastDelivery && (
-          <div className="flex items-center justify-start p-1 gap-2 w-[80px] bg-lime-400/90 text-black font-bold rounded">
-            <div className="min-w-[16x] ml-1">
-              <AiOutlineThunderbolt size={16} />
-            </div>
-            <span className="text-[8px]">FAST DELIVERY</span>
-          </div>
-        )}
       </div>
     </div>
   );

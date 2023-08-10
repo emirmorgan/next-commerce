@@ -18,7 +18,7 @@ export default function DetailsTab({ product }: DetailsTabProps) {
   };
 
   return (
-    <div className="w-full min-h-[225px]">
+    <div className="w-full">
       <ul className="flex w-full h-12 text-sm font-semibold">
         <li
           onClick={() => handleMenuNav("details")}

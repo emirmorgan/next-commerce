@@ -1,4 +1,4 @@
-import { Carousel, Cart, CartItem, Product, Promotions } from "@/lib/types";
+import { Carousel, Product, Promotions } from "@/lib/types";
 
 export const categories: String[] = [
   "Best Sellers",
@@ -41,20 +41,43 @@ export const products: Product[] = [
   {
     id: 1,
     brand: "Nike",
-    name: "Air Force 1 '07",
-    slug: "air-force",
+    name: "Air Jordan",
+    slug: "air-jordan",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
-    src: "/assets/products/nike-airforce/airforce-1.webp",
+    src: "/assets/products/nike/air-jordan/v1-1.webp",
+    video: "/assets/products/nike/air-jordan/video.mov",
     price: {
       current: 89.99,
       discount: 69.99,
     },
     variants: [
       {
-        image: {
-          src: "/assets/products/nike-airforce/airforce-1.webp",
-          alt: "Nike Airforce 1 '07",
-        },
+        images: [
+          {
+            src: "/assets/products/nike/air-jordan/v1-1.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v1-2.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v1-3.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v1-4.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v1-5.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v1-6.webp",
+            alt: "Air Jordan",
+          },
+        ],
         options: [
           {
             option: "40",
@@ -75,10 +98,78 @@ export const products: Product[] = [
         ],
       },
       {
-        image: {
-          src: "/assets/products/nike-airforce/airforce-2.webp",
-          alt: "Nike Airforce 1 '07",
-        },
+        images: [
+          {
+            src: "/assets/products/nike/air-jordan/v2-1.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v2-2.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v2-3.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v2-4.jfif",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v2-5.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v2-6.webp",
+            alt: "Air Jordan",
+          },
+        ],
+        options: [
+          {
+            option: "40",
+            quantity: 0,
+          },
+          {
+            option: "41",
+            quantity: 0,
+          },
+          {
+            option: "42",
+            quantity: 3,
+          },
+          {
+            option: "43",
+            quantity: 0,
+          },
+        ],
+      },
+      {
+        images: [
+          {
+            src: "/assets/products/nike/air-jordan/v3-1.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v3-2.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v3-3.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v3-4.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v3-5.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v3-6.webp",
+            alt: "Air Jordan",
+          },
+        ],
         options: [
           {
             option: "40",
@@ -99,10 +190,32 @@ export const products: Product[] = [
         ],
       },
       {
-        image: {
-          src: "/assets/products/nike-airforce/airforce-3.webp",
-          alt: "Nike Airforce 1 '07",
-        },
+        images: [
+          {
+            src: "/assets/products/nike/air-jordan/v4-1.jfif",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v4-2.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v4-3.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v4-4.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v4-5.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-jordan/v4-6.webp",
+            alt: "Air Jordan",
+          },
+        ],
         options: [
           {
             option: "40",
@@ -123,35 +236,53 @@ export const products: Product[] = [
         ],
       },
     ],
-    badges: {
-      freeShipment: true,
-      fastDelivery: true,
-      newProduct: false,
-    },
     tags: ["mens", "womens", "best-seller"],
-    quantity: 15,
+    quantity: 36,
   },
   {
     id: 2,
     brand: "Nike",
-    name: "Jordan Air 1 Low",
+    name: "Air Force",
+    slug: "air-force",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
-    src: "/assets/products/nike-jordan/jordan-1.webp",
-    slug: "air-jordan",
+    src: "/assets/products/nike/air-force/v1-1.webp",
+    video: "/assets/products/nike/air-force/video.mov",
     price: {
       current: 89.99,
       discount: 69.99,
     },
     variants: [
       {
-        image: {
-          src: "/assets/products/nike-jordan/jordan-1.webp",
-          alt: "Jordan Air 1 Low",
-        },
+        images: [
+          {
+            src: "/assets/products/nike/air-force/v1-1.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-force/v1-2.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-force/v1-3.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-force/v1-4.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-force/v1-5.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-force/v1-6.webp",
+            alt: "Air Jordan",
+          },
+        ],
         options: [
           {
             option: "40",
-            quantity: 1,
+            quantity: 0,
           },
           {
             option: "41",
@@ -163,23 +294,91 @@ export const products: Product[] = [
           },
           {
             option: "43",
-            quantity: 4,
+            quantity: 0,
           },
         ],
       },
       {
-        image: {
-          src: "/assets/products/nike-jordan/jordan-2.webp",
-          alt: "Jordan Air 1 Low",
-        },
+        images: [
+          {
+            src: "/assets/products/nike/air-force/v2-1.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-force/v2-2.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-force/v2-3.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-force/v2-4.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-force/v2-5.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-force/v2-6.webp",
+            alt: "Air Jordan",
+          },
+        ],
         options: [
           {
             option: "40",
-            quantity: 1,
+            quantity: 0,
           },
           {
             option: "41",
-            quantity: 1,
+            quantity: 0,
+          },
+          {
+            option: "42",
+            quantity: 3,
+          },
+          {
+            option: "43",
+            quantity: 0,
+          },
+        ],
+      },
+      {
+        images: [
+          {
+            src: "/assets/products/nike/air-force/v3-1.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-force/v3-2.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-force/v3-3.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-force/v3-4.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-force/v3-5.webp",
+            alt: "Air Jordan",
+          },
+          {
+            src: "/assets/products/nike/air-force/v3-6.webp",
+            alt: "Air Jordan",
+          },
+        ],
+        options: [
+          {
+            option: "40",
+            quantity: 0,
+          },
+          {
+            option: "41",
+            quantity: 0,
           },
           {
             option: "42",
@@ -191,262 +390,9 @@ export const products: Product[] = [
           },
         ],
       },
-      {
-        image: {
-          src: "/assets/products/nike-jordan/jordan-3.webp",
-          alt: "Jordan Air 1 Low",
-        },
-        options: [
-          {
-            option: "40",
-            quantity: 0,
-          },
-          {
-            option: "41",
-            quantity: 0,
-          },
-          {
-            option: "42",
-            quantity: 0,
-          },
-          {
-            option: "43",
-            quantity: 4,
-          },
-        ],
-      },
-      {
-        image: {
-          src: "/assets/products/nike-jordan/jordan-4.webp",
-          alt: "Jordan Air 1 Low",
-        },
-        options: [
-          {
-            option: "40",
-            quantity: 9,
-          },
-          {
-            option: "41",
-            quantity: 1,
-          },
-          {
-            option: "42",
-            quantity: 0,
-          },
-          {
-            option: "43",
-            quantity: 3,
-          },
-        ],
-      },
     ],
-    badges: {
-      freeShipment: true,
-      fastDelivery: true,
-      newProduct: false,
-    },
     tags: ["mens", "womens", "best-seller"],
-    quantity: 24,
-  },
-  {
-    id: 3,
-    brand: "Nike",
-    name: "Nike Sportswear Tech Fleece",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
-    src: "/assets/products/nike-tech/nike-tech-1.webp",
-    slug: "nike-tech",
-    price: {
-      current: 89.99,
-      discount: 69.99,
-    },
-    variants: [
-      {
-        image: {
-          src: "/assets/products/nike-tech/nike-tech-1.webp",
-          alt: "Nike Sportswear Tech Fleece",
-        },
-        options: [
-          {
-            option: "S",
-            quantity: 1,
-          },
-          {
-            option: "M",
-            quantity: 2,
-          },
-          {
-            option: "L",
-            quantity: 3,
-          },
-          {
-            option: "XL",
-            quantity: 4,
-          },
-          {
-            option: "XXL",
-            quantity: 0,
-          },
-        ],
-      },
-      {
-        image: {
-          src: "/assets/products/nike-tech/nike-tech-2.webp",
-          alt: "Nike Sportswear Tech Fleece",
-        },
-        options: [
-          {
-            option: "S",
-            quantity: 1,
-          },
-          {
-            option: "M",
-            quantity: 2,
-          },
-          {
-            option: "L",
-            quantity: 0,
-          },
-          {
-            option: "XL",
-            quantity: 0,
-          },
-          {
-            option: "XXL",
-            quantity: 1,
-          },
-        ],
-      },
-      {
-        image: {
-          src: "/assets/products/nike-tech/nike-tech-3.jfif",
-          alt: "Nike Sportswear Tech Fleece",
-        },
-        options: [
-          {
-            option: "S",
-            quantity: 0,
-          },
-          {
-            option: "M",
-            quantity: 0,
-          },
-          {
-            option: "L",
-            quantity: 3,
-          },
-          {
-            option: "XL",
-            quantity: 4,
-          },
-          {
-            option: "XXL",
-            quantity: 5,
-          },
-        ],
-      },
-    ],
-    badges: {
-      freeShipment: true,
-      fastDelivery: true,
-      newProduct: false,
-    },
-    tags: ["mens", "womens", "best-seller"],
-    quantity: 26,
-  },
-  {
-    id: 4,
-    brand: "Lacoste",
-    name: "Lacoste Polo",
-    desc: "lorem ipsum",
-    src: "/assets/products/lacoste-polo/lacoste-polo-1.webp",
-    slug: "lacoste-polo",
-    price: {
-      current: 12.99,
-    },
-    variants: [
-      {
-        color: "White",
-        image: {
-          src: "/assets/products/lacoste-polo/lacoste-polo-1.webp",
-          alt: "White Lacoste Polo",
-        },
-        options: [
-          { option: "S", quantity: 3 },
-          { option: "M", quantity: 0 },
-          { option: "L", quantity: 1 },
-          { option: "XL", quantity: 0 },
-          { option: "XXL", quantity: 1 },
-        ],
-      },
-      {
-        color: "Black",
-        image: {
-          src: "/assets/products/lacoste-polo/lacoste-polo-2.webp",
-          alt: "Black Lacoste Polo",
-        },
-        options: [
-          { option: "S", quantity: 0 },
-          { option: "M", quantity: 5 },
-          { option: "L", quantity: 2 },
-          { option: "XL", quantity: 1 },
-          { option: "XXL", quantity: 0 },
-        ],
-      },
-      {
-        color: "Red",
-        image: {
-          src: "/assets/products/lacoste-polo/lacoste-polo-3.webp",
-          alt: "Red Lacoste Polo",
-        },
-        options: [
-          { option: "S", quantity: 3 },
-          { option: "M", quantity: 3 },
-          { option: "L", quantity: 4 },
-          { option: "XL", quantity: 1 },
-          { option: "XXL", quantity: 0 },
-        ],
-      },
-      {
-        color: "Green",
-        image: {
-          src: "/assets/products/lacoste-polo/lacoste-polo-4.webp",
-          alt: "Green Lacoste Polo",
-        },
-        options: [
-          { option: "S", quantity: 5 },
-          { option: "M", quantity: 0 },
-          { option: "L", quantity: 2 },
-          { option: "XL", quantity: 4 },
-          { option: "XXL", quantity: 0 },
-        ],
-      },
-    ],
-    badges: {
-      freeShipment: false,
-      fastDelivery: false,
-      newProduct: false,
-    },
-    tags: ["mens"],
-    quantity: 33,
-  },
-  {
-    id: 5,
-    brand: "Nivea",
-    name: "Nivea Protect & Moisture Body Lotion",
-    desc: "Lorem Ipsum",
-    src: "/assets/products/nivea-sunscreen/nivea-sunscreen-1.webp",
-    slug: "nivea-sunscreen",
-    price: {
-      discount: 12.99,
-      current: 8.99,
-    },
-    badges: {
-      freeShipment: false,
-      fastDelivery: false,
-      newProduct: false,
-    },
-    tags: ["Beauty & Personal Care"],
-    quantity: 8,
+    quantity: 36,
   },
 ];
 

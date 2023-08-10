@@ -3,13 +3,15 @@ type ProductVariantOption = {
   quantity: number;
 };
 
+type ProductVariantImages = {
+  src: string;
+  alt: string;
+};
+
 export type ProductVariant = {
   color?: string;
   options: ProductVariantOption[];
-  image: {
-    src: string;
-    alt: string;
-  };
+  images: ProductVariantImages[];
 };
 
 export type Product = {
@@ -18,13 +20,13 @@ export type Product = {
   name: string;
   desc: string;
   src: string;
+  video?: string;
   slug: string;
   price: {
     current: number;
     discount?: number;
   };
   variants?: ProductVariant[];
-  badges: { freeShipment: boolean; fastDelivery: boolean; newProduct: boolean };
   tags: String[];
   quantity: number;
 };

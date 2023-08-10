@@ -6,11 +6,11 @@ import { usePathname, useRouter } from "next/navigation";
 import { Product, ProductVariant } from "@/lib/types";
 
 type VariantSelectorProps = {
-  product: Product | undefined;
-  variant: ProductVariant | undefined;
-  currentVariant: string | null;
-  currentSize: string | null;
-  setOption: Dispatch<SetStateAction<string | null>>;
+  product: Product;
+  variant: ProductVariant;
+  currentVariant: string;
+  currentSize: string;
+  setOption: Dispatch<SetStateAction<string>>;
 };
 
 export default function VariantSelector({
@@ -59,8 +59,8 @@ export default function VariantSelector({
               <div className="relative w-24 h-24">
                 <Image
                   fill
-                  src={item.image.src}
-                  alt={item.image.alt}
+                  src={item.images[0].src}
+                  alt={item.images[0].alt}
                   className="object-contain"
                   sizes="96px"
                   priority={true}

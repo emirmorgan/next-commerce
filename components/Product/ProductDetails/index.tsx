@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import {
   useRouter,
   usePathname,
@@ -8,15 +8,13 @@ import {
   useParams,
 } from "next/navigation";
 
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-
 import { products } from "@/lib/constants";
 import { Product, ProductVariant } from "@/lib/types";
 
-import Image from "next/image";
 import AddToCart from "./AddToCart";
 import VariantSelector from "./VariantSelector";
 import DetailsTab from "./DetailsTab";
+import Gallery from "./Gallery";
 
 export default function ProductDetails() {
   const router = useRouter();
@@ -27,8 +25,8 @@ export default function ProductDetails() {
   const currentVariant = searchParams.get("v");
   const currentSize = searchParams.get("size");
 
-  const [product, setProduct] = useState<Product | undefined>();
-  const [variant, setVariant] = useState<ProductVariant | undefined>();
+  const [product, setProduct] = useState<Product>();
+  const [variant, setVariant] = useState<ProductVariant>();
   const [option, setOption] = useState<string | null>(null);
 
   useEffect(() => {
@@ -43,7 +41,7 @@ export default function ProductDetails() {
       router.push(pathname + "?v=1");
     }
 
-    if (Number(currentVariant) > product?.variants?.length) {
+    if (Number(currentVariant) > Number(product?.variants?.length)) {
       router.push("/");
     }
 
@@ -57,42 +55,10 @@ export default function ProductDetails() {
   return (
     <div className="flex flex-col gap-6 lg:flex-row">
       <div className="flex-[2] border rounded-md">
-        <div className="relative aspect-square w-full h-[550px]">
-          <Image
-            fill
-            src={
-              product?.variants
-                ? (variant?.image.src as string)
-                : (product?.src as string)
-            }
-            alt={
-              product?.variants
-                ? (variant?.image.alt as string)
-                : (product?.name as string)
-            }
-            className="object-contain pointer-events-none"
-            sizes="(max-width: 480px), 70vw, 100vw"
-            priority={true}
-          />
-          {product?.variants && (
-            <div className="absolute flex w-full items-center justify-center bottom-6">
-              <div className="flex items-center justify-center bg-neutral-100/80 border border-gray-400 text-neutral-500 rounded-full shadow-md gap-3">
-                <div className="group p-2 cursor-pointer">
-                  <AiOutlineLeft
-                    size={20}
-                    className="group-hover:text-neutral-700 group-hover:scale-105  transition-all ease-linear"
-                  />
-                </div>
-                <div className="group p-2 cursor-pointer">
-                  <AiOutlineRight
-                    size={20}
-                    className="group-hover:text-neutral-700 group-hover:scale-105 transition-all ease-linear"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+        <Gallery
+          variant={variant as ProductVariant}
+          product={product as Product}
+        />
       </div>
       <div className="flex flex-[1] flex-col border rounded-md">
         <div className="p-4">
@@ -107,11 +73,11 @@ export default function ProductDetails() {
         <div className="w-full h-[1px] rounded-full bg-neutral-200" />
         <div className="flex flex-col p-4">
           <VariantSelector
-            product={product}
-            variant={variant}
-            currentVariant={currentVariant}
-            currentSize={currentSize}
-            setOption={setOption}
+            product={product as Product}
+            variant={variant as ProductVariant}
+            currentVariant={currentVariant as string}
+            currentSize={currentSize as string}
+            setOption={setOption as Dispatch<SetStateAction<string>>}
           />
           <AddToCart
             product={product as Product}
@@ -120,7 +86,7 @@ export default function ProductDetails() {
             color={variant?.color as string}
           />
         </div>
-        <DetailsTab product={product} />
+        <DetailsTab product={product as Product} />
       </div>
     </div>
   );
