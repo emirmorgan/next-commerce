@@ -3,12 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import {
-  AiFillHeart,
-  AiOutlineHeart,
-  AiOutlineThunderbolt,
-} from "react-icons/ai";
-import { BsTruck } from "react-icons/bs";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 import { Product } from "@/lib/types";
 

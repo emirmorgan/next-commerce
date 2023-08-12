@@ -34,7 +34,6 @@ export default function Home() {
                   current: product.price.current,
                   discount: product.price.discount,
                 }}
-                badges={product.badges}
                 tags={product.tags}
                 quantity={product.quantity}
               />
@@ -75,7 +74,6 @@ export default function Home() {
                   current: product.price.current,
                   discount: product.price.discount,
                 }}
-                badges={product.badges}
                 tags={product.tags}
                 quantity={product.quantity}
               />

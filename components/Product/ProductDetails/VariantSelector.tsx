@@ -56,12 +56,12 @@ export default function VariantSelector({
               }
               key={index}
             >
-              <div className="relative w-24 h-24">
+              <div className="relative w-24 h-24 select-none">
                 <Image
                   fill
                   src={item.images[0].src}
                   alt={item.images[0].alt}
-                  className="object-contain"
+                  className="object-contain pointer-events-none"
                   sizes="96px"
                   priority={true}
                 />
@@ -92,7 +92,7 @@ export default function VariantSelector({
       )}
       {variant?.options && (
         <div className="flex flex-col gap-2 mb-3">
-          <span className="text-sm">SIZE</span>
+          <span className="text-sm select-none">SIZE</span>
           <div className="flex items-center text-black font-light gap-2 select-none">
             {variant.options.map((option, index) => (
               <button

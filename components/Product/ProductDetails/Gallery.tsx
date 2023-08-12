@@ -1,4 +1,9 @@
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import {
+  AiFillPlayCircle,
+  AiOutlineLeft,
+  AiOutlinePlayCircle,
+  AiOutlineRight,
+} from "react-icons/ai";
 import { Product, ProductVariant } from "@/lib/types";
 
 import { useState, useEffect } from "react";
@@ -45,7 +50,7 @@ export default function Gallery({ product, variant }: GalleryProps) {
   };
 
   return (
-    <div className="relative aspect-square max-h-[600px] w-full h-full overflow-hidden">
+    <div className="relative aspect-square max-h-[600px] w-full h-full overflow-hidden select-none">
       <Image
         fill
         src={product?.variants ? activeImage : (product?.src as string)}
@@ -54,7 +59,7 @@ export default function Gallery({ product, variant }: GalleryProps) {
         sizes="(max-width: 480px), 70vw, 100vw"
         priority={true}
       />
-      {product?.variants && (
+      {product?.variants && variant?.images && variant?.images.length > 1 && (
         <div className="absolute flex w-full items-center justify-center bottom-6">
           <div className="flex items-center justify-center bg-neutral-100/80 border border-gray-400 text-neutral-500 rounded-full shadow-md gap-3">
             <div className="group p-2 cursor-pointer">
@@ -75,7 +80,7 @@ export default function Gallery({ product, variant }: GalleryProps) {
         </div>
       )}
       {product?.variants && (
-        <div className="absolute top-2 left-2 flex flex-col gap-2">
+        <div className="absolute top-2 left-2 hidden flex-col gap-2 sm:flex">
           {variant?.images.map((image, index) => (
             <div
               key={index}

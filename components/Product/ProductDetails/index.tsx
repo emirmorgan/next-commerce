@@ -61,7 +61,7 @@ export default function ProductDetails() {
         />
       </div>
       <div className="flex flex-[1] flex-col border rounded-md">
-        <div className="p-4">
+        <div className="p-4 select-none">
           <h1 className="text-[32px] font-extrabold">{product?.name}</h1>
           <div className="flex items-center justify-start text-xl text-gray-700 font-semibold mt-1">
             {product?.price.discount
