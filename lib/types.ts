@@ -60,7 +60,7 @@ export type Carousel = {
   alt: string;
 };
 
-export type Promotions = {
+export type Campaigns = {
   brand: string;
   desc: string;
   src: string;

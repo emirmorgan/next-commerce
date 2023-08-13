@@ -1,4 +1,4 @@
-import { Carousel, Product, Promotions } from "@/lib/types";
+import { Carousel, Product, Campaigns } from "@/lib/types";
 
 export const categories: String[] = [
   "Best Sellers",
@@ -14,10 +14,10 @@ export const categories: String[] = [
   "Digital Products",
 ];
 
-export const promotions: Promotions[] = [
+export const promotions: Campaigns[] = [
   {
-    brand: "Nivea",
-    desc: "Get 15% off, It's Beauty Month.",
+    brand: "The Nort Face",
+    desc: "Get 15% off",
     src: "/assets/promotions/1.jpg",
   },
   {
@@ -1660,6 +1660,300 @@ export const products: Product[] = [
           {
             option: "XL",
             quantity: 9,
+          },
+        ],
+      },
+    ],
+    tags: ["mens", "womens", "best-seller"],
+    quantity: 36,
+  },
+  {
+    id: 14,
+    brand: "The North Face",
+    name: "The North Face Jester Backpack",
+    slug: "jester-backpack",
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
+    src: "/assets/products/the-north-face/jester-backpack/v1-1.webp",
+    price: {
+      current: 59.99,
+      discount: 54.99,
+    },
+    variants: [
+      {
+        images: [
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v1-1.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v1-2.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v1-3.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v1-4.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v1-5.webp",
+            alt: "The North Face Jester Backpack",
+          },
+        ],
+        options: [
+          {
+            option: "S",
+            quantity: 5,
+          },
+          {
+            option: "M",
+            quantity: 0,
+          },
+          {
+            option: "L",
+            quantity: 0,
+          },
+        ],
+      },
+      {
+        images: [
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v2-1.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v2-2.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v2-3.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v2-4.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v2-5.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v2-6.webp",
+            alt: "The North Face Jester Backpack",
+          },
+        ],
+        options: [
+          {
+            option: "S",
+            quantity: 0,
+          },
+          {
+            option: "M",
+            quantity: 5,
+          },
+          {
+            option: "L",
+            quantity: 9,
+          },
+        ],
+      },
+      {
+        images: [
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v3-1.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v3-2.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v3-3.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v3-4.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v3-5.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/jester-backpack/v3-6.webp",
+            alt: "The North Face Jester Backpack",
+          },
+        ],
+        options: [
+          {
+            option: "S",
+            quantity: 1,
+          },
+          {
+            option: "M",
+            quantity: 2,
+          },
+          {
+            option: "L",
+            quantity: 9,
+          },
+        ],
+      },
+    ],
+    tags: ["mens", "womens", "best-seller"],
+    quantity: 36,
+  },
+  {
+    id: 15,
+    brand: "The North Face",
+    name: "The North Face Easy T-Shirt",
+    slug: "easy-tshirt",
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
+    src: "/assets/products/the-north-face/easy-tshirt/v1-1.webp",
+    price: {
+      current: 59.99,
+      discount: 54.99,
+    },
+    variants: [
+      {
+        images: [
+          {
+            src: "/assets/products/the-north-face/easy-tshirt/v1-1.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/easy-tshirt/v1-2.webp",
+            alt: "The North Face Jester Backpack",
+          },
+        ],
+        options: [
+          {
+            option: "S",
+            quantity: 0,
+          },
+          {
+            option: "M",
+            quantity: 0,
+          },
+          {
+            option: "L",
+            quantity: 0,
+          },
+          {
+            option: "XL",
+            quantity: 1,
+          },
+        ],
+      },
+      {
+        images: [
+          {
+            src: "/assets/products/the-north-face/easy-tshirt/v2-1.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/easy-tshirt/v2-2.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/easy-tshirt/v2-3.webp",
+            alt: "The North Face Jester Backpack",
+          },
+          {
+            src: "/assets/products/the-north-face/easy-tshirt/v2-4.webp",
+            alt: "The North Face Jester Backpack",
+          },
+        ],
+        options: [
+          {
+            option: "S",
+            quantity: 1,
+          },
+          {
+            option: "M",
+            quantity: 0,
+          },
+          {
+            option: "L",
+            quantity: 9,
+          },
+          {
+            option: "XL",
+            quantity: 5,
+          },
+        ],
+      },
+      {
+        images: [
+          {
+            src: "/assets/products/the-north-face/easy-tshirt/v3-1.webp",
+            alt: "The North Face Easy T-Shirt",
+          },
+          {
+            src: "/assets/products/the-north-face/easy-tshirt/v3-2.webp",
+            alt: "The North Face Easy T-Shirt",
+          },
+          {
+            src: "/assets/products/the-north-face/easy-tshirt/v3-3.webp",
+            alt: "The North Face Easy T-Shirt",
+          },
+          {
+            src: "/assets/products/the-north-face/easy-tshirt/v3-4.webp",
+            alt: "The North Face Easy T-Shirt",
+          },
+        ],
+        options: [
+          {
+            option: "S",
+            quantity: 1,
+          },
+          {
+            option: "M",
+            quantity: 2,
+          },
+          {
+            option: "L",
+            quantity: 9,
+          },
+          {
+            option: "XL",
+            quantity: 0,
+          },
+        ],
+      },
+      {
+        images: [
+          {
+            src: "/assets/products/the-north-face/easy-tshirt/v4-1.webp",
+            alt: "The North Face Easy T-Shirt",
+          },
+          {
+            src: "/assets/products/the-north-face/easy-tshirt/v4-2.webp",
+            alt: "The North Face Easy T-Shirt",
+          },
+          {
+            src: "/assets/products/the-north-face/easy-tshirt/v4-3.webp",
+            alt: "The North Face Easy T-Shirt",
+          },
+        ],
+        options: [
+          {
+            option: "S",
+            quantity: 1,
+          },
+          {
+            option: "M",
+            quantity: 2,
+          },
+          {
+            option: "L",
+            quantity: 9,
+          },
+          {
+            option: "XL",
+            quantity: 1,
           },
         ],
       },

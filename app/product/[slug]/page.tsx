@@ -1,9 +1,15 @@
 import ProductDetails from "@/components/Product/ProductDetails";
+import TrendingProducts from "@/components/TrendingProducts";
 
 export default function Product() {
   return (
-    <div className="my-4 p-4">
-      <ProductDetails />
-    </div>
+    <>
+      <section id="product" className="mt-4">
+        <ProductDetails />
+      </section>
+      <section id="trending" className="mt-4">
+        <TrendingProducts />
+      </section>
+    </>
   );
 }

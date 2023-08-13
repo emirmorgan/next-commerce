@@ -5,9 +5,10 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import Carousel from "@/components/Carousel";
 import Scrollable from "@/components/Scrollable";
 import ProductCard from "@/components/ProductCard";
-import PromotionCard from "@/components/PromotionCard";
+import CampaignCard from "@/components/CampaignCard";
 
 import { products, promotions } from "@/lib/constants";
+import TrendingProducts from "@/components/TrendingProducts";
 
 export default function Home() {
   return (
@@ -16,39 +17,16 @@ export default function Home() {
         <Carousel />
       </article>
       <section id="trending">
-        <article className="w-full px-5 my-3">
-          <h1 className="text-gray-700 font-bold text-xl select-none mb-2">
-            Trending Products
-          </h1>
-          <Scrollable dragging={true}>
-            {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                brand={product.brand}
-                name={product.name}
-                desc={product.desc}
-                src={product.src}
-                slug={product.slug}
-                price={{
-                  current: product.price.current,
-                  discount: product.price.discount,
-                }}
-                tags={product.tags}
-                quantity={product.quantity}
-              />
-            ))}
-          </Scrollable>
-        </article>
+        <TrendingProducts />
       </section>
       <section id="promotions">
         <article className="w-full px-5 my-3">
           <h1 className="text-gray-700 font-bold text-xl select-none mb-2">
-            Promotions
+            Campaigns
           </h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 content-center gap-3">
             {promotions.map((item, index) => (
-              <PromotionCard
+              <CampaignCard
                 key={index}
                 brand={item.brand}
                 desc={item.desc}

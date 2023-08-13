@@ -52,14 +52,21 @@ export default function Footer() {
                 <li>
                   <Link href="">
                     <span className="hover:text-black hover:underline transition-all ease-linear">
-                      %5 off Nike
+                      %15 off Nike
                     </span>
                   </Link>
                 </li>
                 <li>
                   <Link href="">
                     <span className="hover:text-black hover:underline transition-all ease-linear">
-                      %30 off Skin Care
+                      %30 off Lacoste
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="">
+                    <span className="hover:text-black hover:underline transition-all ease-linear">
+                      %40 off Adidas
                     </span>
                   </Link>
                 </li>
@@ -157,7 +164,7 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-      <div className="flex items-center justify-center w-full h-6 bg-black/90 text-white/90 text-xs">
+      <div className="flex items-center justify-center w-full h-6 bg-[#f9f9f9] text-black border-t text-xs select-none">
         <span>© 2023 ESHOP LLC - All Rights Reserved</span>
       </div>
     </>

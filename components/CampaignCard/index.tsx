@@ -1,8 +1,8 @@
 import Image from "next/image";
 
-import { Promotions } from "@/lib/types";
+import { Campaigns } from "@/lib/types";
 
-export default function PromotionCard(props: Promotions) {
+export default function CampaignCard(props: Campaigns) {
   return (
     <div className="w-full cursor-pointer group overflow-hidden">
       <div className="relative aspect-square max-h-[300px] w-full h-full overflow-hidden">
