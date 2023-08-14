@@ -22,6 +22,8 @@ export type Product = {
   src: string;
   video?: string;
   slug: string;
+  gender: string;
+  category: string;
   price: {
     current: number;
     discount?: number;

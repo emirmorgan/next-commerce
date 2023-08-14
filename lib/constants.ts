@@ -43,6 +43,8 @@ export const products: Product[] = [
     brand: "Nike",
     name: "Air Jordan",
     slug: "air-jordan",
+    gender: "Unisex",
+    category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/nike/air-jordan/v1-1.webp",
     price: {
@@ -235,7 +237,7 @@ export const products: Product[] = [
         ],
       },
     ],
-    tags: ["mens", "womens", "best-seller"],
+    tags: ["best-seller", "air-jordan"],
     quantity: 36,
   },
   {
@@ -243,6 +245,8 @@ export const products: Product[] = [
     brand: "Nike",
     name: "Air Force",
     slug: "air-force",
+    gender: "Unisex",
+    category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/nike/air-force/v1-1.webp",
     price: {
@@ -389,7 +393,7 @@ export const products: Product[] = [
         ],
       },
     ],
-    tags: ["mens", "womens", "best-seller"],
+    tags: ["best-seller", "air-force"],
     quantity: 36,
   },
   {
@@ -397,6 +401,8 @@ export const products: Product[] = [
     brand: "Nike",
     name: "Air Max",
     slug: "air-max",
+    gender: "Unisex",
+    category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/nike/air-max/v1-1.webp",
     price: {
@@ -543,7 +549,7 @@ export const products: Product[] = [
         ],
       },
     ],
-    tags: ["mens", "womens", "best-seller"],
+    tags: ["air-max", "best-seller"],
     quantity: 36,
   },
   {
@@ -551,6 +557,8 @@ export const products: Product[] = [
     brand: "Nike",
     name: "Blazer",
     slug: "blazer",
+    gender: "Unisex",
+    category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/nike/blazer/v1-1.webp",
     price: {
@@ -651,7 +659,7 @@ export const products: Product[] = [
         ],
       },
     ],
-    tags: ["mens", "womens", "best-seller"],
+    tags: ["nike-blazer", "best-seller"],
     quantity: 36,
   },
   {
@@ -659,6 +667,8 @@ export const products: Product[] = [
     brand: "Nike",
     name: "Dunk",
     slug: "dunk",
+    gender: "Unisex",
+    category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/nike/dunk/v1-1.webp",
     price: {
@@ -759,7 +769,7 @@ export const products: Product[] = [
         ],
       },
     ],
-    tags: ["mens", "womens", "best-seller"],
+    tags: ["nike-dunk"],
     quantity: 36,
   },
   {
@@ -767,6 +777,8 @@ export const products: Product[] = [
     brand: "Nike",
     name: "Mercurial",
     slug: "mercurial",
+    gender: "Unisex",
+    category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/nike/mercurial/v1-1.webp",
     price: {
@@ -867,7 +879,7 @@ export const products: Product[] = [
         ],
       },
     ],
-    tags: ["mens", "womens", "best-seller"],
+    tags: ["nike-mercurial"],
     quantity: 36,
   },
   {
@@ -875,6 +887,8 @@ export const products: Product[] = [
     brand: "Nike",
     name: "Pegasus",
     slug: "pegasus",
+    gender: "Unisex",
+    category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/nike/pegasus/v1-1.webp",
     price: {
@@ -975,7 +989,7 @@ export const products: Product[] = [
         ],
       },
     ],
-    tags: ["mens", "womens", "best-seller"],
+    tags: ["nike-pegasus"],
     quantity: 36,
   },
   {
@@ -983,6 +997,8 @@ export const products: Product[] = [
     brand: "Adidas",
     name: "Superstar",
     slug: "superstar",
+    gender: "Unisex",
+    category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/adidas/superstar/v1-1.avif",
     price: {
@@ -1083,7 +1099,7 @@ export const products: Product[] = [
         ],
       },
     ],
-    tags: ["mens", "womens", "best-seller"],
+    tags: ["adidas-superstar"],
     quantity: 36,
   },
   {
@@ -1091,6 +1107,8 @@ export const products: Product[] = [
     brand: "Adidas",
     name: "Everyset",
     slug: "everyset",
+    gender: "Unisex",
+    category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/adidas/everyset/v1-1.avif",
     price: {
@@ -1191,7 +1209,7 @@ export const products: Product[] = [
         ],
       },
     ],
-    tags: ["mens", "womens", "best-seller"],
+    tags: ["adidas-everyset"],
     quantity: 36,
   },
   {
@@ -1199,6 +1217,8 @@ export const products: Product[] = [
     brand: "Adidas",
     name: "Galaxy 5",
     slug: "galaxy5",
+    gender: "Unisex",
+    category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/adidas/galaxy5/v1-1.avif",
     price: {
@@ -1299,14 +1319,16 @@ export const products: Product[] = [
         ],
       },
     ],
-    tags: ["mens", "womens", "best-seller"],
+    tags: ["adidas-galaxy5"],
     quantity: 36,
   },
   {
     id: 10,
     brand: "Adidas",
     name: "Run 60s",
-    slug: "baseball-cap",
+    slug: "run60s",
+    gender: "Unisex",
+    category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/adidas/run60s/v1-1.avif",
     price: {
@@ -1361,7 +1383,7 @@ export const products: Product[] = [
         ],
       },
     ],
-    tags: ["mens", "womens", "best-seller"],
+    tags: ["adidas-run60s"],
     quantity: 36,
   },
   {
@@ -1369,6 +1391,8 @@ export const products: Product[] = [
     brand: "Adidas",
     name: "Baseball Cap",
     slug: "adidas-baseball-cap",
+    gender: "Unisex",
+    category: "Caps",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/adidas/baseball-cap/v1-1.avif",
     price: {
@@ -1421,7 +1445,7 @@ export const products: Product[] = [
         ],
       },
     ],
-    tags: ["mens", "womens", "best-seller"],
+    tags: ["adidas-baseball-cap"],
     quantity: 36,
   },
   {
@@ -1429,6 +1453,8 @@ export const products: Product[] = [
     brand: "Lacoste",
     name: "Polo",
     slug: "polo",
+    gender: "Unisex",
+    category: "Shirts",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/lacoste/polo/v1-1.webp",
     price: {
@@ -1527,7 +1553,7 @@ export const products: Product[] = [
         ],
       },
     ],
-    tags: ["mens", "womens", "best-seller"],
+    tags: ["lacoste-polo"],
     quantity: 36,
   },
   {
@@ -1535,6 +1561,8 @@ export const products: Product[] = [
     brand: "Lacoste",
     name: "Shirt",
     slug: "lacoste-shirt",
+    gender: "Unisex",
+    category: "Shirts",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/lacoste/shirt/v1-1.webp",
     price: {
@@ -1664,7 +1692,7 @@ export const products: Product[] = [
         ],
       },
     ],
-    tags: ["mens", "womens", "best-seller"],
+    tags: ["lacoste-shirt"],
     quantity: 36,
   },
   {
@@ -1672,6 +1700,8 @@ export const products: Product[] = [
     brand: "The North Face",
     name: "The North Face Jester Backpack",
     slug: "jester-backpack",
+    gender: "Unisex",
+    category: "Backpacks",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/the-north-face/jester-backpack/v1-1.webp",
     price: {
@@ -1802,7 +1832,7 @@ export const products: Product[] = [
         ],
       },
     ],
-    tags: ["mens", "womens", "best-seller"],
+    tags: ["the-north-face-jester-backpack"],
     quantity: 36,
   },
   {
@@ -1810,6 +1840,8 @@ export const products: Product[] = [
     brand: "The North Face",
     name: "The North Face Easy T-Shirt",
     slug: "easy-tshirt",
+    gender: "Unisex",
+    category: "Shirts",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/the-north-face/easy-tshirt/v1-1.webp",
     price: {
@@ -1958,7 +1990,7 @@ export const products: Product[] = [
         ],
       },
     ],
-    tags: ["mens", "womens", "best-seller"],
+    tags: ["the-north-face-easy-tshirt"],
     quantity: 36,
   },
 ];

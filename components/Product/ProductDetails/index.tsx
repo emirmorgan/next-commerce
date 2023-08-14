@@ -15,6 +15,7 @@ import AddToCart from "./AddToCart";
 import VariantSelector from "./VariantSelector";
 import DetailsTab from "./DetailsTab";
 import Gallery from "./Gallery";
+import Link from "next/link";
 
 export default function ProductDetails() {
   const router = useRouter();
@@ -53,41 +54,60 @@ export default function ProductDetails() {
   }, [product, currentVariant]);
 
   return (
-    <div className="flex flex-col gap-6 lg:flex-row">
-      <div className="flex-[2] border rounded-md">
-        <Gallery
-          variant={variant as ProductVariant}
-          product={product as Product}
-        />
+    <>
+      <div className="flex gap-2 mb-2 text-gray-600 select-none">
+        <Link href="/" className="group">
+          <span className="hover:text-gray-900 hover:underline">Homepage</span>
+        </Link>
+        <span>/</span>
+        <Link href="" className="group">
+          <span className="hover:text-gray-900 hover:underline">
+            {product?.brand}
+          </span>
+        </Link>
+        <span>/</span>
+        <Link href="" className="group">
+          <span className="hover:text-gray-900 hover:underline">
+            {product?.category}
+          </span>
+        </Link>
       </div>
-      <div className="flex flex-[1] flex-col border rounded-md">
-        <div className="p-4 select-none">
-          <h1 className="text-[32px] font-extrabold">{product?.name}</h1>
-          <div className="flex items-center justify-start text-xl text-gray-700 font-semibold mt-1">
-            {product?.price.discount
-              ? product?.price.discount
-              : product?.price.current}{" "}
-            USD
+      <div className="flex flex-col lg:flex-row gap-2">
+        <div className="flex-[2] border rounded-md">
+          <Gallery
+            variant={variant as ProductVariant}
+            product={product as Product}
+          />
+        </div>
+        <div className="flex flex-[1] flex-col border rounded-md">
+          <div className="p-4 select-none">
+            <h1 className="text-[32px] font-extrabold">{product?.name}</h1>
+            <div className="flex items-center justify-start text-xl text-gray-700 font-semibold mt-1">
+              {product?.price.discount
+                ? product?.price.discount
+                : product?.price.current}{" "}
+              USD
+            </div>
           </div>
+          <div className="w-full h-[1px] rounded-full bg-neutral-200" />
+          <div className="flex flex-col p-4">
+            <VariantSelector
+              product={product as Product}
+              variant={variant as ProductVariant}
+              currentVariant={currentVariant as string}
+              currentSize={currentSize as string}
+              setOption={setOption as Dispatch<SetStateAction<string>>}
+            />
+            <AddToCart
+              product={product as Product}
+              variant={variant as ProductVariant}
+              option={option as string}
+              color={variant?.color as string}
+            />
+          </div>
+          <DetailsTab product={product as Product} />
         </div>
-        <div className="w-full h-[1px] rounded-full bg-neutral-200" />
-        <div className="flex flex-col p-4">
-          <VariantSelector
-            product={product as Product}
-            variant={variant as ProductVariant}
-            currentVariant={currentVariant as string}
-            currentSize={currentSize as string}
-            setOption={setOption as Dispatch<SetStateAction<string>>}
-          />
-          <AddToCart
-            product={product as Product}
-            variant={variant as ProductVariant}
-            option={option as string}
-            color={variant?.color as string}
-          />
-        </div>
-        <DetailsTab product={product as Product} />
       </div>
-    </div>
+    </>
   );
 }
