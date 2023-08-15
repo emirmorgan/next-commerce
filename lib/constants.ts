@@ -926,7 +926,7 @@ export const products: Product[] = [
         options: [
           {
             option: "40",
-            quantity: 0,
+            quantity: 5,
           },
           {
             option: "41",
@@ -934,11 +934,11 @@ export const products: Product[] = [
           },
           {
             option: "42",
-            quantity: 3,
+            quantity: 0,
           },
           {
             option: "43",
-            quantity: 0,
+            quantity: 5,
           },
         ],
       },
@@ -1150,11 +1150,11 @@ export const products: Product[] = [
           },
           {
             option: "41",
-            quantity: 0,
+            quantity: 2,
           },
           {
             option: "42",
-            quantity: 3,
+            quantity: 0,
           },
           {
             option: "43",
@@ -1256,7 +1256,7 @@ export const products: Product[] = [
         options: [
           {
             option: "40",
-            quantity: 0,
+            quantity: 5,
           },
           {
             option: "41",

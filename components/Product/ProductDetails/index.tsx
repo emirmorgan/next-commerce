@@ -34,6 +34,8 @@ export default function ProductDetails() {
     const product = products.find((product) => product.slug === params.slug);
 
     product ? setProduct(product) : router.push("/");
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.slug]);
 
   useEffect(() => {
@@ -51,6 +53,8 @@ export default function ProductDetails() {
     }
 
     setOption(null);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product, currentVariant]);
 
   return (

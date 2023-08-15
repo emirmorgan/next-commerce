@@ -3,7 +3,6 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 
 //Components
 import Carousel from "@/components/Carousel";
-import Scrollable from "@/components/Scrollable";
 import ProductCard from "@/components/ProductCard";
 import CampaignCard from "@/components/CampaignCard";
 
@@ -45,6 +44,8 @@ export default function Home() {
                 id={product.id}
                 brand={product.brand}
                 name={product.name}
+                gender={product.gender}
+                category={product.category}
                 desc={product.desc}
                 src={product.src}
                 slug={product.slug}

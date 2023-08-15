@@ -95,6 +95,8 @@ export default function Gallery({ product, variant }: GalleryProps) {
                 src={image.src}
                 alt={image.alt}
                 className="object-cover pointer-events-none"
+                priority={true}
+                sizes="(max-width: 380px), 50vw, 100vw"
               />
             </div>
           ))}
