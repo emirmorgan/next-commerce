@@ -2,11 +2,11 @@
 
 import { createContext, useContext, useState } from "react";
 
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-
 import ShoppingCart from "@/components/Layout/ShoppingCart";
 
 import { Cart, CartItem } from "@/lib/types";
+
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 type CartProvider = {
   children: React.ReactNode;
@@ -33,27 +33,27 @@ export function useShoppingCart() {
 
 export function ShoppingCartProvider({ children }: CartProvider) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [cartItems, setCartItems] = useLocalStorage<Cart[]>("shop/cart", []);
+  const [cartItems, setCartItems] = useLocalStorage("shop/cart", []);
 
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
 
   const cartQuantity = cartItems?.reduce(
-    (quantity, item) => item.quantity + quantity,
+    (quantity: number, item: Cart) => item.quantity + quantity,
     0
   );
 
-  const getSubtotal = cartItems?.reduce((total, item) => {
+  const getSubtotal = cartItems?.reduce((total: number, item: any) => {
     return total + item.price * item.quantity;
   }, 0);
 
   function getQuantity(id: number) {
-    return cartItems.find((item) => item.id === id)?.quantity || 0;
+    return cartItems.find((item: Cart) => item.id === id)?.quantity || 0;
   }
 
   function addToCart(product: CartItem) {
     const cartItem = cartItems.find(
-      (item) =>
+      (item: Cart) =>
         item.src === product.src &&
         item.size === product.size &&
         item.color === product.color
@@ -61,14 +61,14 @@ export function ShoppingCartProvider({ children }: CartProvider) {
 
     if (cartItem) return increaseQuantity(cartItem.id);
 
-    setCartItems((items) => [
+    setCartItems((items: Cart[]) => [
       ...items,
       Object.assign(product, { quantity: 1 }),
     ]);
   }
 
   function increaseQuantity(id: number) {
-    setCartItems((items) => {
+    setCartItems((items: Cart[]) => {
       return items.map((item) => {
         if (item.id === id) {
           return { ...item, quantity: item.quantity + 1 };
@@ -80,7 +80,7 @@ export function ShoppingCartProvider({ children }: CartProvider) {
   }
 
   function decreaseQuantity(id: number) {
-    setCartItems((items) => {
+    setCartItems((items: Cart[]) => {
       // Delete if product falls below one.
       if (items.find((item) => item.id === id)?.quantity === 1) {
         return items.filter((item) => item.id !== id);
@@ -97,7 +97,7 @@ export function ShoppingCartProvider({ children }: CartProvider) {
   }
 
   function removeItem(id: number) {
-    setCartItems((items) => {
+    setCartItems((items: Cart[]) => {
       return items.filter((item) => item.id !== id);
     });
   }

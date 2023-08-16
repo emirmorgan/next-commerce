@@ -117,7 +117,7 @@ export default function Navbar() {
                   >
                     <Link
                       className=" whitespace-nowrap text-sm font-semibold"
-                      href={category}
+                      href={category as string}
                     >
                       {category}
                     </Link>

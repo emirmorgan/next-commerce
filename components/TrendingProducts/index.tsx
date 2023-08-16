@@ -18,6 +18,8 @@ export default function TrendingProducts() {
             name={product.name}
             desc={product.desc}
             src={product.src}
+            gender={product.gender}
+            category={product.category}
             slug={product.slug}
             price={{
               current: product.price.current,
