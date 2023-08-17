@@ -10,6 +10,7 @@ import {
 
 import { useState } from "react";
 
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -20,6 +21,7 @@ import { useShoppingCart } from "@/context/ShoppingCartContext";
 
 export default function Navbar() {
   const { openCart, cartQuantity } = useShoppingCart();
+  const router = useRouter();
 
   const [isCategoriesVisible, setCategoriesVisible] = useState<boolean>(false);
 
@@ -85,7 +87,10 @@ export default function Navbar() {
               />
             </div>
             <div className="hidden md:flex justify-center items-center gap-4 mt-3 md:mt-0">
-              <div className="w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600">
+              <div
+                onClick={() => router.push("/login")}
+                className="w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600"
+              >
                 <AiOutlineUser size={24} />
                 <b className="text-xs">Log in</b>
               </div>

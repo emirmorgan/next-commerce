@@ -1,7 +1,7 @@
 import ProductDetails from "@/components/Product/ProductDetails";
 import TrendingProducts from "@/components/TrendingProducts";
 
-export default function Product() {
+export default function ProductPage() {
   return (
     <>
       <section id="product">

@@ -45,7 +45,7 @@ export default function MobileNav() {
         </li>
         <li className="p-2 text-gray-800 hover:text-green-600">
           <Link
-            href=""
+            href="/login"
             className="flex flex-col justify-center items-center text-center "
           >
             <AiOutlineUser size={22} />
