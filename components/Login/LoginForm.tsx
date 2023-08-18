@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { AiOutlineLock, AiOutlineMail } from "react-icons/ai";
 import { Form, Formik, Field } from "formik";
+import loginSchema from "@/validations/loginSchema";
 
 type LoginFormProps = {
   setForm: Dispatch<SetStateAction<string>>;
@@ -22,6 +23,7 @@ export default function LoginForm({ setForm }: LoginFormProps) {
         email: "",
         password: "",
       }}
+      validationSchema={loginSchema}
       onSubmit={handleSubmit}
     >
       {(formControl) => (
@@ -70,7 +72,14 @@ export default function LoginForm({ setForm }: LoginFormProps) {
             </div>
             <button
               type="submit"
-              className="p-2 text-gray-600 font-semibold border-2 border-gray-300 transition-all ease-linear hover:border-green-500 hover:bg-green-500 hover:text-white disabled:bg-gray-400"
+              disabled={
+                !(
+                  formControl.isValid &&
+                  formControl.dirty &&
+                  !formControl.isSubmitting
+                )
+              }
+              className="p-2 text-gray-600 font-semibold border-2 border-gray-300 transition-all ease-linear enabled:hover:border-green-500 enabled:hover:bg-green-500 enabled:hover:text-white disabled:bg-gray-300 disabled:text-gray-800"
             >
               Log in
             </button>
