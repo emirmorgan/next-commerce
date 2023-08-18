@@ -1,6 +1,9 @@
 import { useState, Dispatch, SetStateAction } from "react";
 import { AiOutlineLock, AiOutlineMail } from "react-icons/ai";
+
 import { Form, Formik, Field } from "formik";
+
+import registerSchema from "@/validations/registerSchema";
 
 type RegisterFormProps = {
   setForm: Dispatch<SetStateAction<string>>;
@@ -28,6 +31,7 @@ export default function RegisterForm({ setForm }: RegisterFormProps) {
         passwordConfirm: "",
         checked: [],
       }}
+      validationSchema={registerSchema}
       onSubmit={handleSubmit}
     >
       {(formControl) => (
@@ -115,7 +119,6 @@ export default function RegisterForm({ setForm }: RegisterFormProps) {
                 </div>
               </div>
             </div>
-
             <div className="flex flex-col gap-2 my-2">
               <div className="flex items-center">
                 <Field
@@ -149,7 +152,14 @@ export default function RegisterForm({ setForm }: RegisterFormProps) {
             </div>
             <button
               type="submit"
-              className="p-2 text-gray-600 font-semibold border-2 border-gray-300 transition-all ease-linear hover:border-green-500 hover:bg-green-500 hover:text-white disabled:bg-gray-400"
+              disabled={
+                !(
+                  formControl.isValid &&
+                  formControl.dirty &&
+                  !formControl.isSubmitting
+                )
+              }
+              className="p-2 text-gray-600 font-semibold border-2 border-gray-300 transition-all ease-linear enabled:hover:border-green-500 enabled:hover:bg-green-500 enabled:hover:text-white disabled:bg-gray-300 disabled:text-gray-800"
             >
               Register
             </button>
