@@ -1998,22 +1998,22 @@ export const products: Product[] = [
 export const carouselItems: Carousel[] = [
   {
     href: "./",
-    src: "/assets/carousel/1.jpg",
+    src: "/assets/carousel/1.webp",
     alt: "1",
   },
   {
     href: "./",
-    src: "/assets/carousel/2.jpg",
+    src: "/assets/carousel/2.webp",
     alt: "2",
   },
   {
     href: "./",
-    src: "/assets/carousel/3.jpg",
+    src: "/assets/carousel/3.webp",
     alt: "3",
   },
   {
     href: "./",
-    src: "/assets/carousel/4.jpg",
+    src: "/assets/carousel/4.webp",
     alt: "4",
   },
 ];
