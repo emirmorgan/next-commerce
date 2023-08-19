@@ -14,26 +14,26 @@ export const categories: String[] = [
   "Digital Products",
 ];
 
-export const promotions: Campaigns[] = [
+export const campaigns: Campaigns[] = [
   {
     brand: "The Nort Face",
     desc: "Get 15% off",
-    src: "/assets/promotions/1.jpg",
+    src: "/assets/campaigns/1.webp",
   },
   {
     brand: "Nike",
     desc: "Save 25% on Nike Footwear.",
-    src: "/assets/promotions/2.jpg",
+    src: "/assets/campaigns/2.webp",
   },
   {
     brand: "Adidas",
     desc: "Adidas -10% off, Higher Comfort With Supernova+.",
-    src: "/assets/promotions/3.jpg",
+    src: "/assets/campaigns/3.webp",
   },
   {
     brand: "Lacoste",
     desc: "Lacoste up to 40% off.",
-    src: "/assets/promotions/4.jpg",
+    src: "/assets/campaigns/4.webp",
   },
 ];
 

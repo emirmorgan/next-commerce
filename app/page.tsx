@@ -6,7 +6,7 @@ import Carousel from "@/components/Carousel";
 import ProductCard from "@/components/ProductCard";
 import CampaignCard from "@/components/CampaignCard";
 
-import { products, promotions } from "@/lib/constants";
+import { products, campaigns } from "@/lib/constants";
 import TrendingProducts from "@/components/TrendingProducts";
 
 export default function Home() {
@@ -24,7 +24,7 @@ export default function Home() {
             Campaigns
           </h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 content-center gap-3">
-            {promotions.map((item) => (
+            {campaigns.map((item) => (
               <CampaignCard
                 key={crypto.randomUUID()}
                 brand={item.brand}

@@ -5,7 +5,12 @@ import "./globals.css";
 
 import { ShoppingCartProvider } from "@/context/ShoppingCartContext";
 
-const montserrat = Montserrat({ subsets: ["latin"] });
+const montserrat = Montserrat({
+  weight: ["400", "600", "700"],
+  style: ["normal"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Full-stack eCommerce",
