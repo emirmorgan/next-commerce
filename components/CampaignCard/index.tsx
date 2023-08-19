@@ -5,7 +5,7 @@ import { Campaigns } from "@/lib/types";
 export default function CampaignCard(props: Campaigns) {
   return (
     <div className="w-full cursor-pointer group overflow-hidden">
-      <div className="relative aspect-square max-h-[300px] w-full h-full overflow-hidden">
+      <div className="relative aspect-square max-h-[280px] w-full h-full overflow-hidden">
         <Image
           fill
           src={props.src}

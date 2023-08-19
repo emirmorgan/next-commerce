@@ -12,7 +12,7 @@ export default function TrendingProducts() {
       <Scrollable dragging={true}>
         {products.map((product) => (
           <ProductCard
-            key={product.id}
+            key={crypto.randomUUID()}
             id={product.id}
             brand={product.brand}
             name={product.name}
