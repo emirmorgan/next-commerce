@@ -1000,7 +1000,7 @@ export const products: Product[] = [
     gender: "Unisex",
     category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
-    src: "/assets/products/adidas/superstar/v1-1.avif",
+    src: "/assets/products/adidas/superstar/v1-1.webp",
     price: {
       current: 89.99,
       discount: 69.99,
@@ -1009,27 +1009,27 @@ export const products: Product[] = [
       {
         images: [
           {
-            src: "/assets/products/adidas/superstar/v1-1.avif",
+            src: "/assets/products/adidas/superstar/v1-1.webp",
             alt: "Adidas Superstar",
           },
           {
-            src: "/assets/products/adidas/superstar/v1-2.avif",
+            src: "/assets/products/adidas/superstar/v1-2.webp",
             alt: "Adidas Superstar",
           },
           {
-            src: "/assets/products/adidas/superstar/v1-3.avif",
+            src: "/assets/products/adidas/superstar/v1-3.webp",
             alt: "Adidas Superstar",
           },
           {
-            src: "/assets/products/adidas/superstar/v1-4.avif",
+            src: "/assets/products/adidas/superstar/v1-4.webp",
             alt: "Adidas Superstar",
           },
           {
-            src: "/assets/products/adidas/superstar/v1-5.avif",
+            src: "/assets/products/adidas/superstar/v1-5.webp",
             alt: "Adidas Superstar",
           },
           {
-            src: "/assets/products/adidas/superstar/v1-6.avif",
+            src: "/assets/products/adidas/superstar/v1-6.webp",
             alt: "Adidas Superstar",
           },
         ],
@@ -1055,27 +1055,27 @@ export const products: Product[] = [
       {
         images: [
           {
-            src: "/assets/products/adidas/superstar/v2-1.avif",
+            src: "/assets/products/adidas/superstar/v2-1.webp",
             alt: "Adidas Superstar",
           },
           {
-            src: "/assets/products/adidas/superstar/v2-2.avif",
+            src: "/assets/products/adidas/superstar/v2-2.webp",
             alt: "Adidas Superstar",
           },
           {
-            src: "/assets/products/adidas/superstar/v2-3.avif",
+            src: "/assets/products/adidas/superstar/v2-3.webp",
             alt: "Adidas Superstar",
           },
           {
-            src: "/assets/products/adidas/superstar/v2-4.avif",
+            src: "/assets/products/adidas/superstar/v2-4.webp",
             alt: "Adidas Superstar",
           },
           {
-            src: "/assets/products/adidas/superstar/v2-5.avif",
+            src: "/assets/products/adidas/superstar/v2-5.webp",
             alt: "Adidas Superstar",
           },
           {
-            src: "/assets/products/adidas/superstar/v2-6.avif",
+            src: "/assets/products/adidas/superstar/v2-6.webp",
             alt: "Adidas Superstar",
           },
         ],
@@ -1110,7 +1110,7 @@ export const products: Product[] = [
     gender: "Unisex",
     category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
-    src: "/assets/products/adidas/everyset/v1-1.avif",
+    src: "/assets/products/adidas/everyset/v1-1.webp",
     price: {
       current: 89.99,
       discount: 69.99,
@@ -1119,27 +1119,27 @@ export const products: Product[] = [
       {
         images: [
           {
-            src: "/assets/products/adidas/everyset/v1-1.avif",
+            src: "/assets/products/adidas/everyset/v1-1.webp",
             alt: "Adidas Everyset",
           },
           {
-            src: "/assets/products/adidas/everyset/v1-2.avif",
+            src: "/assets/products/adidas/everyset/v1-2.webp",
             alt: "Adidas Everyset",
           },
           {
-            src: "/assets/products/adidas/everyset/v1-3.avif",
+            src: "/assets/products/adidas/everyset/v1-3.webp",
             alt: "Adidas Everyset",
           },
           {
-            src: "/assets/products/adidas/everyset/v1-4.avif",
+            src: "/assets/products/adidas/everyset/v1-4.webp",
             alt: "Adidas Everyset",
           },
           {
-            src: "/assets/products/adidas/everyset/v1-5.avif",
+            src: "/assets/products/adidas/everyset/v1-5.webp",
             alt: "Adidas Everyset",
           },
           {
-            src: "/assets/products/adidas/everyset/v1-6.avif",
+            src: "/assets/products/adidas/everyset/v1-6.webp",
             alt: "Adidas Everyset",
           },
         ],
@@ -1165,27 +1165,27 @@ export const products: Product[] = [
       {
         images: [
           {
-            src: "/assets/products/adidas/everyset/v2-1.avif",
+            src: "/assets/products/adidas/everyset/v2-1.webp",
             alt: "Adidas Everyset",
           },
           {
-            src: "/assets/products/adidas/everyset/v2-2.avif",
+            src: "/assets/products/adidas/everyset/v2-2.webp",
             alt: "Adidas Everyset",
           },
           {
-            src: "/assets/products/adidas/everyset/v2-3.avif",
+            src: "/assets/products/adidas/everyset/v2-3.webp",
             alt: "Adidas Everyset",
           },
           {
-            src: "/assets/products/adidas/everyset/v2-4.avif",
+            src: "/assets/products/adidas/everyset/v2-4.webp",
             alt: "Adidas Everyset",
           },
           {
-            src: "/assets/products/adidas/everyset/v2-5.avif",
+            src: "/assets/products/adidas/everyset/v2-5.webp",
             alt: "Adidas Everyset",
           },
           {
-            src: "/assets/products/adidas/everyset/v2-6.avif",
+            src: "/assets/products/adidas/everyset/v2-6.webp",
             alt: "Adidas Everyset",
           },
         ],
@@ -1220,7 +1220,7 @@ export const products: Product[] = [
     gender: "Unisex",
     category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
-    src: "/assets/products/adidas/galaxy5/v1-1.avif",
+    src: "/assets/products/adidas/galaxy5/v1-1.webp",
     price: {
       current: 89.99,
       discount: 69.99,
@@ -1229,27 +1229,27 @@ export const products: Product[] = [
       {
         images: [
           {
-            src: "/assets/products/adidas/galaxy5/v1-1.avif",
+            src: "/assets/products/adidas/galaxy5/v1-1.webp",
             alt: "Adidas Galaxy 5",
           },
           {
-            src: "/assets/products/adidas/galaxy5/v1-2.avif",
+            src: "/assets/products/adidas/galaxy5/v1-2.webp",
             alt: "Adidas Galaxy 5",
           },
           {
-            src: "/assets/products/adidas/galaxy5/v1-3.avif",
+            src: "/assets/products/adidas/galaxy5/v1-3.webp",
             alt: "Adidas Galaxy 5",
           },
           {
-            src: "/assets/products/adidas/galaxy5/v1-4.avif",
+            src: "/assets/products/adidas/galaxy5/v1-4.webp",
             alt: "Adidas Galaxy 5",
           },
           {
-            src: "/assets/products/adidas/galaxy5/v1-5.avif",
+            src: "/assets/products/adidas/galaxy5/v1-5.webp",
             alt: "Adidas Galaxy 5",
           },
           {
-            src: "/assets/products/adidas/galaxy5/v1-6.avif",
+            src: "/assets/products/adidas/galaxy5/v1-6.webp",
             alt: "Adidas Galaxy 5",
           },
         ],
@@ -1275,27 +1275,27 @@ export const products: Product[] = [
       {
         images: [
           {
-            src: "/assets/products/adidas/galaxy5/v2-1.avif",
+            src: "/assets/products/adidas/galaxy5/v2-1.webp",
             alt: "Adidas Galaxy 5",
           },
           {
-            src: "/assets/products/adidas/galaxy5/v2-2.avif",
+            src: "/assets/products/adidas/galaxy5/v2-2.webp",
             alt: "Adidas Galaxy 5",
           },
           {
-            src: "/assets/products/adidas/galaxy5/v2-3.avif",
+            src: "/assets/products/adidas/galaxy5/v2-3.webp",
             alt: "Adidas Galaxy 5",
           },
           {
-            src: "/assets/products/adidas/galaxy5/v2-4.avif",
+            src: "/assets/products/adidas/galaxy5/v2-4.webp",
             alt: "Adidas Galaxy 5",
           },
           {
-            src: "/assets/products/adidas/galaxy5/v2-5.avif",
+            src: "/assets/products/adidas/galaxy5/v2-5.webp",
             alt: "Adidas Galaxy 5",
           },
           {
-            src: "/assets/products/adidas/galaxy5/v2-6.avif",
+            src: "/assets/products/adidas/galaxy5/v2-6.webp",
             alt: "Adidas Galaxy 5",
           },
         ],
@@ -1330,7 +1330,7 @@ export const products: Product[] = [
     gender: "Unisex",
     category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
-    src: "/assets/products/adidas/run60s/v1-1.avif",
+    src: "/assets/products/adidas/run60s/v1-1.webp",
     price: {
       current: 89.99,
       discount: 69.99,
@@ -1339,27 +1339,27 @@ export const products: Product[] = [
       {
         images: [
           {
-            src: "/assets/products/adidas/run60s/v1-1.avif",
+            src: "/assets/products/adidas/run60s/v1-1.webp",
             alt: "Adidas Run 60s",
           },
           {
-            src: "/assets/products/adidas/run60s/v1-2.avif",
+            src: "/assets/products/adidas/run60s/v1-2.webp",
             alt: "Adidas Run 60s",
           },
           {
-            src: "/assets/products/adidas/run60s/v1-3.avif",
+            src: "/assets/products/adidas/run60s/v1-3.webp",
             alt: "Adidas Run 60s",
           },
           {
-            src: "/assets/products/adidas/run60s/v1-4.avif",
+            src: "/assets/products/adidas/run60s/v1-4.webp",
             alt: "Adidas Run 60s",
           },
           {
-            src: "/assets/products/adidas/run60s/v1-5.avif",
+            src: "/assets/products/adidas/run60s/v1-5.webp",
             alt: "Adidas Run 60s",
           },
           {
-            src: "/assets/products/adidas/run60s/v1-6.avif",
+            src: "/assets/products/adidas/run60s/v1-6.webp",
             alt: "Adidas Run 60s",
           },
         ],
@@ -1394,7 +1394,7 @@ export const products: Product[] = [
     gender: "Unisex",
     category: "Caps",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
-    src: "/assets/products/adidas/baseball-cap/v1-1.avif",
+    src: "/assets/products/adidas/baseball-cap/v1-1.webp",
     price: {
       current: 12.99,
       discount: 9.99,
@@ -1403,7 +1403,7 @@ export const products: Product[] = [
       {
         images: [
           {
-            src: "/assets/products/adidas/baseball-cap/v1-1.avif",
+            src: "/assets/products/adidas/baseball-cap/v1-1.webp",
             alt: "Adidas Baseball Cap",
           },
         ],
@@ -1425,7 +1425,7 @@ export const products: Product[] = [
       {
         images: [
           {
-            src: "/assets/products/adidas/baseball-cap/v2-1.avif",
+            src: "/assets/products/adidas/baseball-cap/v2-1.webp",
             alt: "Adidas Baseball Cap",
           },
         ],

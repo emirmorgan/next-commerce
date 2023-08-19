@@ -48,18 +48,18 @@ export default function ProductCard(props: Product) {
           <span className="text-black font-bold h-fit">{props.brand}</span>
           <span className="ml-2">{props.name}</span>
         </div>
-        <div className="flex gap-1 mt-6">
+        <div className="flex flex-col mt-6">
           {props.price.discount ? (
             <>
-              <span className="font-bold text-black/30 line-through">
+              <span className="font-bold text-sm text-gray-600 line-through">
                 {props.price.current} $
               </span>
-              <span className="font-bold text-green-600">
+              <span className="font-bold text-green-700">
                 {props.price.discount} $
               </span>
             </>
           ) : (
-            <span className="font-bold text-green-600">
+            <span className="font-bold text-green-700">
               {props.price.current} $
             </span>
           )}
