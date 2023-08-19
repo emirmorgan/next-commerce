@@ -6,7 +6,7 @@ import LoginForm from "@/components/Login/LoginForm";
 import RegisterForm from "@/components/Login/RegisterForm";
 
 export default function LoginPage() {
-  const [currentForm, setCurrentForm] = useState("register");
+  const [currentForm, setCurrentForm] = useState("login");
 
   const formType = {
     login: <LoginForm setForm={setCurrentForm} />,
@@ -19,7 +19,7 @@ export default function LoginPage() {
         <h1 className="font-bold text-2xl">Welcome!</h1>
         <p>Enjoy shopping with best prices.</p>
       </div>
-      <div className="border rounded w-full py-4">{formType}</div>
+      <div className="border rounded w-full py-4 mb-5">{formType}</div>
     </div>
   );
 }

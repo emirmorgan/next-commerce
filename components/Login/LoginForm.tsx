@@ -1,5 +1,11 @@
-import { Dispatch, SetStateAction } from "react";
-import { AiOutlineLock, AiOutlineMail } from "react-icons/ai";
+import { Dispatch, SetStateAction, useState } from "react";
+import {
+  AiFillEye,
+  AiOutlineEye,
+  AiOutlineEyeInvisible,
+  AiOutlineLock,
+  AiOutlineMail,
+} from "react-icons/ai";
 import { Form, Formik, Field } from "formik";
 import loginSchema from "@/validations/loginSchema";
 
@@ -13,6 +19,12 @@ type LoginSubmitProps = {
 };
 
 export default function LoginForm({ setForm }: LoginFormProps) {
+  const [isPasswordHidden, setPasswordHidden] = useState<boolean>(true);
+
+  const handlePasswordVisiblity = () => {
+    setPasswordHidden((curr) => !curr);
+  };
+
   const handleSubmit = async (values: LoginSubmitProps) => {
     console.log(values);
   };
@@ -60,9 +72,23 @@ export default function LoginForm({ setForm }: LoginFormProps) {
                   id="password"
                   name="password"
                   placeholder="**************"
-                  type="password"
+                  type={isPasswordHidden ? "password" : "text"}
                   className="w-full p-2 focus:outline-none"
                 />
+                <div
+                  onClick={handlePasswordVisiblity}
+                  className="flex justify-center items-center border-r cursor-pointer p-3"
+                >
+                  {formControl.values.password.length !== 0 ? (
+                    <>
+                      {isPasswordHidden ? (
+                        <AiOutlineEye size={20} />
+                      ) : (
+                        <AiOutlineEyeInvisible size={20} />
+                      )}
+                    </>
+                  ) : null}
+                </div>
               </div>
             </div>
             <div className="flex items-center justify-end p-1 text-sm text-green-500 cursor-pointer hover:underline hover:text-green-600">
@@ -79,7 +105,7 @@ export default function LoginForm({ setForm }: LoginFormProps) {
                   !formControl.isSubmitting
                 )
               }
-              className="p-2 text-gray-600 font-semibold border-2 border-gray-300 transition-all ease-linear enabled:hover:border-green-500 enabled:hover:bg-green-500 enabled:hover:text-white disabled:bg-gray-300 disabled:text-gray-800"
+              className="p-2 text-gray-600 font-semibold border-2 border-gray-300 transition-all ease-linear select-none enabled:hover:border-green-500 enabled:hover:bg-green-500 enabled:hover:text-white disabled:bg-gray-300 disabled:text-gray-800"
             >
               Log in
             </button>

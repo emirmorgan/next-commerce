@@ -159,7 +159,7 @@ export default function RegisterForm({ setForm }: RegisterFormProps) {
                   !formControl.isSubmitting
                 )
               }
-              className="p-2 text-gray-600 font-semibold border-2 border-gray-300 transition-all ease-linear enabled:hover:border-green-500 enabled:hover:bg-green-500 enabled:hover:text-white disabled:bg-gray-300 disabled:text-gray-800"
+              className="p-2 text-gray-600 font-semibold border-2 border-gray-300 transition-all ease-linear select-none enabled:hover:border-green-500 enabled:hover:bg-green-500 enabled:hover:text-white disabled:bg-gray-300 disabled:text-gray-800"
             >
               Register
             </button>
