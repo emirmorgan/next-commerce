@@ -1,16 +1,32 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+using server.Data;
+using server.Models;
 
 namespace server.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class ProductsController : ControllerBase
 {
-    private readonly ILogger<ProductsController> _logger;
+    private readonly CommerceContext _context;
 
-    public ProductsController(ILogger<ProductsController> logger)
+    public ProductsController(CommerceContext context)
     {
-        _logger = logger;
+        _context = context;
     }
 
+    [HttpGet] // api/products - Get All Products
+    public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+    {
+        var products = await _context.Products.ToListAsync();
+
+        if (products == null)
+        {
+            return NotFound();
+        }
+
+        return products;
+    }
 }

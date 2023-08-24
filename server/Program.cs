@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using server.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<DbContext>(
+builder.Services.AddDbContext<CommerceContext>(
     options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 

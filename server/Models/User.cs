@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace server.Models;
 
-namespace server.Models;
+using System.ComponentModel.DataAnnotations;
 
 public class User
 {
     [Key]
-    public int Id { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
+    public required int Id { get; set; }
+    public required string Email { get; set; }
+    public required string Password { get; set; }
+    public string? Gender { get; set; }
 }

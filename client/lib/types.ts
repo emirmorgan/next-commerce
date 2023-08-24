@@ -18,17 +18,16 @@ export type Product = {
   id: number;
   brand: string;
   name: string;
-  desc: string;
+  desc?: string;
   src: string;
-  video?: string;
   slug: string;
-  gender: string;
   category: string;
   price: {
     current: number;
     discount?: number;
   };
   variants?: ProductVariant[];
+  gender?: string;
   tags: String[];
   quantity: number;
 };
