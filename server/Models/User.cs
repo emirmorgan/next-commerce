@@ -5,8 +5,16 @@ using System.ComponentModel.DataAnnotations;
 public class User
 {
     [Key]
-    public required int Id { get; set; }
-    public required string Email { get; set; }
-    public required string Password { get; set; }
+    public int Id { get; set; }
+
+    [Required]
+    [EmailAddress]
+    public string Email { get; set; }
+
+    [Required]
+    public byte[] PasswordHash { get; set; }
+
+    [Required]
+    public byte[] PasswordSalt { get; set; }
     public string? Gender { get; set; }
 }

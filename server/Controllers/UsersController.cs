@@ -6,9 +6,7 @@ using server.Models;
 
 namespace server.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class UsersController : ControllerBase
+public class UsersController : BaseController
 {
     private readonly CommerceContext _context;
 
@@ -25,7 +23,7 @@ public class UsersController : ControllerBase
         return users;
     }
 
-    [HttpGet("{id}")] // api/users/{id} - Get spesif<ic user by id
+    [HttpGet("{id}")] // api/users/{id} - Get spesific user by id
     public async Task<ActionResult<User>> GetUser(int id)
     {
         var user = await _context.Users.FindAsync(id);

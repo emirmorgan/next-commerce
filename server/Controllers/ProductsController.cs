@@ -6,9 +6,7 @@ using server.Models;
 
 namespace server.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class ProductsController : ControllerBase
+public class ProductsController : BaseController
 {
     private readonly CommerceContext _context;
 

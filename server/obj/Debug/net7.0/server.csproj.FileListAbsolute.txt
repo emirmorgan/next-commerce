@@ -61,3 +61,11 @@ C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net7.0\runt
 C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net7.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net7.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net7.0\runtimes\win-x86\native\e_sqlite3.dll
+C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll

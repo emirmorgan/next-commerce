@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using server.Data;
 
 namespace server.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class FavoritesController : ControllerBase
+[Authorize]
+public class FavoritesController : BaseController
 {
     private readonly CommerceContext _context;
 
@@ -16,11 +17,17 @@ public class FavoritesController : ControllerBase
         _context = context;
     }
 
-    [HttpGet("{id}")] // api/favorites/{id} - Get user's favorite products
-    public async Task<IEnumerable<object>> GetFavorites(int id)
+    [HttpGet] // api/favorites/
+    public async Task<object> GetFavorites([FromHeader] string authorization)
     {
+        var tokenString = authorization.Substring(7); // trim 'Bearer '
+        var token = new JwtSecurityToken(jwtEncodedString: tokenString);
+
+        var userEmail = token.Claims.First(c => c.Type == "email").Value;
+        var user = _context.Users.Where(u => u.Email == userEmail).FirstOrDefault();
+
         return await _context.Favorites
-            .Where(f => f.UserId == id)
+            .Where(f => f.UserId == user.Id)
             .Select(c => c.Product)
             .ToListAsync();
     }
