@@ -4,6 +4,7 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 
 import { ShoppingCartProvider } from "@/context/ShoppingCartContext";
+import { AuthProvider } from "@/context/AuthContext";
 
 const montserrat = Montserrat({
   weight: ["400", "600", "700"],
@@ -26,7 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={montserrat.className}>
-        <ShoppingCartProvider>{children}</ShoppingCartProvider>
+        <AuthProvider>
+          <ShoppingCartProvider>{children}</ShoppingCartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

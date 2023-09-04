@@ -19,8 +19,5 @@ namespace server.DTOs
             MinimumLength = 6
         )]
         public string Password { get; set; }
-
-        [StringLength(6, MinimumLength = 4)]
-        public string? Gender { get; set; }
     }
 }

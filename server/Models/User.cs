@@ -16,5 +16,9 @@ public class User
 
     [Required]
     public byte[] PasswordSalt { get; set; }
-    public string? Gender { get; set; }
+
+    [Required]
+    public string Role { get; set; } = "USER";
+
+    public Address Address { get; set; }
 }

@@ -5,9 +5,9 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import Carousel from "@/components/Carousel";
 import ProductCard from "@/components/ProductCard";
 import CampaignCard from "@/components/CampaignCard";
+import TrendingProducts from "@/components/TrendingProducts";
 
 import { products, campaigns } from "@/lib/constants";
-import TrendingProducts from "@/components/TrendingProducts";
 
 export default function Home() {
   return (

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using server.Data;
+using server.Models;
 
 namespace server.Controllers;
 
@@ -18,17 +19,26 @@ public class FavoritesController : BaseController
     }
 
     [HttpGet] // api/favorites/
-    public async Task<object> GetFavorites([FromHeader] string authorization)
+    public async Task<IActionResult> GetFavorites([FromHeader] string authorization)
     {
+        if (authorization == null)
+            return NotFound();
+
         var tokenString = authorization.Substring(7); // trim 'Bearer '
         var token = new JwtSecurityToken(jwtEncodedString: tokenString);
 
         var userEmail = token.Claims.First(c => c.Type == "email").Value;
         var user = _context.Users.Where(u => u.Email == userEmail).FirstOrDefault();
 
-        return await _context.Favorites
-            .Where(f => f.UserId == user.Id)
-            .Select(c => c.Product)
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var favoriteProducts = await _context.Products
+            .Where(p => p.Favorites.Any(f => f.UserId == user.Id))
             .ToListAsync();
+
+        return Ok(favoriteProducts);
     }
 }

@@ -16,6 +16,35 @@ namespace server.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.10");
 
+            modelBuilder.Entity("Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ContactNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Adress");
+                });
+
             modelBuilder.Entity("server.Models.Cart", b =>
                 {
                     b.Property<int>("Id")
@@ -111,9 +140,6 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("TEXT");
-
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("BLOB");
@@ -122,9 +148,24 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("BLOB");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Address", b =>
+                {
+                    b.HasOne("server.Models.User", "User")
+                        .WithOne("Address")
+                        .HasForeignKey("Address", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("server.Models.Favorites", b =>
@@ -141,6 +182,12 @@ namespace server.Migrations
             modelBuilder.Entity("server.Models.Product", b =>
                 {
                     b.Navigation("Favorites");
+                });
+
+            modelBuilder.Entity("server.Models.User", b =>
+                {
+                    b.Navigation("Address")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

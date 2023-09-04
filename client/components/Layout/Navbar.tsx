@@ -18,10 +18,13 @@ import MobileCategories from "./MobileCategories";
 
 import { categories } from "@/lib/constants";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
-  const { openCart, cartQuantity } = useShoppingCart();
   const router = useRouter();
+
+  const { openCart, cartQuantity } = useShoppingCart();
+  const { authenticated, authLogout } = useAuth();
 
   const [isCategoriesVisible, setCategoriesVisible] = useState<boolean>(false);
 
@@ -87,13 +90,23 @@ export default function Navbar() {
               />
             </div>
             <div className="hidden md:flex justify-center items-center gap-4 mt-3 md:mt-0">
-              <div
-                onClick={() => router.push("/login")}
-                className="w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600"
-              >
-                <AiOutlineUser size={24} />
-                <b className="text-xs">Log in</b>
-              </div>
+              {authenticated ? (
+                <div
+                  onClick={() => authLogout()}
+                  className="w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600"
+                >
+                  <AiOutlineUser size={24} />
+                  <b className="text-xs">Log out</b>
+                </div>
+              ) : (
+                <div
+                  onClick={() => router.push("/login")}
+                  className="w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600"
+                >
+                  <AiOutlineUser size={24} />
+                  <b className="text-xs">Log in</b>
+                </div>
+              )}
               <div className="w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600">
                 <AiOutlineHeart size={24} />
                 <b className="text-xs">Favorites</b>

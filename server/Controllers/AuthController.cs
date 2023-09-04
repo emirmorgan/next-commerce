@@ -37,7 +37,6 @@ public class AuthController : BaseController
                 Email = authDTO.Email,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(authDTO.Password)),
                 PasswordSalt = hmac.Key,
-                Gender = authDTO.Gender,
             };
 
             _context.Users.Add(user);
@@ -54,7 +53,7 @@ public class AuthController : BaseController
             var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == authDTO.Email);
 
             if (user == null)
-                return Unauthorized("wrong-email");
+                return Unauthorized("wrong-email-or-password");
 
             using var hmac = new HMACSHA256(user.PasswordSalt);
 
@@ -63,7 +62,7 @@ public class AuthController : BaseController
             for (int i = 0; i < computedHash.Length; i++)
             {
                 if (computedHash[i] != user.PasswordHash[i])
-                    return Unauthorized("wrong-password");
+                    return Unauthorized("wrong-email-or-password");
             }
 
             return new UserDTO

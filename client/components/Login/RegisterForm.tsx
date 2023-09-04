@@ -4,6 +4,8 @@ import { AiOutlineLock, AiOutlineMail } from "react-icons/ai";
 import { Form, Formik, Field } from "formik";
 
 import registerSchema from "@/validations/registerSchema";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 type RegisterFormProps = {
   setForm: Dispatch<SetStateAction<string>>;
@@ -17,10 +19,13 @@ type RegisterSubmitProps = {
 };
 
 export default function RegisterForm({ setForm }: RegisterFormProps) {
+  const router = useRouter();
+  const { authRegister } = useAuth();
   const [gender, setGender] = useState<string>("");
 
   const handleSubmit = async (values: RegisterSubmitProps) => {
-    console.log(values, gender);
+    authRegister(values.email, values.password, gender);
+    router.push("/");
   };
 
   return (

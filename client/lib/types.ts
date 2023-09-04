@@ -66,3 +66,17 @@ export type Campaigns = {
   desc: string;
   src: string;
 };
+
+export type User = {
+  id: number;
+  email: string;
+  adress: UserAdress[];
+  role: string;
+};
+
+export type UserAdress = {
+  id: number;
+  title: string;
+  contactNumber: number;
+  details: string;
+};

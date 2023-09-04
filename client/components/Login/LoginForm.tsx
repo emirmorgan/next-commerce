@@ -1,13 +1,14 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import {
-  AiFillEye,
   AiOutlineEye,
   AiOutlineEyeInvisible,
   AiOutlineLock,
   AiOutlineMail,
 } from "react-icons/ai";
 import { Form, Formik, Field } from "formik";
+
 import loginSchema from "@/validations/loginSchema";
+import { useAuth } from "@/context/AuthContext";
 
 type LoginFormProps = {
   setForm: Dispatch<SetStateAction<string>>;
@@ -19,6 +20,7 @@ type LoginSubmitProps = {
 };
 
 export default function LoginForm({ setForm }: LoginFormProps) {
+  const { authLogin } = useAuth();
   const [isPasswordHidden, setPasswordHidden] = useState<boolean>(true);
 
   const handlePasswordVisiblity = () => {
@@ -26,7 +28,7 @@ export default function LoginForm({ setForm }: LoginFormProps) {
   };
 
   const handleSubmit = async (values: LoginSubmitProps) => {
-    console.log(values);
+    authLogin(values.email, values.password);
   };
 
   return (
