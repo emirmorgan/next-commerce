@@ -22,8 +22,9 @@ type AuthContextProvider = {
 };
 
 type IAuthContext = {
+  user: User | null;
   authenticated: boolean;
-  authRegister: (email: string, password: string, gender?: string) => void;
+  authRegister: (email: string, password: string) => void;
   authLogin: (email: string, password: string) => void;
   authLogout: () => void;
   setUser: Dispatch<SetStateAction<User | null>>;
@@ -61,6 +62,7 @@ export function AuthProvider({ children }: AuthContextProvider) {
         setUser(user);
       } else {
         setAuthenticated(false);
+        setUser(null);
       }
 
       setLoading(false);
@@ -134,6 +136,7 @@ export function AuthProvider({ children }: AuthContextProvider) {
   return (
     <AuthContext.Provider
       value={{
+        user,
         authenticated,
         setUser,
         authLogin,

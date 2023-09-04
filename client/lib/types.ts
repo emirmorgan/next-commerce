@@ -70,11 +70,11 @@ export type Campaigns = {
 export type User = {
   id: number;
   email: string;
-  adress: UserAdress[];
+  address: UserAddress[];
   role: string;
 };
 
-export type UserAdress = {
+export type UserAddress = {
   id: number;
   title: string;
   contactNumber: number;

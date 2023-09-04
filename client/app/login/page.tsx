@@ -9,12 +9,12 @@ import RegisterForm from "@/components/Login/RegisterForm";
 import LoadingScreen from "@/components/Layout/LoadingScreen";
 
 export default function LoginPage() {
-  const { token, user, authenticated } = useAuth();
+  const { authenticated } = useAuth();
   const router = useRouter();
 
   const [currentForm, setCurrentForm] = useState("login");
 
-  if (authenticated && token !== null) {
+  if (authenticated) {
     router.push("/");
 
     return <LoadingScreen />;

@@ -42,10 +42,27 @@ public class AuthController : BaseController
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
+            var userData = await _context.Users
+                .Where(u => u.Email == authDTO.Email)
+                .FirstOrDefaultAsync();
+
+            if (userData == null)
+            {
+                return NotFound();
+            }
+
             return new UserDTO
             {
-                Email = user.Email,
-                Token = await _tokenService.CreateToken(user)
+                UserID = userData.Id,
+                Token = await _tokenService.CreateToken(user),
+                Email = userData.Email,
+                Role = userData.Role,
+                Address = new AddressDTO
+                {
+                    Title = userData.Address.Title,
+                    Details = userData.Address.Details,
+                    ContactNumber = userData.Address.ContactNumber,
+                }
             };
         }
         else if (authDTO.Type == "login")
@@ -67,8 +84,16 @@ public class AuthController : BaseController
 
             return new UserDTO
             {
+                UserID = user.Id,
+                Token = await _tokenService.CreateToken(user),
                 Email = user.Email,
-                Token = await _tokenService.CreateToken(user)
+                Role = user.Role,
+                Address = new AddressDTO
+                {
+                    Title = user.Address.Title,
+                    Details = user.Address.Details,
+                    ContactNumber = user.Address.ContactNumber,
+                }
             };
         }
         else

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using server.Data;
-using server.Models;
+using server.DTOs;
 
 namespace server.Controllers;
 
@@ -17,7 +17,7 @@ public class UserController : BaseController
     }
 
     [HttpGet] // api/user/
-    public async Task<ActionResult<User>> GetUser([FromHeader] string authorization)
+    public async Task<ActionResult<UserDTO>> GetUser([FromHeader] string authorization)
     {
         if (authorization == null)
             return NotFound();
@@ -29,10 +29,27 @@ public class UserController : BaseController
 
         var user = await _context.Users.Where(u => u.Email == userEmail).FirstOrDefaultAsync();
 
-        var userWithAdress = await _context.Users
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var userData = await _context.Users
             .Include(u => u.Address)
             .FirstOrDefaultAsync(u => u.Id == user.Id);
 
-        return Ok(userWithAdress);
+        return new UserDTO
+        {
+            UserID = userData.Id,
+            Token = tokenString,
+            Email = userData.Email,
+            Role = userData.Role,
+            Address = new AddressDTO
+            {
+                Title = userData.Address.Title,
+                Details = userData.Address.Details,
+                ContactNumber = userData.Address.ContactNumber,
+            }
+        };
     }
 }
