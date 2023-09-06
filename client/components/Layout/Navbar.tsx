@@ -24,7 +24,7 @@ export default function Navbar() {
   const router = useRouter();
 
   const { openCart, cartQuantity } = useShoppingCart();
-  const { authenticated, authLogout } = useAuth();
+  const { authenticated } = useAuth();
 
   const [isCategoriesVisible, setCategoriesVisible] = useState<boolean>(false);
 
@@ -92,11 +92,11 @@ export default function Navbar() {
             <div className="hidden md:flex justify-center items-center gap-4 mt-3 md:mt-0">
               {authenticated ? (
                 <div
-                  onClick={() => authLogout()}
+                  onClick={() => router.push("/profile")}
                   className="w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600"
                 >
                   <AiOutlineUser size={24} />
-                  <b className="text-xs">Log out</b>
+                  <b className="text-xs">Profile</b>
                 </div>
               ) : (
                 <div

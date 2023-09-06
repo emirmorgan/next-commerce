@@ -32,37 +32,29 @@ public class AuthController : BaseController
 
             using var hmac = new HMACSHA256();
 
-            var user = new User
+            var register = new User
             {
                 Email = authDTO.Email,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(authDTO.Password)),
                 PasswordSalt = hmac.Key,
             };
 
-            _context.Users.Add(user);
+            _context.Users.Add(register);
             await _context.SaveChangesAsync();
 
-            var userData = await _context.Users
-                .Where(u => u.Email == authDTO.Email)
-                .FirstOrDefaultAsync();
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == authDTO.Email);
 
-            if (userData == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
             return new UserDTO
             {
-                UserID = userData.Id,
+                UserID = user.Id,
                 Token = await _tokenService.CreateToken(user),
-                Email = userData.Email,
-                Role = userData.Role,
-                Address = new AddressDTO
-                {
-                    Title = userData.Address.Title,
-                    Details = userData.Address.Details,
-                    ContactNumber = userData.Address.ContactNumber,
-                }
+                Email = user.Email,
+                Role = user.Role,
             };
         }
         else if (authDTO.Type == "login")
@@ -82,19 +74,30 @@ public class AuthController : BaseController
                     return Unauthorized("wrong-email-or-password");
             }
 
-            return new UserDTO
+            var userData = await _context.Users
+                .Include(u => u.Address)
+                .FirstOrDefaultAsync(u => u.Id == user.Id);
+
+            if (userData == null)
             {
-                UserID = user.Id,
+                return NotFound();
+            }
+
+            var userDTO = new UserDTO
+            {
+                UserID = userData.Id,
                 Token = await _tokenService.CreateToken(user),
-                Email = user.Email,
-                Role = user.Role,
+                Email = userData.Email,
+                Role = userData.Role,
                 Address = new AddressDTO
                 {
-                    Title = user.Address.Title,
-                    Details = user.Address.Details,
-                    ContactNumber = user.Address.ContactNumber,
+                    Title = userData.Address.Title,
+                    Details = userData.Address.Details,
+                    ContactNumber = userData.Address.ContactNumber,
                 }
             };
+
+            return Ok(userDTO);
         }
         else
         {
