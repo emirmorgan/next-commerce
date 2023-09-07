@@ -29,7 +29,7 @@ export default function Profile() {
         />
         <div className="flex justify-end gap-2">
           <button
-            onClick={openModal}
+            onClick={() => openModal("password")}
             className="font-semibold border p-2 hover:border-black transition-all ease-linear"
           >
             Change Password

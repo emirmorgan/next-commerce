@@ -9,7 +9,7 @@ type ModalContextProvider = {
 
 type IModalContext = {
   isVisible: boolean;
-  openModal: () => void;
+  openModal: (type: string) => void;
   closeModal: () => void;
 };
 
@@ -21,14 +21,18 @@ export function useModal() {
 
 export function ModalProvider({ children }: ModalContextProvider) {
   const [isVisible, setVisible] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<string>("password");
 
-  const openModal = () => setVisible(true);
+  const openModal = (type: string) => {
+    setVisible(true);
+    setModalType(type);
+  };
   const closeModal = () => setVisible(false);
 
   return (
     <ModalContext.Provider value={{ isVisible, openModal, closeModal }}>
       {children}
-      <Modal />
+      <Modal type={modalType} />
     </ModalContext.Provider>
   );
 }

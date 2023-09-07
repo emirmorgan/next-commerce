@@ -12,7 +12,7 @@ export default function UserOrders() {
           <span>Order Id: 5514141 - 07/09/2023</span>
         </div>
         <div
-          onClick={openModal}
+          onClick={() => openModal("order")}
           className="border p-2 cursor-pointer hover:border-black transition-all ease-linear"
         >
           <AiOutlineFileText size={24} />

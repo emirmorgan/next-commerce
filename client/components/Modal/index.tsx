@@ -1,11 +1,19 @@
 "use client";
 
-import { useRef, useEffect, MutableRefObject } from "react";
+import { useRef, useEffect, MutableRefObject, useState } from "react";
 
 import { useModal } from "@/context/ModalContext";
 import useClickOutside from "@/hooks/useClickOutside";
+import PasswordModal from "./PasswordModal";
+import OrderModal from "./OrderModal";
+import { AiOutlineClose } from "react-icons/ai";
 
-export default function Modal() {
+export default function Modal({ type }: { type: string }) {
+  const modalType = {
+    password: <PasswordModal />,
+    order: <OrderModal />,
+  }[type];
+
   const elRef = useRef() as MutableRefObject<HTMLDivElement>;
 
   const { isVisible, closeModal } = useModal();
@@ -34,7 +42,7 @@ export default function Modal() {
       }
     >
       <div ref={elRef} className="border-2 bg-white rounded-md p-3">
-        <span>children</span>
+        {modalType}
       </div>
     </div>
   );
