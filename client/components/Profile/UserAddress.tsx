@@ -14,12 +14,12 @@ export default function UserAddress({
   return (
     <div className="w-full border p-3">
       <span className="font-semibold">{title}</span>
-      <div className="flex items-center gap-2 ">
-        <AiOutlineHome />
+      <div className="flex items-center gap-2 whitespace-break-spaces break-words">
+        <AiOutlineHome size={22} />
         <p>{details}</p>
       </div>
       <div className="flex items-center gap-2">
-        <AiOutlinePhone />
+        <AiOutlinePhone size={22} min={22} />
         <span>{contactNumber}</span>
       </div>
       <div className="flex justify-end gap-2">

@@ -1,13 +1,18 @@
 "use client";
 
+//Components
 import LoadingScreen from "@/components/Layout/LoadingScreen";
 import UserAddress from "@/components/Profile/UserAddress";
 import UserInfo from "@/components/Profile/UserInfo";
 import UserOrders from "@/components/Profile/UserOrders";
+
+//Contexts
 import { useAuth } from "@/context/AuthContext";
+import { useModal } from "@/context/ModalContext";
 
 export default function Profile() {
   const { user, authLogout } = useAuth();
+  const { openModal } = useModal();
 
   if (!user) {
     return <LoadingScreen />;
@@ -23,7 +28,10 @@ export default function Profile() {
           contactNumber={user?.address.contactNumber as string}
         />
         <div className="flex justify-end gap-2">
-          <button className="font-semibold border p-2 hover:border-black transition-all ease-linear">
+          <button
+            onClick={openModal}
+            className="font-semibold border p-2 hover:border-black transition-all ease-linear"
+          >
             Change Password
           </button>
           <button

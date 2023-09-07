@@ -8,7 +8,7 @@ export default function useClickOutside(
 
   useEffect(() => {
     const handleClickOutside = (e: any) => {
-      if (elRef.current && elRef.current.contains(e.target)) {
+      if (elRef.current && !elRef.current.contains(e.target)) {
         callbackRef.current();
       }
     };

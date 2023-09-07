@@ -5,6 +5,7 @@ import "./globals.css";
 
 import { ShoppingCartProvider } from "@/context/ShoppingCartContext";
 import { AuthProvider } from "@/context/AuthContext";
+import { ModalProvider } from "@/context/ModalContext";
 
 const montserrat = Montserrat({
   weight: ["400", "600", "700"],
@@ -28,7 +29,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={montserrat.className}>
         <AuthProvider>
-          <ShoppingCartProvider>{children}</ShoppingCartProvider>
+          <ShoppingCartProvider>
+            <ModalProvider>{children}</ModalProvider>
+          </ShoppingCartProvider>
         </AuthProvider>
       </body>
     </html>

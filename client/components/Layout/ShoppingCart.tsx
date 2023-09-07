@@ -46,19 +46,15 @@ export default function ShoppingCart({ isOpen }: ShoppingCartProps) {
   }, [isOpen]);
 
   return (
-    <>
+    <div
+      className={
+        "fixed z-[50] top-0 left-0 w-full h-full bg-black/40" +
+        (isOpen ? " block" : " hidden")
+      }
+    >
       <div
         ref={elRef}
-        className={
-          "fixed z-[998] top-0 left-0 w-full h-full bg-black/40" +
-          (isOpen ? " block" : " hidden")
-        }
-      />
-      <div
-        className={
-          "fixed z-[999] top-0 right-0 h-full w-full max-w-[500px] bg-white shadow-lg transition-all ease-linear" +
-          (isOpen ? " flex flex-col" : " hidden")
-        }
+        className="fixed z-[100] top-0 right-0 w-full h-full max-w-[500px] bg-white shadow-lg"
       >
         <div className="flex flex-col justify-start items-start w-full h-full p-5">
           <div className="flex w-full justify-between items-center">
@@ -164,6 +160,6 @@ export default function ShoppingCart({ isOpen }: ShoppingCartProps) {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
