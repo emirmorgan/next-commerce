@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\server.csproj": {}
+    "c:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\server.csproj": {
+    "c:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\server.csproj",
+        "projectUniqueName": "c:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\server.csproj",
         "projectName": "server",
-        "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\server.csproj",
+        "projectPath": "c:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\server.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\obj\\",
+        "outputPath": "c:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
