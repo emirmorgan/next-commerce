@@ -89,12 +89,15 @@ public class AuthController : BaseController
                 Token = await _tokenService.CreateToken(user),
                 Email = userData.Email,
                 Role = userData.Role,
-                Address = new AddressDTO
-                {
-                    Title = userData.Address.Title,
-                    Details = userData.Address.Details,
-                    ContactNumber = userData.Address.ContactNumber,
-                }
+                Address =
+                    userData.Address != null
+                        ? new AddressDTO
+                        {
+                            Title = userData.Address.Title,
+                            Details = userData.Address.Details,
+                            ContactNumber = userData.Address.ContactNumber,
+                        }
+                        : null
             };
 
             return Ok(userDTO);

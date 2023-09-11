@@ -1,7 +1,8 @@
 "use client";
 
-import Modal from "@/components/Modal";
 import { createContext, useContext, useState } from "react";
+
+import Modal from "@/components/Modal";
 
 type ModalContextProvider = {
   children: React.ReactNode;
@@ -27,6 +28,7 @@ export function ModalProvider({ children }: ModalContextProvider) {
     setVisible(true);
     setModalType(type);
   };
+
   const closeModal = () => setVisible(false);
 
   return (

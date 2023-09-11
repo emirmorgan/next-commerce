@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AN5UnZ0vAbcTpsV+Wd2Rw0FETN4JbK8SCw7KKywE0GCnrt+fhmAcDuzXReyhDPHNkRQCYARmu+eGqv874g0E9g==",
+  "dgSpecHash": "0dNHgpYeCMCjiunNQDXTKYNWRhBcdak5hBglp0YyCyEgzU6EwvkhrcNKFj6DILZn8xheKR9/BDMELlIoUehf9Q==",
   "success": true,
-  "projectFilePath": "c:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\server.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.10\\microsoft.aspnetcore.authentication.jwtbearer.7.0.10.nupkg.sha512",

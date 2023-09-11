@@ -3,10 +3,10 @@
 import { useRef, useEffect, MutableRefObject, useState } from "react";
 
 import { useModal } from "@/context/ModalContext";
+
 import useClickOutside from "@/hooks/useClickOutside";
 import PasswordModal from "./PasswordModal";
 import OrderModal from "./OrderModal";
-import { AiOutlineClose } from "react-icons/ai";
 
 export default function Modal({ type }: { type: string }) {
   const modalType = {

@@ -10,6 +10,8 @@ public class CommerceContext : DbContext
     public DbSet<Favorites> Favorites { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Address> Adress { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 //Components
 import LoadingScreen from "@/components/Layout/LoadingScreen";
 import UserAddress from "@/components/Profile/UserAddress";
@@ -9,10 +11,16 @@ import UserOrders from "@/components/Profile/UserOrders";
 //Contexts
 import { useAuth } from "@/context/AuthContext";
 import { useModal } from "@/context/ModalContext";
+import { useOrder } from "@/context/OrderContext";
 
 export default function Profile() {
+  const { fetchOrders } = useOrder();
   const { user, authLogout } = useAuth();
   const { openModal } = useModal();
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
 
   if (!user) {
     return <LoadingScreen />;
@@ -23,9 +31,9 @@ export default function Profile() {
       <div className="flex flex-col flex-1 border p-4 py-[20px] rounded-md shadow-sm gap-4">
         <UserInfo email={user?.email as string} />
         <UserAddress
-          title={user?.address.title as string}
-          details={user?.address.details as string}
-          contactNumber={user?.address.contactNumber as string}
+          title={user?.address?.title as string}
+          details={user?.address?.details as string}
+          contactNumber={user?.address?.contactNumber as string}
         />
         <div className="flex justify-end gap-2">
           <button

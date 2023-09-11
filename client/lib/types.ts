@@ -79,3 +79,24 @@ export type UserAddress = {
   contactNumber: string;
   details: string;
 };
+
+export type Order = {
+  orderID: number;
+  orderDate: string;
+  orderStatus: string;
+  deliveryAddress: string;
+  deliveryContact: string;
+  deliveryInvoice: string;
+  deliveryTrace: string;
+  orderItems: OrderItem[];
+};
+
+type OrderItem = {
+  brand: string;
+  name: string;
+  image: string;
+  color?: string;
+  size?: string;
+  price: string;
+  quantity: number;
+};

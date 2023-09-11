@@ -129,6 +129,7 @@ export function AuthProvider({ children }: AuthContextProvider) {
     setUser(null);
     setAuthenticated(false);
     setCookies({ type: "DELETE", tag: "token", data: "" });
+    axios.defaults.headers.common["Authorization"] = "";
 
     route.push("/");
   }
