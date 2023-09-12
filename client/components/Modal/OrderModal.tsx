@@ -99,7 +99,7 @@ export default function OrderModal() {
         ))}
       </ul>
       <div className="w-full h-[1px] bg-slate-200 mb-3" />
-      <h1 className="font-semibold mb-2">Delivery Adress</h1>
+      <h1 className="font-semibold mb-2">Delivery Address</h1>
       <div className="flex flex-col w-full border p-3 gap-2">
         <div className="flex items-center gap-2 whitespace-break-spaces break-words">
           <AiOutlineHome size={22} />

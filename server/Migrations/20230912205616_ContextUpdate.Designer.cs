@@ -11,8 +11,8 @@ using server.Data;
 namespace server.Migrations
 {
     [DbContext(typeof(CommerceContext))]
-    [Migration("20230911025933_Initialize")]
-    partial class Initialize
+    [Migration("20230912205616_ContextUpdate")]
+    partial class ContextUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
