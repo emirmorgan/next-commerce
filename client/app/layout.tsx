@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 
 import "./globals.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import { ShoppingCartProvider } from "@/context/ShoppingCartContext";
 import { AuthProvider } from "@/context/AuthContext";

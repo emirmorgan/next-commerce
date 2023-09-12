@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ using server.DTOs;
 
 namespace server.Controllers;
 
+[Authorize]
 public class UserController : BaseController
 {
     private readonly CommerceContext _context;

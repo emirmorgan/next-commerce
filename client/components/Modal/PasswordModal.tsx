@@ -1,22 +1,36 @@
 import { AiOutlineClose, AiOutlineLock } from "react-icons/ai";
 
+import { toast } from "react-toastify";
 import { Field, Form, Formik } from "formik";
 
-import changePasswordSchema from "@/validations/changePasswordSchema";
 import { useModal } from "@/context/ModalContext";
+import { useAuth } from "@/context/AuthContext";
+
+import changePasswordSchema from "@/validations/changePasswordSchema";
+
+type ChangePasswordProps = {
+  currentPassword: string;
+  newPassword: string;
+  newPasswordAgain: string;
+};
 
 export default function PasswordModal() {
   const { closeModal } = useModal();
+  const { changePassword } = useAuth();
 
-  const handleSubmit = async (values: any) => {
-    console.log(values.email, values.password);
+  const handleSubmit = async (values: ChangePasswordProps) => {
+    if (values.newPassword === values.newPasswordAgain) {
+      changePassword(values.currentPassword, values.newPassword);
+    } else {
+      toast.error("Passwords do not match.");
+    }
   };
 
   return (
     <div className="w-[400px] p-3 my-2">
       <Formik
         initialValues={{
-          password: "",
+          currentPassword: "",
           newPassword: "",
           newPasswordAgain: "",
         }}
@@ -44,7 +58,7 @@ export default function PasswordModal() {
               </div>
               <div className="w-full h-[2px] bg-green-500" />
               <div className="flex flex-col gap-1">
-                <label htmlFor="password" className="select-none">
+                <label htmlFor="currentPassword" className="select-none">
                   Password
                 </label>
                 <div className="flex border focus-within:border-gray-400">
@@ -52,8 +66,8 @@ export default function PasswordModal() {
                     <AiOutlineLock size={20} />
                   </div>
                   <Field
-                    id="password"
-                    name="password"
+                    id="currentPassword"
+                    name="currentPassword"
                     placeholder="**************"
                     type="password"
                     className="w-full p-2 focus:outline-none"

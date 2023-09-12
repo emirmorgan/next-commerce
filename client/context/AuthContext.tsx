@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import {
   createContext,
@@ -10,11 +11,13 @@ import {
   Dispatch,
   useEffect,
 } from "react";
+
 import { useRouter } from "next/navigation";
 
 import setCookies from "@/lib/setCookies";
 import { User } from "@/lib/types";
 import verifyToken from "@/lib/verifyToken";
+
 import LoadingScreen from "@/components/Layout/LoadingScreen";
 
 type AuthContextProvider = {
@@ -28,6 +31,7 @@ type IAuthContext = {
   authLogin: (email: string, password: string) => void;
   authLogout: () => void;
   setUser: Dispatch<SetStateAction<User | null>>;
+  changePassword: (currentPassword: string, newPassword: string) => void;
 };
 
 const AuthContext = createContext({} as IAuthContext);
@@ -134,6 +138,30 @@ export function AuthProvider({ children }: AuthContextProvider) {
     route.push("/");
   }
 
+  async function changePassword(currentPassword: string, newPassword: string) {
+    try {
+      const token = await setCookies({ type: "GET", tag: "token", data: "" });
+
+      await axios.post(
+        process.env.NEXT_PUBLIC_API_URL + "/auth/changepassword",
+        { currentPassword, newPassword },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      toast.success("Password has been successfully changed.");
+    } catch (error: any) {
+      if (error.response.data === "wrong-password") {
+        toast.error("Your current password is incorrect.");
+      } else {
+        toast.error("Something went wrong.");
+      }
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -143,6 +171,7 @@ export function AuthProvider({ children }: AuthContextProvider) {
         authLogin,
         authLogout,
         authRegister,
+        changePassword,
       }}
     >
       {children}
