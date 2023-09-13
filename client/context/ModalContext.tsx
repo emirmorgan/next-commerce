@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useContext,
+  useState,
+} from "react";
 
 import Modal from "@/components/Modal";
 
@@ -10,8 +16,10 @@ type ModalContextProvider = {
 
 type IModalContext = {
   isVisible: boolean;
+  addressType: string;
   openModal: (type: string) => void;
   closeModal: () => void;
+  setAddressType: Dispatch<SetStateAction<string>>;
 };
 
 const ModalContext = createContext({} as IModalContext);
@@ -23,6 +31,7 @@ export function useModal() {
 export function ModalProvider({ children }: ModalContextProvider) {
   const [isVisible, setVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<string>("password");
+  const [addressType, setAddressType] = useState<string>("add");
 
   const openModal = (type: string) => {
     setVisible(true);
@@ -32,7 +41,9 @@ export function ModalProvider({ children }: ModalContextProvider) {
   const closeModal = () => setVisible(false);
 
   return (
-    <ModalContext.Provider value={{ isVisible, openModal, closeModal }}>
+    <ModalContext.Provider
+      value={{ isVisible, addressType, openModal, closeModal, setAddressType }}
+    >
       {children}
       <Modal type={modalType} />
     </ModalContext.Provider>

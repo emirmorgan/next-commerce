@@ -1,3 +1,5 @@
+import { useAuth } from "@/context/AuthContext";
+import { useModal } from "@/context/ModalContext";
 import { UserAddress } from "@/lib/types";
 import {
   AiOutlineDelete,
@@ -12,7 +14,14 @@ export default function UserAddress({
   contactNumber,
   details,
 }: UserAddress) {
-  if (title || contactNumber || details == null) {
+  const { updateAddress } = useAuth();
+  const { openModal, setAddressType } = useModal();
+
+  if (
+    title === (null || undefined) ||
+    contactNumber === (null || undefined) ||
+    details === (null || undefined)
+  ) {
     return (
       <div className="flex flex-col gap-1">
         <span className="font-semibold">Address</span>
@@ -21,7 +30,13 @@ export default function UserAddress({
             <p>We couldn&apos;t find any address.</p>
           </div>
           <div className="flex justify-end mt-2">
-            <div className="border p-2 cursor-pointer hover:border-black">
+            <div
+              onClick={() => {
+                openModal("address");
+                setAddressType("add");
+              }}
+              className="border p-2 cursor-pointer hover:border-black"
+            >
               <AiOutlinePlus size={20} />
             </div>
           </div>
@@ -44,10 +59,19 @@ export default function UserAddress({
           <span>{contactNumber}</span>
         </div>
         <div className="flex justify-end gap-2">
-          <div className="border p-2 cursor-pointer hover:border-black">
+          <div
+            onClick={() => {
+              openModal("address");
+              setAddressType("update");
+            }}
+            className="border p-2 cursor-pointer hover:border-black"
+          >
             <AiOutlineEdit size={20} />
           </div>
-          <div className="border p-2 cursor-pointer hover:border-red-500 hover:text-red-500">
+          <div
+            onClick={() => updateAddress("delete", "", "", "")}
+            className="border p-2 cursor-pointer hover:border-red-500 hover:text-red-500"
+          >
             <AiOutlineDelete size={20} />
           </div>
         </div>

@@ -7,11 +7,13 @@ import { useModal } from "@/context/ModalContext";
 import useClickOutside from "@/hooks/useClickOutside";
 import PasswordModal from "./PasswordModal";
 import OrderModal from "./OrderModal";
+import AddressModal from "./AddressModal";
 
 export default function Modal({ type }: { type: string }) {
   const modalType = {
     password: <PasswordModal />,
     order: <OrderModal />,
+    address: <AddressModal />,
   }[type];
 
   const elRef = useRef() as MutableRefObject<HTMLDivElement>;

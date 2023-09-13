@@ -32,6 +32,12 @@ type IAuthContext = {
   authLogout: () => void;
   setUser: Dispatch<SetStateAction<User | null>>;
   changePassword: (currentPassword: string, newPassword: string) => void;
+  updateAddress: (
+    type: string,
+    title: string,
+    details: string,
+    contactNumber: string
+  ) => void;
 };
 
 const AuthContext = createContext({} as IAuthContext);
@@ -48,32 +54,32 @@ export function AuthProvider({ children }: AuthContextProvider) {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchUser() {
-      const token = await setCookies({ type: "GET", tag: "token", data: "" });
-
-      const hasVerifiedToken = token && (await verifyToken(token as string));
-
-      if (hasVerifiedToken) {
-        axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-
-        const user = await axios
-          .get(process.env.NEXT_PUBLIC_API_URL + "/user")
-          .then((response) => {
-            return response.data;
-          });
-
-        setAuthenticated(true);
-        setUser(user);
-      } else {
-        setAuthenticated(false);
-        setUser(null);
-      }
-
-      setLoading(false);
-    }
-
     fetchUser();
   }, []);
+
+  async function fetchUser() {
+    const token = await setCookies({ type: "GET", tag: "token", data: "" });
+
+    const hasVerifiedToken = token && (await verifyToken(token as string));
+
+    if (hasVerifiedToken) {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+
+      const user = await axios
+        .get(process.env.NEXT_PUBLIC_API_URL + "/user")
+        .then((response) => {
+          return response.data;
+        });
+
+      setAuthenticated(true);
+      setUser(user);
+    } else {
+      setAuthenticated(false);
+      setUser(null);
+    }
+
+    setLoading(false);
+  }
 
   if (isLoading) {
     return <LoadingScreen />;
@@ -162,6 +168,44 @@ export function AuthProvider({ children }: AuthContextProvider) {
     }
   }
 
+  async function updateAddress(
+    type: string,
+    title: string,
+    details: string,
+    contactNumber: string
+  ) {
+    const updateType = {
+      add: "/address/add",
+      update: "/address/update",
+      delete: "/address/delete",
+    }[type];
+
+    const toastMessage = {
+      add: "Address successfully added.",
+      update: "Address successfully changed.",
+      delete: "Address successfully removed.",
+    }[type];
+
+    try {
+      const token = await setCookies({ type: "GET", tag: "token", data: "" });
+
+      await axios.post(
+        (process.env.NEXT_PUBLIC_API_URL as string) + updateType,
+        { title, details, contactNumber },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      fetchUser();
+      toast.success(toastMessage);
+    } catch (error) {
+      toast.error("Something went wrong.");
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -172,6 +216,7 @@ export function AuthProvider({ children }: AuthContextProvider) {
         authLogout,
         authRegister,
         changePassword,
+        updateAddress,
       }}
     >
       {children}
