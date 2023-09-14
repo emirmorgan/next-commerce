@@ -1,4 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -133,5 +135,51 @@ public class UserController : BaseController
         );
 
         return Ok(orderDTOs);
+    }
+
+    [HttpPost("password/update")] // POST: api/auth/password/update
+    public async Task<ActionResult<UpdatePasswordDTO>> UpdatePassword(
+        UpdatePasswordDTO request,
+        [FromHeader(Name = "Authorization")] string authorization
+    )
+    {
+        if (authorization == null || request.newPassword == null || request.currentPassword == null)
+            return Unauthorized("Something is not right.");
+
+        var tokenString = authorization.Substring(7); // trim 'Bearer '
+        var token = new JwtSecurityToken(jwtEncodedString: tokenString);
+
+        var userEmailClaim = token.Claims.FirstOrDefault(c => c.Type == "email");
+        if (userEmailClaim == null)
+        {
+            return NotFound();
+        }
+
+        var userEmail = userEmailClaim.Value;
+
+        var user = await _context.Users.Where(u => u.Email == userEmail).FirstOrDefaultAsync();
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        using var hmac = new HMACSHA256(user.PasswordSalt);
+
+        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(request.currentPassword));
+
+        for (int i = 0; i < computedHash.Length; i++)
+        {
+            if (computedHash[i] != user.PasswordHash[i])
+                return Unauthorized("wrong-password");
+        }
+
+        var newPasswordHashed = hmac.ComputeHash(Encoding.UTF8.GetBytes(request.newPassword));
+
+        user.PasswordHash = newPasswordHashed;
+
+        await _context.SaveChangesAsync();
+
+        return Ok();
     }
 }

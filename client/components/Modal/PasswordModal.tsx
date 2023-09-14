@@ -16,11 +16,11 @@ type ChangePasswordProps = {
 
 export default function PasswordModal() {
   const { closeModal } = useModal();
-  const { changePassword } = useAuth();
+  const { updatePassword } = useAuth();
 
   const handleSubmit = async (values: ChangePasswordProps) => {
     if (values.newPassword === values.newPasswordAgain) {
-      changePassword(values.currentPassword, values.newPassword);
+      updatePassword(values.currentPassword, values.newPassword);
     } else {
       toast.error("Passwords do not match.");
     }

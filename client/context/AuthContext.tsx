@@ -31,7 +31,7 @@ type IAuthContext = {
   authLogin: (email: string, password: string) => void;
   authLogout: () => void;
   setUser: Dispatch<SetStateAction<User | null>>;
-  changePassword: (currentPassword: string, newPassword: string) => void;
+  updatePassword: (currentPassword: string, newPassword: string) => void;
   updateAddress: (
     type: string,
     title: string,
@@ -144,12 +144,12 @@ export function AuthProvider({ children }: AuthContextProvider) {
     route.push("/");
   }
 
-  async function changePassword(currentPassword: string, newPassword: string) {
+  async function updatePassword(currentPassword: string, newPassword: string) {
     try {
       const token = await setCookies({ type: "GET", tag: "token", data: "" });
 
       await axios.post(
-        process.env.NEXT_PUBLIC_API_URL + "/auth/changepassword",
+        process.env.NEXT_PUBLIC_API_URL + "/user/password/update",
         { currentPassword, newPassword },
         {
           headers: {
@@ -215,7 +215,7 @@ export function AuthProvider({ children }: AuthContextProvider) {
         authLogin,
         authLogout,
         authRegister,
-        changePassword,
+        updatePassword,
         updateAddress,
       }}
     >
