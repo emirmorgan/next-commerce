@@ -162,6 +162,10 @@ export function AuthProvider({ children }: AuthContextProvider) {
     } catch (error: any) {
       if (error.response.data === "wrong-password") {
         toast.error("Your current password is incorrect.");
+      } else if (error.response.data === "current-password") {
+        toast.error(
+          "The new password cannot be the same as the current password."
+        );
       } else {
         toast.error("Something went wrong.");
       }

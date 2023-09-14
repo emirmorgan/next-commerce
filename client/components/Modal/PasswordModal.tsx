@@ -1,12 +1,12 @@
 import { AiOutlineClose, AiOutlineLock } from "react-icons/ai";
 
 import { toast } from "react-toastify";
-import { Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 
 import { useModal } from "@/context/ModalContext";
 import { useAuth } from "@/context/AuthContext";
 
-import changePasswordSchema from "@/validations/changePasswordSchema";
+import updatePasswordSchema from "@/validations/updatePasswordSchema";
 
 type ChangePasswordProps = {
   currentPassword: string;
@@ -19,10 +19,14 @@ export default function PasswordModal() {
   const { updatePassword } = useAuth();
 
   const handleSubmit = async (values: ChangePasswordProps) => {
-    if (values.newPassword === values.newPasswordAgain) {
-      updatePassword(values.currentPassword, values.newPassword);
-    } else {
+    if (values.newPassword !== values.newPasswordAgain) {
       toast.error("Passwords do not match.");
+    } else if (values.currentPassword === values.newPassword) {
+      toast.error(
+        "The new password cannot be the same as the current password."
+      );
+    } else {
+      updatePassword(values.currentPassword, values.newPassword);
     }
   };
 
@@ -34,7 +38,7 @@ export default function PasswordModal() {
           newPassword: "",
           newPasswordAgain: "",
         }}
-        validationSchema={changePasswordSchema}
+        validationSchema={updatePasswordSchema}
         onSubmit={handleSubmit}
       >
         {(formControl) => (
@@ -73,6 +77,12 @@ export default function PasswordModal() {
                     className="w-full p-2 focus:outline-none"
                   />
                 </div>
+                <ErrorMessage
+                  component="span"
+                  className="text-red-500"
+                  id="currentPassword"
+                  name="currentPassword"
+                />
               </div>
               <div className="flex flex-col gap-1">
                 <label htmlFor="newPassword" className="select-none">
@@ -90,6 +100,12 @@ export default function PasswordModal() {
                     className="w-full p-2 focus:outline-none"
                   />
                 </div>
+                <ErrorMessage
+                  component="span"
+                  className="text-red-500"
+                  id="newPassword"
+                  name="newPassword"
+                />
               </div>
               <div className="flex flex-col gap-1">
                 <label htmlFor="newPasswordAgain" className="select-none">
@@ -108,6 +124,12 @@ export default function PasswordModal() {
                     className="w-full p-2 focus:outline-none"
                   />
                 </div>
+                <ErrorMessage
+                  component="span"
+                  className="text-red-500"
+                  id="newPasswordAgain"
+                  name="newPasswordAgain"
+                />
               </div>
               <button
                 type="submit"

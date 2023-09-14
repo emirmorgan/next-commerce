@@ -146,6 +146,11 @@ public class UserController : BaseController
         if (authorization == null || request.newPassword == null || request.currentPassword == null)
             return Unauthorized("Something is not right.");
 
+        if (request.currentPassword == request.newPassword)
+        {
+            return Unauthorized("current-password");
+        }
+
         var tokenString = authorization.Substring(7); // trim 'Bearer '
         var token = new JwtSecurityToken(jwtEncodedString: tokenString);
 
