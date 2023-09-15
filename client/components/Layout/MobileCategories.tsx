@@ -43,19 +43,15 @@ export default function MobileCategories({
   }, [isCategoriesVisible]);
 
   return (
-    <>
+    <div
+      className={
+        "fixed z-[100] top-0 left-0 w-full h-full bg-black/50 backdrop-blur-md" +
+        (isCategoriesVisible ? " block" : " hidden")
+      }
+    >
       <div
         ref={elRef}
-        className={
-          "fixed z-[998] top-0 left-0 w-full h-full bg-black/50 backdrop-blur-md" +
-          (isCategoriesVisible ? " block" : " hidden")
-        }
-      />
-      <div
-        className={
-          "absolute z-[999] top-0 left-0 h-full w-[85%] max-w-[350px] bg-white shadow-lg transition-all ease-linear" +
-          (isCategoriesVisible ? " flex flex-col" : " hidden")
-        }
+        className="flex flex-col h-full w-[85%] max-w-[350px] bg-white shadow-lg transition-all ease-linear"
       >
         <div className="flex w-full justify-between items-center border-b py-2 px-3">
           <div className="relative w-28 h-8">
@@ -87,6 +83,6 @@ export default function MobileCategories({
           ))}
         </ul>
       </div>
-    </>
+    </div>
   );
 }
