@@ -5,7 +5,7 @@ import {
   AiOutlineLock,
   AiOutlineMail,
 } from "react-icons/ai";
-import { Form, Formik, Field } from "formik";
+import { Form, Formik, Field, ErrorMessage } from "formik";
 
 import loginSchema from "@/validations/loginSchema";
 import { useAuth } from "@/context/AuthContext";
@@ -61,6 +61,12 @@ export default function LoginForm({ setForm }: LoginFormProps) {
                   className="w-full p-2 focus:outline-none"
                 />
               </div>
+              <ErrorMessage
+                component="span"
+                className="text-red-600"
+                id="email"
+                name="email"
+              />
             </div>
             <div className="flex flex-col gap-1">
               <label htmlFor="password" className="select-none">
@@ -92,6 +98,12 @@ export default function LoginForm({ setForm }: LoginFormProps) {
                   ) : null}
                 </div>
               </div>
+              <ErrorMessage
+                component="span"
+                className="text-red-600"
+                id="password"
+                name="password"
+              />
             </div>
             <div className="flex items-center justify-end p-1 text-sm text-green-500 cursor-pointer hover:underline hover:text-green-600">
               <span className="select-none font-semibold">

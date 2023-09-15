@@ -1,7 +1,7 @@
 import { useState, Dispatch, SetStateAction } from "react";
 import { AiOutlineLock, AiOutlineMail } from "react-icons/ai";
 
-import { Form, Formik, Field } from "formik";
+import { Form, Formik, Field, ErrorMessage } from "formik";
 
 import registerSchema from "@/validations/registerSchema";
 import { useAuth } from "@/context/AuthContext";
@@ -15,16 +15,14 @@ type RegisterSubmitProps = {
   email: string;
   password: string;
   passwordConfirm: string;
-  checked: String[];
 };
 
 export default function RegisterForm({ setForm }: RegisterFormProps) {
   const router = useRouter();
   const { authRegister } = useAuth();
-  const [gender, setGender] = useState<string>("");
 
   const handleSubmit = async (values: RegisterSubmitProps) => {
-    authRegister(values.email, values.password, gender);
+    authRegister(values.email, values.password);
     router.push("/");
   };
 
@@ -34,7 +32,7 @@ export default function RegisterForm({ setForm }: RegisterFormProps) {
         email: "",
         password: "",
         passwordConfirm: "",
-        checked: [],
+        termsAndConditions: null,
       }}
       validationSchema={registerSchema}
       onSubmit={handleSubmit}
@@ -62,6 +60,12 @@ export default function RegisterForm({ setForm }: RegisterFormProps) {
                   className="w-full p-2 focus:outline-none"
                 />
               </div>
+              <ErrorMessage
+                component="span"
+                className="text-red-600"
+                id="email"
+                name="email"
+              />
             </div>
             <div className="flex flex-col gap-1">
               <label htmlFor="password" className="select-none">
@@ -79,6 +83,12 @@ export default function RegisterForm({ setForm }: RegisterFormProps) {
                   className="w-full p-2 focus:outline-none"
                 />
               </div>
+              <ErrorMessage
+                component="span"
+                className="text-red-600"
+                id="password"
+                name="password"
+              />
             </div>
             <div className="flex flex-col gap-1">
               <label htmlFor="passwordConfirm" className="select-none">
@@ -96,59 +106,23 @@ export default function RegisterForm({ setForm }: RegisterFormProps) {
                   className="w-full p-2 focus:outline-none"
                 />
               </div>
-            </div>
-            <div className="flex flex-col gap-1">
-              <label>Gender (optional)</label>
-              <div className="flex justify-between gap-5">
-                <div
-                  onClick={() => setGender("female")}
-                  className={
-                    "flex flex-1 justify-center items-center bg-gray-100 border h-10 cursor-pointer font-semibold text-sm" +
-                    (gender === "female"
-                      ? " border-black"
-                      : "  hover:border-gray-300")
-                  }
-                >
-                  <span className="select-none">Female</span>
-                </div>
-                <div
-                  onClick={() => setGender("male")}
-                  className={
-                    "flex flex-1 justify-center items-center bg-gray-100 border h-10 cursor-pointer font-semibold text-sm" +
-                    (gender === "male"
-                      ? " border-black"
-                      : "  hover:border-gray-300")
-                  }
-                >
-                  <span className="select-none">Male</span>
-                </div>
-              </div>
+              <ErrorMessage
+                component="span"
+                className="text-red-600"
+                id="passwordConfirm"
+                name="passwordConfirm"
+              />
             </div>
             <div className="flex flex-col gap-2 my-2">
               <div className="flex items-center">
                 <Field
-                  id="notifyMe"
                   type="checkbox"
-                  name="checked"
-                  value="notifyMe"
-                />
-                <label
-                  htmlFor="notifyMe"
-                  className="ml-1 text-sm font-medium text-gray-900 select-none"
-                >
-                  I want to receive the newsletter
-                </label>
-              </div>
-              <div className="flex items-center">
-                <Field
-                  id="terms"
-                  type="checkbox"
-                  name="checked"
-                  value="terms"
+                  id="termsAndConditions"
+                  name="termsAndConditions"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                 />
                 <label
-                  htmlFor="terms"
+                  htmlFor="termsAndConditions"
                   className="ml-1 text-sm font-medium text-gray-900 select-none"
                 >
                   I agree with terms and conditions

@@ -106,8 +106,13 @@ export function AuthProvider({ children }: AuthContextProvider) {
         setCookies({ type: "SET", tag: "token", data: token });
         setUser(user);
         setAuthenticated(true);
+        toast.success("You have successfully registered.");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response.data === "already-exist") {
+          toast.error("E-mail already in use.");
+        }
+      });
   }
 
   async function authLogin(email: string, password: string) {
@@ -131,8 +136,13 @@ export function AuthProvider({ children }: AuthContextProvider) {
         setCookies({ type: "SET", tag: "token", data: token });
         setUser(user);
         setAuthenticated(true);
+        toast.success("Successfully logged in.");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response.data === "wrong-email-or-password") {
+          toast.error("Wrong e-mail or password.");
+        }
+      });
   }
 
   function authLogout() {
@@ -142,6 +152,7 @@ export function AuthProvider({ children }: AuthContextProvider) {
     axios.defaults.headers.common["Authorization"] = "";
 
     route.push("/");
+    toast.success("Successfully logged out.");
   }
 
   async function updatePassword(currentPassword: string, newPassword: string) {
