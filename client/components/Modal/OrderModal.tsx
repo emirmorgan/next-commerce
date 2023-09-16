@@ -36,7 +36,7 @@ export default function OrderModal() {
   }[currentOrder.orderStatus];
 
   return (
-    <div className="w-[600px] max-h-[600px] overflow-hidden p-3 my-2">
+    <div className="max-w-[600px] max-h-[600px] overflow-hidden p-5 md:w-[600px] sm:w-[450px]">
       <div className="flex justify-between items-center whitespace-nowrap">
         <h1 className="mr-auto text-xl font-bold text-gray-800">
           Order ID: {currentOrder?.orderID}
@@ -53,7 +53,7 @@ export default function OrderModal() {
           </div>
         </div>
       </div>
-      <div className="flex justify-between mt-3">
+      <div className="flex flex-col justify-between mt-3 md:flex-row">
         <div className="flex justify-start items-center font-semibold gap-2">
           <div className="w-[8px] h-[8px] bg-green-600 rounded-full animate-ping" />
           <span className="text-green-600">{orderStatus}</span>
@@ -66,7 +66,7 @@ export default function OrderModal() {
         </span>
       </div>
       <div className="w-full h-[1px] bg-slate-200 mt-3" />
-      <ul className="flex flex-col my-3 gap-3 max-h-[300px] overflow-auto scrollbar-cart">
+      <ul className="flex flex-col my-3 gap-3 max-h-[200px] overflow-auto scrollbar-cart">
         {currentOrder.orderItems.map((orderItem, index) => (
           <li key={index} className="flex">
             <div className="relative w-24 h-24 border overflow-hidden mr-5">

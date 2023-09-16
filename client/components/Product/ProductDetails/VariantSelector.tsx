@@ -43,7 +43,7 @@ export default function VariantSelector({
 
   return (
     <>
-      <div className="flex gap-2 mb-3">
+      <div className="flex flex-wrap gap-2 mb-3">
         {!variant?.color &&
           product?.variants?.map((item, index) => (
             <div

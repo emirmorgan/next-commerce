@@ -43,7 +43,7 @@ export default function Modal({ type }: { type: string }) {
         (isVisible ? " flex justify-center items-center" : " hidden")
       }
     >
-      <div ref={elRef} className="border-2 bg-white rounded-lg p-3">
+      <div ref={elRef} className="border-2 bg-white rounded-lg">
         {modalType}
       </div>
     </div>

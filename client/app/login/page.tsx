@@ -26,7 +26,7 @@ export default function LoginPage() {
   }[currentForm];
 
   return (
-    <div className="flex flex-col items-center w-[400px] mx-auto">
+    <div className="flex flex-col items-center max-w-[400px] mx-auto">
       <div className="flex flex-col items-center my-3 gap-1">
         <h1 className="font-bold text-2xl">Welcome!</h1>
         <p>Enjoy shopping with best prices.</p>
