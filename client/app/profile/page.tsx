@@ -13,7 +13,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useModal } from "@/context/ModalContext";
 import { useOrder } from "@/context/OrderContext";
 
-export default function Profile() {
+export default function ProfilePage() {
   const { fetchOrders } = useOrder();
   const { user, authLogout } = useAuth();
   const { openModal } = useModal();

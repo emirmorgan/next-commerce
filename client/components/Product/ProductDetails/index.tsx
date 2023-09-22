@@ -60,30 +60,30 @@ export default function ProductDetails() {
   return (
     <>
       <div className="flex gap-2 mb-2 text-gray-600 select-none">
-        <Link href="/" className="group">
+        <Link href="/">
           <span className="hover:text-gray-900 hover:underline">Homepage</span>
         </Link>
         <span>/</span>
-        <Link href="" className="group">
+        <Link href="/">
           <span className="hover:text-gray-900 hover:underline">
             {product?.brand}
           </span>
         </Link>
         <span>/</span>
-        <Link href="" className="group">
+        <Link href="/">
           <span className="hover:text-gray-900 hover:underline">
             {product?.category}
           </span>
         </Link>
       </div>
       <div className="flex flex-col lg:flex-row gap-2">
-        <div className="flex-[2] border rounded-md">
+        <div className="flex-[2] border">
           <Gallery
             variant={variant as ProductVariant}
             product={product as Product}
           />
         </div>
-        <div className="flex flex-[1] flex-col border rounded-md">
+        <div className="flex flex-[1] flex-col border">
           <div className="p-4 select-none">
             <h1 className="text-[32px] font-extrabold">{product?.name}</h1>
             <div className="flex items-center justify-start text-xl text-gray-700 font-semibold mt-1">

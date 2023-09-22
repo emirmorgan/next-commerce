@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 using server.Data;
 using server.DTOs;
+using server.Models;
 
 namespace server.Controllers;
 
@@ -135,6 +136,37 @@ public class UserController : BaseController
         );
 
         return Ok(orderDTOs);
+    }
+
+    [HttpGet("favorites")] // api/user/favorites
+    public async Task<ActionResult<Favorite>> GetFavorites([FromHeader] string authorization)
+    {
+        if (authorization == null)
+            return NotFound();
+
+        var tokenString = authorization.Substring(7); // trim 'Bearer '
+        var token = new JwtSecurityToken(jwtEncodedString: tokenString);
+
+        var userEmailClaim = token.Claims.FirstOrDefault(c => c.Type == "email");
+        if (userEmailClaim == null)
+        {
+            return NotFound();
+        }
+
+        var userEmail = userEmailClaim.Value;
+
+        var user = await _context.Users.Where(u => u.Email == userEmail).FirstOrDefaultAsync();
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var favoriteProducts = await _context.Products
+            .Where(p => p.Favorites.Any(f => f.UserId == user.Id))
+            .ToListAsync();
+
+        return Ok(favoriteProducts);
     }
 
     [HttpPost("password/update")] // POST: api/auth/password/update
