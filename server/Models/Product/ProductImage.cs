@@ -8,7 +8,4 @@ public class ProductImage
 
     public Product? Product { get; set; }
     public int? ProductId { get; set; }
-
-    public ProductVariant? ProductVariant { get; set; }
-    public int? ProductVariantId { get; set; }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.Data;
 
@@ -10,9 +11,11 @@ using server.Data;
 namespace server.Migrations
 {
     [DbContext(typeof(CommerceContext))]
-    partial class CommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20230922213641_QuantityUpdate")]
+    partial class QuantityUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.10");
@@ -140,6 +143,9 @@ namespace server.Migrations
                     b.Property<int?>("ProductId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("ProductVariantId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("alt")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -151,6 +157,8 @@ namespace server.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductVariantId");
 
                     b.ToTable("ProductImages");
                 });
@@ -251,9 +259,6 @@ namespace server.Migrations
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Color")
-                        .HasColumnType("TEXT");
 
                     b.Property<decimal>("CurrentPrice")
                         .HasColumnType("TEXT");
@@ -399,7 +404,13 @@ namespace server.Migrations
                         .WithMany("Images")
                         .HasForeignKey("ProductId");
 
+                    b.HasOne("ProductVariant", "ProductVariant")
+                        .WithMany("Images")
+                        .HasForeignKey("ProductVariantId");
+
                     b.Navigation("Product");
+
+                    b.Navigation("ProductVariant");
                 });
 
             modelBuilder.Entity("ProductVariant", b =>
@@ -465,6 +476,11 @@ namespace server.Migrations
             modelBuilder.Entity("Order", b =>
                 {
                     b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("ProductVariant", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("server.Models.Category", b =>

@@ -10,7 +10,8 @@ public class Product
     public string Name { get; set; }
     public string Slug { get; set; }
     public string Desc { get; set; }
-    public int Quantity { get; set; }
+    public string? Color { get; set; }
+    public int TotalQuantity { get; set; } // sum of variants quantity
 
     public decimal CurrentPrice { get; set; }
     public decimal? DiscountPrice { get; set; }

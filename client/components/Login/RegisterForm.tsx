@@ -22,8 +22,12 @@ export default function RegisterForm({ setForm }: RegisterFormProps) {
   const { authRegister } = useAuth();
 
   const handleSubmit = async (values: RegisterSubmitProps) => {
-    authRegister(values.email, values.password);
-    router.push("/");
+    try {
+      await authRegister(values.email, values.password);
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -32,7 +36,7 @@ export default function RegisterForm({ setForm }: RegisterFormProps) {
         email: "",
         password: "",
         passwordConfirm: "",
-        termsAndConditions: null,
+        termsAndConditions: false,
       }}
       validationSchema={registerSchema}
       onSubmit={handleSubmit}

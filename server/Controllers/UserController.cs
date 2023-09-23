@@ -139,7 +139,7 @@ public class UserController : BaseController
     }
 
     [HttpGet("favorites")] // api/user/favorites
-    public async Task<ActionResult<Favorite>> GetFavorites([FromHeader] string authorization)
+    public async Task<ActionResult<FavoriteDTO>> GetFavorites([FromHeader] string authorization)
     {
         if (authorization == null)
             return NotFound();
@@ -166,10 +166,30 @@ public class UserController : BaseController
             .Where(p => p.Favorites.Any(f => f.UserId == user.Id))
             .ToListAsync();
 
-        return Ok(favoriteProducts);
+        var favoriteDTOs = await Task.WhenAll(
+            favoriteProducts.Select(async product =>
+            {
+                var image = await _context.ProductImages
+                    .Where(i => i.ProductId == product.Id)
+                    .FirstOrDefaultAsync();
+
+                return new FavoriteDTO
+                {
+                    Brand = product.Brand,
+                    Name = product.Name,
+                    Src = image.src ?? "/assets/products/default.webp",
+                    Alt = image.alt,
+                    Price = product.CurrentPrice,
+                    DiscountPrice = product.DiscountPrice,
+                    Slug = product.Slug
+                };
+            })
+        );
+
+        return Ok(favoriteDTOs);
     }
 
-    [HttpPost("password/update")] // POST: api/auth/password/update
+    [HttpPost("password/update")] // POST: api/user/password/update
     public async Task<ActionResult<UpdatePasswordDTO>> UpdatePassword(
         UpdatePasswordDTO request,
         [FromHeader(Name = "Authorization")] string authorization
