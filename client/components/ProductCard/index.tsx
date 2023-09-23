@@ -5,9 +5,18 @@ import { useRouter } from "next/navigation";
 
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
-import { Product } from "@/lib/types";
+export type ProductCardProps = {
+  brand: string;
+  name: string;
+  slug: string;
+  src: string;
+  alt: string;
+  price: number;
+  discountPrice: number;
+  children?: React.ReactNode;
+};
 
-export default function ProductCard(props: Product) {
+export default function ProductCard(props: ProductCardProps) {
   const router = useRouter();
 
   const handleFavorite = (e: any) => {
@@ -49,19 +58,17 @@ export default function ProductCard(props: Product) {
           <span className="ml-2">{props.name}</span>
         </div>
         <div className="flex flex-col mt-6">
-          {props.price.discount ? (
+          {props.discountPrice ? (
             <>
               <span className="font-bold text-sm text-gray-500 line-through">
-                {props.price.current} USD
+                {props.price} USD
               </span>
               <span className="font-bold text-green-700">
-                {props.price.discount} USD
+                {props.discountPrice} USD
               </span>
             </>
           ) : (
-            <span className="font-bold text-green-700">
-              {props.price.current} USD
-            </span>
+            <span className="font-bold text-green-700">{props.price} USD</span>
           )}
         </div>
       </div>

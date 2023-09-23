@@ -107,7 +107,10 @@ export default function Navbar() {
                   <b className="text-xs">Log in</b>
                 </div>
               )}
-              <div className="w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600">
+              <div
+                onClick={() => router.push("/favorites")}
+                className="w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600"
+              >
                 <AiOutlineHeart size={24} />
                 <b className="text-xs">Favorites</b>
               </div>

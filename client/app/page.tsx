@@ -41,20 +41,13 @@ export default function Home() {
             {products.map((product) => (
               <ProductCard
                 key={crypto.randomUUID()}
-                id={product.id}
                 brand={product.brand}
                 name={product.name}
-                gender={product.gender}
-                category={product.category}
-                desc={product.desc}
                 src={product.src}
+                alt="Product Image"
                 slug={product.slug}
-                price={{
-                  current: product.price.current,
-                  discount: product.price.discount,
-                }}
-                tags={product.tags}
-                quantity={product.quantity}
+                price={product.price}
+                discountPrice={product.discountPrice}
               />
             ))}
           </div>

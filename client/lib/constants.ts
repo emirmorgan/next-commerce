@@ -47,10 +47,8 @@ export const products: Product[] = [
     category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/nike/air-jordan/v1-1.webp",
-    price: {
-      current: 89.99,
-      discount: 69.99,
-    },
+    price: 19.99,
+    discountPrice: 19.99,
     variants: [
       {
         images: [
@@ -249,10 +247,8 @@ export const products: Product[] = [
     category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/nike/air-force/v1-1.webp",
-    price: {
-      current: 89.99,
-      discount: 69.99,
-    },
+    price: 19.99,
+    discountPrice: 19.99,
     variants: [
       {
         images: [
@@ -405,10 +401,8 @@ export const products: Product[] = [
     category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/nike/air-max/v1-1.webp",
-    price: {
-      current: 89.99,
-      discount: 69.99,
-    },
+    price: 19.99,
+    discountPrice: 19.99,
     variants: [
       {
         images: [
@@ -561,10 +555,8 @@ export const products: Product[] = [
     category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/nike/blazer/v1-1.webp",
-    price: {
-      current: 89.99,
-      discount: 69.99,
-    },
+    price: 19.99,
+    discountPrice: 19.99,
     variants: [
       {
         images: [
@@ -671,10 +663,8 @@ export const products: Product[] = [
     category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/nike/dunk/v1-1.webp",
-    price: {
-      current: 89.99,
-      discount: 69.99,
-    },
+    price: 19.99,
+    discountPrice: 19.99,
     variants: [
       {
         images: [
@@ -781,10 +771,8 @@ export const products: Product[] = [
     category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/nike/mercurial/v1-1.webp",
-    price: {
-      current: 89.99,
-      discount: 69.99,
-    },
+    price: 19.99,
+    discountPrice: 19.99,
     variants: [
       {
         images: [
@@ -891,10 +879,8 @@ export const products: Product[] = [
     category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/nike/pegasus/v1-1.webp",
-    price: {
-      current: 89.99,
-      discount: 69.99,
-    },
+    price: 19.99,
+    discountPrice: 19.99,
     variants: [
       {
         images: [
@@ -1001,10 +987,8 @@ export const products: Product[] = [
     category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/adidas/superstar/v1-1.webp",
-    price: {
-      current: 89.99,
-      discount: 69.99,
-    },
+    price: 19.99,
+    discountPrice: 19.99,
     variants: [
       {
         images: [
@@ -1111,10 +1095,8 @@ export const products: Product[] = [
     category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/adidas/everyset/v1-1.webp",
-    price: {
-      current: 89.99,
-      discount: 69.99,
-    },
+    price: 19.99,
+    discountPrice: 19.99,
     variants: [
       {
         images: [
@@ -1221,10 +1203,8 @@ export const products: Product[] = [
     category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/adidas/galaxy5/v1-1.webp",
-    price: {
-      current: 89.99,
-      discount: 69.99,
-    },
+    price: 19.99,
+    discountPrice: 19.99,
     variants: [
       {
         images: [
@@ -1331,10 +1311,8 @@ export const products: Product[] = [
     category: "Shoes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/adidas/run60s/v1-1.webp",
-    price: {
-      current: 89.99,
-      discount: 69.99,
-    },
+    price: 19.99,
+    discountPrice: 19.99,
     variants: [
       {
         images: [
@@ -1395,10 +1373,8 @@ export const products: Product[] = [
     category: "Caps",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/adidas/baseball-cap/v1-1.webp",
-    price: {
-      current: 12.99,
-      discount: 9.99,
-    },
+    price: 19.99,
+    discountPrice: 19.99,
     variants: [
       {
         images: [
@@ -1457,10 +1433,8 @@ export const products: Product[] = [
     category: "Shirts",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/lacoste/polo/v1-1.webp",
-    price: {
-      current: 49.99,
-      discount: 44.99,
-    },
+    price: 19.99,
+    discountPrice: 19.99,
     variants: [
       {
         color: "White",
@@ -1565,10 +1539,8 @@ export const products: Product[] = [
     category: "Shirts",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/lacoste/shirt/v1-1.webp",
-    price: {
-      current: 49.99,
-      discount: 44.99,
-    },
+    price: 19.99,
+    discountPrice: 19.99,
     variants: [
       {
         color: "White",
@@ -1704,10 +1676,8 @@ export const products: Product[] = [
     category: "Backpacks",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/the-north-face/jester-backpack/v1-1.webp",
-    price: {
-      current: 59.99,
-      discount: 54.99,
-    },
+    price: 19.99,
+    discountPrice: 19.99,
     variants: [
       {
         images: [
@@ -1844,10 +1814,8 @@ export const products: Product[] = [
     category: "Shirts",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dui nulla, auctor et libero non, aliquet fringilla nisi. In egestas elit eget risus consectetur fermentum.",
     src: "/assets/products/the-north-face/easy-tshirt/v1-1.webp",
-    price: {
-      current: 59.99,
-      discount: 54.99,
-    },
+    price: 19.99,
+    discountPrice: 19.99,
     variants: [
       {
         images: [

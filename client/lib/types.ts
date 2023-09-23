@@ -22,10 +22,8 @@ export type Product = {
   src: string;
   slug: string;
   category: string;
-  price: {
-    current: number;
-    discount?: number;
-  };
+  price: number;
+  discountPrice: number;
   variants?: ProductVariant[];
   gender?: string;
   tags: String[];
@@ -99,4 +97,14 @@ type OrderItem = {
   size?: string;
   price: string;
   quantity: number;
+};
+
+export type Favorite = {
+  brand: string;
+  name: string;
+  slug: string;
+  src: string;
+  alt: string;
+  price: number;
+  discountPrice: number;
 };
