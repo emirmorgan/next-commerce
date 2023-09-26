@@ -138,57 +138,6 @@ public class UserController : BaseController
         return Ok(orderDTOs);
     }
 
-    [HttpGet("favorites")] // api/user/favorites
-    public async Task<ActionResult<FavoriteDTO>> GetFavorites([FromHeader] string authorization)
-    {
-        if (authorization == null)
-            return NotFound();
-
-        var tokenString = authorization.Substring(7); // trim 'Bearer '
-        var token = new JwtSecurityToken(jwtEncodedString: tokenString);
-
-        var userEmailClaim = token.Claims.FirstOrDefault(c => c.Type == "email");
-        if (userEmailClaim == null)
-        {
-            return NotFound();
-        }
-
-        var userEmail = userEmailClaim.Value;
-
-        var user = await _context.Users.Where(u => u.Email == userEmail).FirstOrDefaultAsync();
-
-        if (user == null)
-        {
-            return NotFound();
-        }
-
-        var favoriteProducts = await _context.Products
-            .Where(p => p.Favorites.Any(f => f.UserId == user.Id))
-            .ToListAsync();
-
-        var favoriteDTOs = await Task.WhenAll(
-            favoriteProducts.Select(async product =>
-            {
-                var image = await _context.ProductImages
-                    .Where(i => i.ProductId == product.Id)
-                    .FirstOrDefaultAsync();
-
-                return new FavoriteDTO
-                {
-                    Brand = product.Brand,
-                    Name = product.Name,
-                    Src = image.src ?? "/assets/products/default.webp",
-                    Alt = image.alt,
-                    Price = product.CurrentPrice,
-                    DiscountPrice = product.DiscountPrice,
-                    Slug = product.Slug
-                };
-            })
-        );
-
-        return Ok(favoriteDTOs);
-    }
-
     [HttpPost("password/update")] // POST: api/user/password/update
     public async Task<ActionResult<UpdatePasswordDTO>> UpdatePassword(
         UpdatePasswordDTO request,

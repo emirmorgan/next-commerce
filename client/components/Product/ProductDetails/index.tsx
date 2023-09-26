@@ -87,10 +87,7 @@ export default function ProductDetails() {
           <div className="p-4 select-none">
             <h1 className="text-[32px] font-extrabold">{product?.name}</h1>
             <div className="flex items-center justify-start text-xl text-gray-700 font-semibold mt-1">
-              {product?.price.discount
-                ? product?.price.discount
-                : product?.price.current}{" "}
-              USD
+              {product?.price ? product?.discountPrice : product?.price} USD
             </div>
           </div>
           <div className="w-full h-[1px] rounded-full bg-neutral-200" />

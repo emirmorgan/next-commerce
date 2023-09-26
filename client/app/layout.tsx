@@ -4,11 +4,12 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 
+//Contexts
 import { ShoppingCartProvider } from "@/context/ShoppingCartContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ModalProvider } from "@/context/ModalContext";
 import { OrderProvider } from "@/context/OrderContext";
-import { FavoritesProvider } from "@/context/FavoritesContext";
+import { ProductsProvider } from "@/context/ProductsContext";
 
 const montserrat = Montserrat({
   weight: ["400", "600", "700"],
@@ -32,13 +33,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={montserrat.className}>
         <AuthProvider>
-          <FavoritesProvider>
+          <ProductsProvider>
             <OrderProvider>
               <ShoppingCartProvider>
                 <ModalProvider>{children}</ModalProvider>
               </ShoppingCartProvider>
             </OrderProvider>
-          </FavoritesProvider>
+          </ProductsProvider>
         </AuthProvider>
       </body>
     </html>

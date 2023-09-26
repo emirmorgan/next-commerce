@@ -13,6 +13,7 @@ export type ProductCardProps = {
   alt: string;
   price: number;
   discountPrice: number;
+  isFavorite: boolean;
   children?: React.ReactNode;
 };
 
@@ -37,7 +38,7 @@ export default function ProductCard(props: ProductCardProps) {
           className="border bg-white hover:bg-gray-100 shadow rounded-full p-2"
           onClick={handleFavorite}
         >
-          {false ? <AiFillHeart color="red" /> : <AiOutlineHeart />}
+          {props.isFavorite ? <AiFillHeart color="red" /> : <AiOutlineHeart />}
         </div>
       </div>
       <div className="relative z-[-1] w-full flex overflow-hidden pointer-events-none">

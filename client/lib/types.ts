@@ -99,7 +99,7 @@ type OrderItem = {
   quantity: number;
 };
 
-export type Favorite = {
+export type ProductCardType = {
   brand: string;
   name: string;
   slug: string;
@@ -107,4 +107,5 @@ export type Favorite = {
   alt: string;
   price: number;
   discountPrice: number;
+  isFavorite: boolean;
 };

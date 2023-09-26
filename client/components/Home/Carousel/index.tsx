@@ -23,7 +23,7 @@ export default function Carousel(userProps: CarouselProps) {
   const carousel = useRef<Slider>(null);
 
   return (
-    <div className="relative w-full h-full">
+    <article className="w-full px-5 my-3 mb-[36px]">
       <Slider
         ref={carousel}
         arrows={props.arrows}
@@ -51,6 +51,6 @@ export default function Carousel(userProps: CarouselProps) {
           </Link>
         ))}
       </Slider>
-    </div>
+    </article>
   );
 }
