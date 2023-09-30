@@ -5,6 +5,9 @@ namespace server.DTOs
     public class ProductDTO
     {
         [Required]
+        public int Id { get; set; }
+
+        [Required]
         public string Brand { get; set; }
 
         [Required]

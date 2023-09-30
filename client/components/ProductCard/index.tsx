@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 export type ProductCardProps = {
+  id: number;
   brand: string;
   name: string;
   slug: string;
@@ -25,7 +26,7 @@ export default function ProductCard(props: ProductCardProps) {
   };
 
   const handleNavigate = () => {
-    router.push(`/product/${props.slug}`);
+    router.push(`/product/${props.id}/`);
   };
 
   return (

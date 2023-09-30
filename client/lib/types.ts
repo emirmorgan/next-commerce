@@ -3,15 +3,21 @@ type ProductVariantOption = {
   quantity: number;
 };
 
-type ProductVariantImages = {
+export type ProductImages = {
   src: string;
   alt: string;
 };
 
 export type ProductVariant = {
-  color?: string;
-  options: ProductVariantOption[];
-  images: ProductVariantImages[];
+  name: string;
+  value: string;
+  quantity: number;
+};
+
+export type ProductSimilar = {
+  id: number;
+  src: string;
+  alt: string;
 };
 
 export type Product = {
@@ -19,15 +25,15 @@ export type Product = {
   brand: string;
   name: string;
   desc?: string;
-  src: string;
+  color?: string;
   slug: string;
   category: string;
+  subcategory: string;
   price: number;
   discountPrice: number;
   variants?: ProductVariant[];
-  gender?: string;
-  tags: String[];
-  quantity: number;
+  images?: ProductImages[];
+  similarProducts?: ProductSimilar[];
 };
 
 export type Cart = {
@@ -100,6 +106,7 @@ type OrderItem = {
 };
 
 export type ProductCardType = {
+  id: number;
   brand: string;
   name: string;
   slug: string;

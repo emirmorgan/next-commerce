@@ -15,6 +15,7 @@ export default function Products() {
         <div className="grid justify-start grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 place-items-center gap-3 flex-wrap">
           {products.map((product) => (
             <ProductCard
+              id={product.id}
               key={crypto.randomUUID()}
               brand={product.brand}
               name={product.name}

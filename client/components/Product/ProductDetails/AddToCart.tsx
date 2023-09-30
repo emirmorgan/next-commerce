@@ -6,30 +6,43 @@ import { CartItem, Product, ProductVariant } from "@/lib/types";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
 
 type AddToCartProps = {
-  product: Product;
-  variant: ProductVariant;
-  option: string;
+  size: string;
   color: string;
+  product: Product;
 };
 
-export default function AddToCart({
-  product,
-  variant,
-  option,
-  color,
-}: AddToCartProps) {
+export default function AddToCart({ size, color, product }: AddToCartProps) {
   const [isValid, setIsValid] = useState<boolean>(false);
   const { addToCart, cartItems } = useShoppingCart();
 
-  //Validation control
   useEffect(() => {
-    if (variant === null) return setIsValid(false);
-    if (!variant?.options) return setIsValid(true);
-    if (variant?.options && option === null) return setIsValid(false);
-    if (variant.color && color == null) return setIsValid(false);
+    if (product?.variants && size == null) return setIsValid(false);
+    if (!product?.variants) return setIsValid(true);
+
+    //Check size validation
+    if (
+      size &&
+      !product?.variants.some(
+        (variant) => variant.name == "Size" && variant.value == size
+      )
+    ) {
+      return setIsValid(false);
+    }
+
+    //Check color validation
+    if (
+      color &&
+      !product?.variants.some(
+        (variant) => variant.name == "Color" && variant.value == color
+      )
+    ) {
+      return setIsValid(false);
+    }
 
     setIsValid(true);
-  }, [variant, option, color]);
+
+    // eslint-disable-next-line
+  }, [size, color]);
 
   const handleAddToCart = () => {
     if (isValid) {
@@ -38,10 +51,9 @@ export default function AddToCart({
         productId: product.id,
         brand: product.brand,
         name: product.name,
-        src: variant ? variant.images[0].src : product.src,
+        src: product.images ? product.images[0].src : "/assets/logo.png",
         price: product.price,
-        color: color,
-        size: option,
+        size: size,
       } as CartItem;
 
       addToCart(cartItem);
