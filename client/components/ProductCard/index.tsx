@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
+import { useAuth } from "@/context/AuthContext";
+import { useProducts } from "@/context/ProductsContext";
+
 export type ProductCardProps = {
   id: number;
   brand: string;
@@ -20,9 +23,23 @@ export type ProductCardProps = {
 
 export default function ProductCard(props: ProductCardProps) {
   const router = useRouter();
+  const { authenticated } = useAuth();
+  const { fetchProducts, updateFavorites } = useProducts();
 
-  const handleFavorite = (e: any) => {
+  const handleFavorite = (e: any, isFavorite: boolean, productId: number) => {
     e.stopPropagation();
+
+    if (authenticated) {
+      if (isFavorite) {
+        updateFavorites("delete", productId);
+        fetchProducts();
+      } else {
+        updateFavorites("add", productId);
+        fetchProducts();
+      }
+    } else {
+      router.push("/login");
+    }
   };
 
   const handleNavigate = () => {
@@ -36,10 +53,15 @@ export default function ProductCard(props: ProductCardProps) {
     >
       <div className="absolute top-2 right-2 z-[2]">
         <div
-          className="border bg-white hover:bg-gray-100 shadow rounded-full p-2"
-          onClick={handleFavorite}
+          className={
+            "border border-gray-300 p-2" +
+            (props.isFavorite
+              ? " text-red-600 border-red-600 hover:border-red-400 hover:text-red-400"
+              : " hover:text-red-500 hover:border-red-500")
+          }
+          onClick={(e) => handleFavorite(e, props.isFavorite, props.id)}
         >
-          {props.isFavorite ? <AiFillHeart color="red" /> : <AiOutlineHeart />}
+          {props.isFavorite ? <AiFillHeart /> : <AiOutlineHeart />}
         </div>
       </div>
       <div className="relative z-[-1] w-full flex overflow-hidden pointer-events-none">

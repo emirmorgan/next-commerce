@@ -1,5 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 using server.Data;
 using server.DTOs;
-using server.Models;
 
 namespace server.Controllers;
 
@@ -22,32 +20,18 @@ public class UserController : BaseController
     }
 
     [HttpGet] // api/user/
-    public async Task<ActionResult<UserDTO>> GetUser([FromHeader] string authorization)
+    public async Task<ActionResult<UserDTO>> GetUser()
     {
-        if (authorization == null)
-            return NotFound();
+        var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
 
-        var tokenString = authorization.Substring(7); // trim 'Bearer '
-        var token = new JwtSecurityToken(jwtEncodedString: tokenString);
-
-        var userEmailClaim = token.Claims.FirstOrDefault(c => c.Type == "email");
-        if (userEmailClaim == null)
+        if (uid == 0)
         {
-            return NotFound();
-        }
-
-        var userEmail = userEmailClaim.Value;
-
-        var user = await _context.Users.Where(u => u.Email == userEmail).FirstOrDefaultAsync();
-
-        if (user == null)
-        {
-            return NotFound();
+            return Unauthorized();
         }
 
         var userData = await _context.Users
             .Include(u => u.Address)
-            .FirstOrDefaultAsync(u => u.Id == user.Id);
+            .FirstOrDefaultAsync(u => u.Id == uid);
 
         if (userData == null)
         {
@@ -57,7 +41,6 @@ public class UserController : BaseController
         return new UserDTO
         {
             UserID = userData.Id,
-            Token = tokenString,
             Email = userData.Email,
             Role = userData.Role,
             Address =
@@ -73,31 +56,17 @@ public class UserController : BaseController
     }
 
     [HttpGet("order")] // api/user/order
-    public async Task<ActionResult<OrderDTO>> GetUserOrders([FromHeader] string authorization)
+    public async Task<ActionResult<OrderDTO>> GetUserOrders()
     {
-        if (authorization == null)
-            return NotFound();
+        var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
 
-        var tokenString = authorization.Substring(7); // trim 'Bearer '
-        var token = new JwtSecurityToken(jwtEncodedString: tokenString);
-
-        var userEmailClaim = token.Claims.FirstOrDefault(c => c.Type == "email");
-        if (userEmailClaim == null)
+        if (uid == 0)
         {
-            return NotFound();
-        }
-
-        var userEmail = userEmailClaim.Value;
-
-        var user = await _context.Users.Where(u => u.Email == userEmail).FirstOrDefaultAsync();
-
-        if (user == null)
-        {
-            return NotFound();
+            return Unauthorized();
         }
 
         var orders = await _context.Orders
-            .Where(o => o.UserID == user.Id)
+            .Where(o => o.UserID == uid)
             .Include(i => i.OrderItems)
             .ToListAsync();
 
@@ -139,31 +108,19 @@ public class UserController : BaseController
     }
 
     [HttpPost("password/update")] // POST: api/user/password/update
-    public async Task<ActionResult<UpdatePasswordDTO>> UpdatePassword(
-        UpdatePasswordDTO request,
-        [FromHeader(Name = "Authorization")] string authorization
-    )
+    public async Task<ActionResult<UpdatePasswordDTO>> UpdatePassword(UpdatePasswordDTO request)
     {
-        if (authorization == null || request.newPassword == null || request.currentPassword == null)
+        if (request.newPassword == null || request.currentPassword == null)
             return Unauthorized("Something is not right.");
 
-        if (request.currentPassword == request.newPassword)
+        var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
+
+        if (uid == 0)
         {
-            return Unauthorized("current-password");
+            return Unauthorized();
         }
 
-        var tokenString = authorization.Substring(7); // trim 'Bearer '
-        var token = new JwtSecurityToken(jwtEncodedString: tokenString);
-
-        var userEmailClaim = token.Claims.FirstOrDefault(c => c.Type == "email");
-        if (userEmailClaim == null)
-        {
-            return NotFound();
-        }
-
-        var userEmail = userEmailClaim.Value;
-
-        var user = await _context.Users.Where(u => u.Email == userEmail).FirstOrDefaultAsync();
+        var user = await _context.Users.Where(u => u.Id == uid).FirstOrDefaultAsync();
 
         if (user == null)
         {

@@ -13,6 +13,7 @@ export default function FavoritesPage() {
         .map((product) => (
           <ProductCard
             key={crypto.randomUUID()}
+            id={product.id}
             brand={product.brand}
             name={product.name}
             src={product.src}

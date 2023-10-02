@@ -5,6 +5,7 @@ import axios from "axios";
 
 import setCookies from "@/lib/setCookies";
 import { ProductCardType } from "@/lib/types";
+import { useAuth } from "./AuthContext";
 
 export const ProductsContext = createContext({} as IProductsContext);
 
@@ -19,14 +20,16 @@ type ProductsContextProvider = {
 type IProductsContext = {
   products: ProductCardType[];
   fetchProducts: () => void;
+  updateFavorites: (type: string, productId: number) => void;
 };
 
 export function ProductsProvider({ children }: ProductsContextProvider) {
+  const { user } = useAuth();
   const [products, setProducts] = useState<ProductCardType[]>([]);
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [user]);
 
   async function fetchProducts() {
     try {
@@ -51,8 +54,34 @@ export function ProductsProvider({ children }: ProductsContextProvider) {
     } catch (error) {}
   }
 
+  async function updateFavorites(type: string, productId: number) {
+    const token = await setCookies({ type: "GET", tag: "token", data: "" });
+
+    if (type === "add") {
+      axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/favorites/add/${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } else if (type === "delete") {
+      axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/favorites/delete/${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    }
+  }
+
   return (
-    <ProductsContext.Provider value={{ products, fetchProducts }}>
+    <ProductsContext.Provider
+      value={{ products, fetchProducts, updateFavorites }}
+    >
       {children}
     </ProductsContext.Provider>
   );

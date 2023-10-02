@@ -19,7 +19,7 @@ public class TokenService : ITokenService
 
     public async Task<string> CreateToken(User user)
     {
-        var claims = new List<Claim> { new Claim(JwtRegisteredClaimNames.Email, user.Email) };
+        var claims = new List<Claim> { new Claim("userid", user.Id.ToString()), };
 
         var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 

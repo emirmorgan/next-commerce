@@ -1,4 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,30 +18,13 @@ public class AddressController : BaseController
     }
 
     [HttpPost("add")] //api/address/add
-    public async Task<ActionResult<AddressDTO>> AddAddress(
-        [FromHeader] string authorization,
-        AddressDTO addressDTO
-    )
+    public async Task<ActionResult<AddressDTO>> AddAddress(AddressDTO addressDTO)
     {
-        if (authorization == null)
-            return NotFound();
+        var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
 
-        var tokenString = authorization.Substring(7); // trim 'Bearer '
-        var token = new JwtSecurityToken(jwtEncodedString: tokenString);
-
-        var userEmailClaim = token.Claims.FirstOrDefault(c => c.Type == "email");
-        if (userEmailClaim == null)
+        if (uid == 0)
         {
-            return NotFound();
-        }
-
-        var userEmail = userEmailClaim.Value;
-
-        var user = await _context.Users.Where(u => u.Email == userEmail).FirstOrDefaultAsync();
-
-        if (user == null)
-        {
-            return NotFound();
+            return Unauthorized();
         }
 
         var address = new Address
@@ -50,7 +32,7 @@ public class AddressController : BaseController
             Title = addressDTO.Title,
             Details = addressDTO.Details,
             ContactNumber = addressDTO.ContactNumber,
-            UserId = user.Id
+            UserId = uid
         };
 
         _context.Address.Add(address);
@@ -60,35 +42,16 @@ public class AddressController : BaseController
     }
 
     [HttpPost("update")] //api/address/update
-    public async Task<ActionResult<AddressDTO>> UpdateAddress(
-        [FromHeader] string authorization,
-        AddressDTO addressDTO
-    )
+    public async Task<ActionResult<AddressDTO>> UpdateAddress(AddressDTO addressDTO)
     {
-        if (authorization == null)
-            return NotFound();
+        var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
 
-        var tokenString = authorization.Substring(7); // trim 'Bearer '
-        var token = new JwtSecurityToken(jwtEncodedString: tokenString);
-
-        var userEmailClaim = token.Claims.FirstOrDefault(c => c.Type == "email");
-        if (userEmailClaim == null)
+        if (uid == 0)
         {
-            return NotFound();
+            return Unauthorized();
         }
 
-        var userEmail = userEmailClaim.Value;
-
-        var user = await _context.Users.Where(u => u.Email == userEmail).FirstOrDefaultAsync();
-
-        if (user == null)
-        {
-            return NotFound();
-        }
-
-        var userAddress = await _context.Address
-            .Where(a => a.UserId == user.Id)
-            .FirstOrDefaultAsync();
+        var userAddress = await _context.Address.Where(a => a.UserId == uid).FirstOrDefaultAsync();
 
         if (userAddress == null)
         {
@@ -105,32 +68,16 @@ public class AddressController : BaseController
     }
 
     [HttpPost("delete")] //api/address/delete
-    public async Task<ActionResult<AddressDTO>> DeleteAddress([FromHeader] string authorization)
+    public async Task<ActionResult<AddressDTO>> DeleteAddress()
     {
-        if (authorization == null)
-            return NotFound();
+        var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
 
-        var tokenString = authorization.Substring(7); // trim 'Bearer '
-        var token = new JwtSecurityToken(jwtEncodedString: tokenString);
-
-        var userEmailClaim = token.Claims.FirstOrDefault(c => c.Type == "email");
-        if (userEmailClaim == null)
+        if (uid == 0)
         {
-            return NotFound();
+            return Unauthorized();
         }
 
-        var userEmail = userEmailClaim.Value;
-
-        var user = await _context.Users.Where(u => u.Email == userEmail).FirstOrDefaultAsync();
-
-        if (user == null)
-        {
-            return NotFound();
-        }
-
-        var userAddress = await _context.Address
-            .Where(a => a.UserId == user.Id)
-            .FirstOrDefaultAsync();
+        var userAddress = await _context.Address.Where(a => a.UserId == uid).FirstOrDefaultAsync();
 
         if (userAddress == null)
         {

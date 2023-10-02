@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-import { CartItem, Product, ProductVariant } from "@/lib/types";
+import { CartItem, Product } from "@/lib/types";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
 
 type AddToCartProps = {
@@ -40,9 +40,7 @@ export default function AddToCart({ size, color, product }: AddToCartProps) {
     }
 
     setIsValid(true);
-
-    // eslint-disable-next-line
-  }, [size, color]);
+  }, [product?.variants, size, color]);
 
   const handleAddToCart = () => {
     if (isValid) {

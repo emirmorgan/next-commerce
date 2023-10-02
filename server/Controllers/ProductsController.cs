@@ -1,4 +1,4 @@
-using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -57,28 +57,15 @@ public class ProductsController : BaseController
         return Ok(productDTOs);
     }
 
+    [Authorize]
     [HttpGet("user")] // api/products/user - Get All Products(favorite products of user is marked)
-    public async Task<ActionResult<ProductDTO>> GetUserProducts([FromHeader] string authorization)
+    public async Task<ActionResult<ProductDTO>> GetUserProducts()
     {
-        if (authorization == null)
-            return NotFound();
+        var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
 
-        var tokenString = authorization.Substring(7); // trim 'Bearer '
-        var token = new JwtSecurityToken(jwtEncodedString: tokenString);
-
-        var userEmailClaim = token.Claims.FirstOrDefault(c => c.Type == "email");
-        if (userEmailClaim == null)
+        if (uid == 0)
         {
-            return NotFound();
-        }
-
-        var userEmail = userEmailClaim.Value;
-
-        var user = await _context.Users.Where(u => u.Email == userEmail).FirstOrDefaultAsync();
-
-        if (user == null)
-        {
-            return NotFound();
+            return Unauthorized();
         }
 
         var products = await _context.Products.ToListAsync();
@@ -96,7 +83,7 @@ public class ProductsController : BaseController
                     .FirstOrDefaultAsync();
 
                 var favorite = await _context.Favorites.AnyAsync(
-                    f => f.ProductId == product.Id && f.UserId == user.Id
+                    f => f.ProductId == product.Id && f.UserId == uid
                 );
 
                 return new ProductDTO
