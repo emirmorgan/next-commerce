@@ -159,7 +159,14 @@ export default function FilterTab({
             <div className="flex flex-col">
               <span className="text-gray-600 text-sm">Color</span>
               <div className="flex items-center justify-center gap-2">
-                <div className="border w-[16px] h-[16px] rounded-full" />
+                <div
+                  className="border w-[16px] h-[16px] rounded-full"
+                  style={{
+                    backgroundColor: colors.find(
+                      (color) => color.label == currentColor
+                    )?.hex,
+                  }}
+                />
                 <span>{currentColor ? currentColor : "Any"}</span>
               </div>
             </div>
