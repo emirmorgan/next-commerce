@@ -1,8 +1,3 @@
-type ProductVariantOption = {
-  option: string;
-  quantity: number;
-};
-
 export type ProductImages = {
   src: string;
   alt: string;
@@ -18,22 +13,6 @@ export type ProductSimilar = {
   id: number;
   src: string;
   alt: string;
-};
-
-export type Product = {
-  id: number;
-  brand: string;
-  name: string;
-  desc?: string;
-  color?: string;
-  slug: string;
-  category: string;
-  subcategory: string;
-  price: number;
-  discountPrice: number;
-  variants?: ProductVariant[];
-  images?: ProductImages[];
-  similarProducts?: ProductSimilar[];
 };
 
 export type Cart = {

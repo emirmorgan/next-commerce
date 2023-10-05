@@ -54,10 +54,10 @@ export default function ProductCard(props: ProductCardProps) {
       <div className="absolute top-2 right-2 z-[2]">
         <div
           className={
-            "border border-gray-300 p-2" +
+            "border border-gray-300 p-2 transition-all ease-linear " +
             (props.isFavorite
               ? " text-red-600 border-red-600 hover:border-red-400 hover:text-red-400"
-              : " hover:text-red-500 hover:border-red-500")
+              : " hover:text-black hover:bg-black/5 hover:border-black")
           }
           onClick={(e) => handleFavorite(e, props.isFavorite, props.id)}
         >

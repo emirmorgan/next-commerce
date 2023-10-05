@@ -8,6 +8,10 @@ body {
   scroll-behavior: smooth !important;
 }
 
+input:focus {
+  outline: none;
+}
+
 input[type="checkbox"] {
   appearance: none;
 

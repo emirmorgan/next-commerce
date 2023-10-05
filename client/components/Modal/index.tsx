@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, MutableRefObject, useState } from "react";
+import { useRef, useEffect, MutableRefObject } from "react";
 
 import { useModal } from "@/context/ModalContext";
 

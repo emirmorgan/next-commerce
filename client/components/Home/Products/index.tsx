@@ -29,8 +29,8 @@ export default function Products() {
           ))}
         </div>
         <div className="my-5 flex items-center justify-center">
-          <Link href="./">
-            <div className="flex justify-center items-center text-lg font-bold p-5 h-8 border-2 border-gray-200 text-green-600 gap-2 rounded-lg hover:bg-gray-100 hover:border-gray-300 transition-all ease-linear">
+          <Link href="./products">
+            <div className="flex justify-center items-center text-gray-800 text-lg font-bold p-5 h-8 gap-2 border border-gray-300 hover:bg-gray-100 hover:border-black transition-all ease-linear">
               <span>Explore All</span>
               <AiOutlineArrowRight />
             </div>
