@@ -1,6 +1,6 @@
 import { AiFillCaretDown } from "react-icons/ai";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState, FormEvent } from "react";
 
 import { categories, colors, subcategories } from "@/lib/constants";
@@ -20,6 +20,7 @@ export default function FilterTab({
 }: FilterTabProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const params = useSearchParams();
 
   const [toggleCategory, setToggleCategory] = useState(false);
   const [toggleSubcategory, setToggleSubcategory] = useState(false);
@@ -32,14 +33,19 @@ export default function FilterTab({
     const from = data.get("priceFrom") as string;
     const to = data.get("priceTo") as string;
 
-    if (from !== "" && to !== "") {
-      const newQueryString =
-        createQueryString("priceFrom", from) +
-        "&" +
-        createQueryString("priceTo", to);
+    const queryParams = new URLSearchParams(params);
 
-      router.push(pathname + "?" + newQueryString);
+    if (from !== "") {
+      queryParams.set("priceFrom", from);
     }
+
+    if (to !== "") {
+      queryParams.set("priceTo", to);
+    }
+
+    const queryString = queryParams.toString();
+
+    router.push(pathname + (queryString ? `?${queryString}` : ""));
   };
 
   return (
