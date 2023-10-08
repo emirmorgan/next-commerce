@@ -23,7 +23,7 @@ export default function AddToCart({ size, color, product }: AddToCartProps) {
     if (
       size &&
       !product?.variants.some(
-        (variant) => variant.name == "Size" && variant.value == size
+        (variant: any) => variant.name == "Size" && variant.value == size
       )
     ) {
       return setIsValid(false);
@@ -33,7 +33,7 @@ export default function AddToCart({ size, color, product }: AddToCartProps) {
     if (
       color &&
       !product?.variants.some(
-        (variant) => variant.name == "Color" && variant.value == color
+        (variant: any) => variant.name == "Color" && variant.value == color
       )
     ) {
       return setIsValid(false);

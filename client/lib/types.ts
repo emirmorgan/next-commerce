@@ -1,3 +1,37 @@
+export type Product = {
+  id: number;
+  brand: string;
+  name: string;
+  slug: string;
+  src: string;
+  alt: string;
+  price: number;
+  date: string;
+  color?: string;
+  desc?: string;
+  category: string;
+  subcategory: string;
+  images: ProductImages[];
+  similarProducts: ProductSimilar[];
+  variants: ProductVariant[];
+  discountPrice: number;
+  isFavorite: boolean;
+};
+
+export type ProductCardType = {
+  id: number;
+  brand: string;
+  name: string;
+  slug: string;
+  src: string;
+  alt: string;
+  price: number;
+  date: string;
+  color?: string;
+  discountPrice: number;
+  isFavorite: boolean;
+};
+
 export type ProductImages = {
   src: string;
   alt: string;
@@ -82,16 +116,4 @@ type OrderItem = {
   size?: string;
   price: string;
   quantity: number;
-};
-
-export type ProductCardType = {
-  id: number;
-  brand: string;
-  name: string;
-  slug: string;
-  src: string;
-  alt: string;
-  price: number;
-  discountPrice: number;
-  isFavorite: boolean;
 };

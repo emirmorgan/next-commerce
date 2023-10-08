@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,159 +17,157 @@ public class ProductsController : BaseController
         _context = context;
     }
 
-    [HttpGet] // api/products/ - Get All Products
-    public async Task<ActionResult<ProductDTO>> GetProducts()
+    [AllowAnonymous] // Allows access to both authenticated and non-authenticated users
+    public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProducts(
+        [FromQuery] string? sort,
+        [FromQuery] string? category,
+        [FromQuery] string? subcategory,
+        [FromQuery] string? color,
+        [FromQuery] decimal? priceFrom,
+        [FromQuery] decimal? priceTo,
+        [FromQuery] int pn = 1
+    )
     {
-        var products = await _context.Products.ToListAsync();
+        const int pageSize = 20;
 
-        if (products == null)
+        var query = _context.Products
+            .Include(p => p.Category)
+            .Include(p => p.Subcategory)
+            .Include(p => p.Images)
+            .AsQueryable();
+
+        if (!string.IsNullOrEmpty(category) && category != "Any")
         {
-            return NotFound();
+            query = query.Where(p => p.Category.Name == category);
         }
 
-        var productDTOs = await Task.WhenAll(
-            products.Select(async product =>
-            {
-                var image = await _context.ProductImages
-                    .Where(i => i.ProductId == product.Id)
-                    .FirstOrDefaultAsync();
-
-                return new ProductDTO
-                {
-                    Id = product.Id,
-                    Brand = product.Brand,
-                    Name = product.Name,
-                    Src =
-                        image != null && !string.IsNullOrEmpty(image.src)
-                            ? image.src
-                            : "/assets/logo.png",
-                    Alt =
-                        image != null && !string.IsNullOrEmpty(image.alt)
-                            ? image.alt
-                            : product.Brand,
-                    Price = product.CurrentPrice,
-                    DiscountPrice = product.DiscountPrice,
-                    Slug = product.Slug,
-                    IsFavorite = false
-                };
-            })
-        );
-
-        return Ok(productDTOs);
-    }
-
-    [Authorize]
-    [HttpGet("user")] // api/products/user - Get All Products(favorite products of user is marked)
-    public async Task<ActionResult<ProductDTO>> GetUserProducts()
-    {
-        var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
-
-        if (uid == 0)
+        if (!string.IsNullOrEmpty(subcategory) && subcategory != "Any")
         {
-            return Unauthorized();
+            query = query.Where(p => p.Subcategory.Name == subcategory);
         }
 
-        var products = await _context.Products.ToListAsync();
-
-        if (products == null)
+        if (!string.IsNullOrEmpty(color) && color != "Any")
         {
-            return NotFound();
+            query = query.Where(p => p.Color == color);
         }
 
-        var productDTOs = await Task.WhenAll(
-            products.Select(async product =>
-            {
-                var image = await _context.ProductImages
-                    .Where(i => i.ProductId == product.Id)
-                    .FirstOrDefaultAsync();
+        if (priceFrom.HasValue)
+        {
+            query = query.Where(
+                p =>
+                    (p.DiscountPrice.HasValue ? p.DiscountPrice : p.CurrentPrice) >= priceFrom.Value
+            );
+        }
 
-                var favorite = await _context.Favorites.AnyAsync(
-                    f => f.ProductId == product.Id && f.UserId == uid
+        if (priceTo.HasValue)
+        {
+            query = query.Where(
+                p => (p.DiscountPrice.HasValue ? p.DiscountPrice : p.CurrentPrice) <= priceTo.Value
+            );
+        }
+
+        switch (sort)
+        {
+            case "priceAsc":
+                query = query.OrderBy(
+                    p => p.DiscountPrice.HasValue ? p.DiscountPrice : p.CurrentPrice
                 );
-
-                return new ProductDTO
-                {
-                    Id = product.Id,
-                    Brand = product.Brand,
-                    Name = product.Name,
-                    Src =
-                        image != null && !string.IsNullOrEmpty(image.src)
-                            ? image.src
-                            : "/assets/logo.png",
-                    Alt =
-                        image != null && !string.IsNullOrEmpty(image.alt)
-                            ? image.alt
-                            : product.Brand,
-                    Price = product.CurrentPrice,
-                    DiscountPrice = product.DiscountPrice,
-                    Slug = product.Slug,
-                    IsFavorite = favorite
-                };
-            })
-        );
-
-        return Ok(productDTOs);
-    }
-
-    [HttpGet("details")] // api/products/details
-    public async Task<ActionResult<ProductDetailsDTO>> GetProductDetails(int productId)
-    {
-        if (productId == 0)
-            return NotFound();
-
-        var product = await _context.Products
-            .Where(p => p.Id == productId)
-            .Include(c => c.Category)
-            .Include(sc => sc.Subcategory)
-            .Include(pv => pv.ProductVariants)
-            .Include(img => img.Images)
-            .FirstOrDefaultAsync();
-
-        if (product == null)
-        {
-            return NotFound();
+                break;
+            case "priceDesc":
+                query = query.OrderByDescending(
+                    p => p.DiscountPrice.HasValue ? p.DiscountPrice : p.CurrentPrice
+                );
+                break;
+            case "dateAsc":
+                query = query.OrderBy(p => p.Date);
+                break;
+            default:
+                // Default sorting: latest products (dateDesc)
+                query = query.OrderByDescending(p => p.Date);
+                break;
         }
 
-        var SlugProducts = await _context.Products.Where(p => p.Slug == product.Slug).ToListAsync();
-
-        var ProductDTO = new ProductDetailsDTO
+        if (User.Identity.IsAuthenticated)
         {
-            Id = product.Id,
-            Brand = product.Brand,
-            Name = product.Name,
-            Desc = product.Desc,
-            Price = product.CurrentPrice,
-            DiscountPrice = product.DiscountPrice,
-            Slug = product.Slug,
-            Category = product.Category.Name,
-            Subcategory = product.Subcategory.Name,
-            Variants = product.ProductVariants
-                .Select(
-                    pv =>
-                        new ProductVariantDTO
-                        {
-                            Name = pv.Name,
-                            Value = pv.Value,
-                            Quantity = pv.Quantity
-                        }
-                )
-                .ToList(),
-            Images = product.Images
-                .Select(image => new ProductImageDTO { src = image.src, alt = image.alt })
-                .ToList(),
-            SimilarProducts = SlugProducts
-                .Select(
-                    sp =>
-                        new ProductSimilarDTO
-                        {
-                            Id = sp.Id,
-                            Src = sp.Images[0].src,
-                            Alt = sp.Images[0].alt
-                        }
-                )
-                .ToList()
-        };
+            var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
 
-        return Ok(ProductDTO);
+            if (uid == 0)
+            {
+                return Unauthorized();
+            }
+
+            var productsWithFavorites = await query
+                .Select(
+                    p =>
+                        new ProductDTO
+                        {
+                            Id = p.Id,
+                            Brand = p.Brand,
+                            Name = p.Name,
+                            Src = p.Images.Any() ? p.Images[0].src : "/assets/logo.png",
+                            Alt = p.Images.Any() ? p.Images[0].alt : p.Brand,
+                            Price = p.CurrentPrice,
+                            DiscountPrice = p.DiscountPrice,
+                            Date = p.Date,
+                            Slug = p.Slug,
+                            IsFavorite = _context.Favorites.Any(
+                                f => f.UserId == uid && f.ProductId == p.Id
+                            ),
+                        }
+                )
+                .ToListAsync();
+
+            var totalProducts = productsWithFavorites.Count;
+
+            productsWithFavorites = productsWithFavorites
+                .Skip((pn - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return Ok(
+                new
+                {
+                    TotalProducts = totalProducts,
+                    PageSize = pageSize,
+                    PageNumber = pn,
+                    Products = productsWithFavorites
+                }
+            );
+        }
+        else
+        {
+            var totalProducts = await query.CountAsync();
+
+            query = query.Skip((pn - 1) * pageSize).Take(pageSize);
+
+            var products = await query
+                .Select(
+                    p =>
+                        new ProductDTO
+                        {
+                            Id = p.Id,
+                            Brand = p.Brand,
+                            Name = p.Name,
+                            Src = p.Images.Any() ? p.Images[0].src : "/assets/logo.png",
+                            Alt = p.Images.Any() ? p.Images[0].alt : p.Brand,
+                            Price = p.CurrentPrice,
+                            DiscountPrice = p.DiscountPrice,
+                            Date = p.Date,
+                            Slug = p.Slug,
+                            IsFavorite = false
+                        }
+                )
+                .ToListAsync();
+
+            return Ok(
+                new
+                {
+                    TotalProducts = totalProducts,
+                    PageSize = pageSize,
+                    PageNumber = pn,
+                    Products = products
+                }
+            );
+        }
     }
 }

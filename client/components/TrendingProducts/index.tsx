@@ -6,7 +6,7 @@ import ProductCard from "../ProductCard";
 import { useProducts } from "@/context/ProductsContext";
 
 export default function TrendingProducts() {
-  const { products } = useProducts();
+  const { productsResponse } = useProducts();
 
   return (
     <section id="trending">
@@ -15,7 +15,7 @@ export default function TrendingProducts() {
           Trending Products
         </h1>
         <Scrollable dragging={true}>
-          {products.map((product) => (
+          {productsResponse.products.map((product) => (
             <ProductCard
               id={product.id}
               key={crypto.randomUUID()}

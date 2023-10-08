@@ -10,6 +10,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { ModalProvider } from "@/context/ModalContext";
 import { OrderProvider } from "@/context/OrderContext";
 import { ProductsProvider } from "@/context/ProductsContext";
+import { ParamsProvider } from "@/context/ParamsContext";
 
 const montserrat = Montserrat({
   weight: ["400", "600", "700"],
@@ -33,13 +34,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={montserrat.className}>
         <AuthProvider>
-          <ProductsProvider>
-            <OrderProvider>
-              <ShoppingCartProvider>
-                <ModalProvider>{children}</ModalProvider>
-              </ShoppingCartProvider>
-            </OrderProvider>
-          </ProductsProvider>
+          <ParamsProvider>
+            <ProductsProvider>
+              <OrderProvider>
+                <ShoppingCartProvider>
+                  <ModalProvider>{children}</ModalProvider>
+                </ShoppingCartProvider>
+              </OrderProvider>
+            </ProductsProvider>
+          </ParamsProvider>
         </AuthProvider>
       </body>
     </html>

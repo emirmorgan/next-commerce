@@ -4,15 +4,12 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { sorts } from "@/lib/constants";
+import { useURLParams } from "@/context/ParamsContext";
 
-type SortProps = {
-  sort: string;
-  createQueryString: (name: string, value: string) => void;
-};
-
-export default function Sort({ sort, createQueryString }: SortProps) {
+export default function Sort() {
   const router = useRouter();
   const pathname = usePathname();
+  const { sort, createQueryString } = useURLParams();
 
   const [isVisible, setVisible] = useState(false);
 
@@ -49,7 +46,8 @@ export default function Sort({ sort, createQueryString }: SortProps) {
               key={index}
               onClick={() =>
                 router.push(
-                  pathname + "?" + createQueryString("sort", sort.name)
+                  pathname + "?" + createQueryString("sort", sort.name),
+                  { scroll: false }
                 )
               }
               className="cursor-pointer p-2 border-b hover:bg-black/5"

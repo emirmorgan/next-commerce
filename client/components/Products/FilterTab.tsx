@@ -1,26 +1,21 @@
 import { AiFillCaretDown } from "react-icons/ai";
-
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState, FormEvent } from "react";
 
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
 import { categories, colors, subcategories } from "@/lib/constants";
+import { useURLParams } from "@/context/ParamsContext";
 
-type FilterTabProps = {
-  currentCategory: string;
-  currentSubcategory: string;
-  currentColor: string;
-  createQueryString: (name: string, value: string) => void;
-};
-
-export default function FilterTab({
-  currentCategory,
-  currentSubcategory,
-  currentColor,
-  createQueryString,
-}: FilterTabProps) {
+export default function FilterTab() {
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
+  const {
+    currentCategory,
+    currentColor,
+    currentSubcategory,
+    createQueryString,
+  } = useURLParams();
 
   const [toggleCategory, setToggleCategory] = useState(false);
   const [toggleSubcategory, setToggleSubcategory] = useState(false);
@@ -45,7 +40,9 @@ export default function FilterTab({
 
     const queryString = queryParams.toString();
 
-    router.push(pathname + (queryString ? `?${queryString}` : ""));
+    router.push(pathname + (queryString ? `?${queryString}` : ""), {
+      scroll: false,
+    });
   };
 
   return (
@@ -80,7 +77,10 @@ export default function FilterTab({
             <li
               onClick={() =>
                 router.push(
-                  pathname + "?" + createQueryString("category", "Any")
+                  pathname + "?" + createQueryString("category", "Any"),
+                  {
+                    scroll: false,
+                  }
                 )
               }
               className="flex items-center border-t border-gray-200 p-1 hover:bg-black/5"
@@ -95,7 +95,10 @@ export default function FilterTab({
                   router.push(
                     pathname +
                       "?" +
-                      createQueryString("category", category as string)
+                      createQueryString("category", category as string),
+                    {
+                      scroll: false,
+                    }
                   )
                 }
                 className="flex items-center border-t border-gray-200 p-1 hover:bg-black/5"
@@ -131,7 +134,10 @@ export default function FilterTab({
             <li
               onClick={() =>
                 router.push(
-                  pathname + "?" + createQueryString("subcategory", "Any")
+                  pathname + "?" + createQueryString("subcategory", "Any"),
+                  {
+                    scroll: false,
+                  }
                 )
               }
               className="flex items-center border-t border-gray-200 p-1 hover:bg-black/5"
@@ -146,7 +152,10 @@ export default function FilterTab({
                   router.push(
                     pathname +
                       "?" +
-                      createQueryString("subcategory", subcategory)
+                      createQueryString("subcategory", subcategory),
+                    {
+                      scroll: false,
+                    }
                   )
                 }
                 className="flex items-center border-t border-gray-200 p-1 hover:bg-black/5"
@@ -192,7 +201,12 @@ export default function FilterTab({
           >
             <li
               onClick={() =>
-                router.push(pathname + "?" + createQueryString("color", "Any"))
+                router.push(
+                  pathname + "?" + createQueryString("color", "Any"),
+                  {
+                    scroll: false,
+                  }
+                )
               }
               className="flex items-center border-t border-gray-200 p-1 hover:bg-black/5"
             >
@@ -204,7 +218,10 @@ export default function FilterTab({
                 key={index}
                 onClick={() =>
                   router.push(
-                    pathname + "?" + createQueryString("color", color.label)
+                    pathname + "?" + createQueryString("color", color.label),
+                    {
+                      scroll: false,
+                    }
                   )
                 }
                 className="flex items-center border-t border-gray-200 p-1 hover:bg-black/5"
