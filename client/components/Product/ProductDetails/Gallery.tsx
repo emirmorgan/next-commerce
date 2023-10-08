@@ -36,7 +36,7 @@ export default function Gallery({ images }: GalleryProps) {
     return (
       <div
         role="status"
-        className="flex items-center justify-center h-full w-full bg-gray-300 animate-pulse"
+        className="flex items-center justify-center h-full w-full min-h-[250px] bg-gray-300 animate-pulse"
       >
         <svg
           className="w-10 h-10 text-gray-200"

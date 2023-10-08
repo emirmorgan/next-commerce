@@ -17,7 +17,7 @@ public class ProductsController : BaseController
         _context = context;
     }
 
-    [AllowAnonymous] // Allows access to both authenticated and non-authenticated users
+    [AllowAnonymous] // api/products/
     public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProducts(
         [FromQuery] string? sort,
         [FromQuery] string? category,
@@ -169,5 +169,67 @@ public class ProductsController : BaseController
                 }
             );
         }
+    }
+
+    [HttpGet("details")] // api/products/details
+    public async Task<ActionResult<ProductDetailsDTO>> GetProductDetails(int productId)
+    {
+        if (productId == 0)
+            return NotFound();
+
+        var product = await _context.Products
+            .Where(p => p.Id == productId)
+            .Include(c => c.Category)
+            .Include(sc => sc.Subcategory)
+            .Include(pv => pv.ProductVariants)
+            .Include(img => img.Images)
+            .FirstOrDefaultAsync();
+
+        if (product == null)
+        {
+            return NotFound();
+        }
+
+        var SlugProducts = await _context.Products.Where(p => p.Slug == product.Slug).ToListAsync();
+
+        var ProductDTO = new ProductDetailsDTO
+        {
+            Id = product.Id,
+            Brand = product.Brand,
+            Name = product.Name,
+            Desc = product.Desc,
+            Price = product.CurrentPrice,
+            DiscountPrice = product.DiscountPrice,
+            Slug = product.Slug,
+            Category = product.Category.Name,
+            Subcategory = product.Subcategory.Name,
+            Variants = product.ProductVariants
+                .Select(
+                    pv =>
+                        new ProductVariantDTO
+                        {
+                            Name = pv.Name,
+                            Value = pv.Value,
+                            Quantity = pv.Quantity
+                        }
+                )
+                .ToList(),
+            Images = product.Images
+                .Select(image => new ProductImageDTO { src = image.src, alt = image.alt })
+                .ToList(),
+            SimilarProducts = SlugProducts
+                .Select(
+                    sp =>
+                        new ProductSimilarDTO
+                        {
+                            Id = sp.Id,
+                            Src = sp.Images[0].src,
+                            Alt = sp.Images[0].alt
+                        }
+                )
+                .ToList()
+        };
+
+        return Ok(ProductDTO);
     }
 }
