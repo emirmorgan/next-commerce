@@ -44,7 +44,7 @@ export default function LoginForm({ setForm }: LoginFormProps) {
         <Form className="flex flex-col justify-center items-center gap-4">
           <div className="flex flex-col gap-2 w-11/12">
             <h1 className="mr-auto text-xl font-bold text-gray-800">Log in</h1>
-            <div className="w-full h-[2px] bg-green-500" />
+            <div className="w-full h-[2px] bg-black" />
             <div className="flex flex-col gap-1">
               <label htmlFor="email" className="select-none">
                 E-Mail
@@ -105,7 +105,7 @@ export default function LoginForm({ setForm }: LoginFormProps) {
                 name="password"
               />
             </div>
-            <div className="flex items-center justify-end p-1 text-sm text-green-500 cursor-pointer hover:underline hover:text-green-600">
+            <div className="flex items-center justify-end p-1 text-sm text-gray-700 cursor-pointer hover:underline hover:text-black">
               <span className="select-none font-semibold">
                 Forgot password?
               </span>
@@ -119,7 +119,7 @@ export default function LoginForm({ setForm }: LoginFormProps) {
                   !formControl.isSubmitting
                 )
               }
-              className="p-2 text-gray-600 font-semibold border-2 border-gray-300 transition-all ease-linear select-none enabled:hover:border-green-500 enabled:hover:bg-green-500 enabled:hover:text-white disabled:bg-gray-300 disabled:text-gray-800"
+              className="p-2 text-gray-600 font-semibold border-2 border-gray-300 transition-all ease-linear select-none enabled:hover:border-black enabled:hover:bg-black enabled:hover:text-white disabled:bg-gray-300 disabled:text-gray-800"
             >
               Log in
             </button>
@@ -127,7 +127,7 @@ export default function LoginForm({ setForm }: LoginFormProps) {
               <span>Don&apos;t have an account?</span>
               <span
                 onClick={() => setForm("register")}
-                className="font-semibold text-green-500 cursor-pointer hover:underline hover:text-green-600"
+                className="font-semibold text-gray-700 cursor-pointer hover:underline hover:text-black"
               >
                 Register now.
               </span>

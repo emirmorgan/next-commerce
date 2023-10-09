@@ -125,7 +125,7 @@ export default function OrderModal() {
           <Link
             href={currentOrder.deliveryTrace}
             target="_blank"
-            className="flex items-center border border-green-600 text-green-600 font-semibold p-2 gap-2 hover:text-white hover:bg-green-600"
+            className="flex items-center border bg-black text-white font-semibold p-2 gap-2"
           >
             <AiOutlineEnvironment size={24} />
             <span>Track order</span>

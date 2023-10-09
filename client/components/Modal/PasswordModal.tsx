@@ -59,7 +59,7 @@ export default function PasswordModal() {
                 </div>
               </div>
             </div>
-            <div className="w-full h-[2px] bg-green-500" />
+            <div className="w-full h-[2px] bg-black" />
             <div className="flex flex-col gap-1">
               <label htmlFor="currentPassword" className="select-none">
                 Password
@@ -138,7 +138,7 @@ export default function PasswordModal() {
                   !formControl.isSubmitting
                 )
               }
-              className="p-2 text-gray-600 font-semibold border-2 border-gray-300 transition-all ease-linear select-none enabled:hover:border-green-500 enabled:hover:bg-green-500 enabled:hover:text-white disabled:bg-gray-300 disabled:text-gray-800"
+              className="p-2 text-gray-600 font-semibold border-2 border-gray-300 transition-all ease-linear select-none enabled:hover:border-black enabled:hover:bg-black enabled:hover:text-white disabled:bg-gray-300 disabled:text-gray-800"
             >
               Change Password
             </button>

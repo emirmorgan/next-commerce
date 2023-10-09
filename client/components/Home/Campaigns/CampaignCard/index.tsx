@@ -4,7 +4,7 @@ import { Campaigns } from "@/lib/types";
 
 export default function CampaignCard(props: Campaigns) {
   return (
-    <div className="w-full cursor-pointer group">
+    <div className="w-full cursor-pointer group border border-gray-300 hover:border-gray-400 transition-all ease-linear">
       <div className="relative aspect-square max-h-[280px] w-full h-full overflow-hidden">
         <Image
           fill
@@ -15,9 +15,9 @@ export default function CampaignCard(props: Campaigns) {
           priority={true}
         />
       </div>
-      <div className="h-24 text-gray-600 border border-gray-200 py-3 px-4">
+      <div className="h-24 text-gray-600 py-3 px-4">
         <p>{props.brand}</p>
-        <b className="group-hover:text-green-600">{props.desc}</b>
+        <b className="group-hover:text-gray-800">{props.desc}</b>
       </div>
     </div>
   );

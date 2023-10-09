@@ -54,7 +54,7 @@ export default function MobileCategories({
         className="flex flex-col h-full w-[85%] max-w-[350px] bg-white shadow-lg transition-all ease-linear"
       >
         <div className="flex w-full justify-between items-center border-b py-2 px-3">
-          <div className="relative w-28 h-8">
+          <div className="relative w-8 h-8">
             <Image
               fill
               src="/assets/logo.png"

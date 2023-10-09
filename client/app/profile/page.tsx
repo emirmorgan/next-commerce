@@ -52,7 +52,7 @@ export default function ProfilePage() {
       </div>
       <div className="flex flex-col flex-1 border p-4 rounded-md shadow-sm">
         <h1 className="text-md font-bold">Orders</h1>
-        <div className="w-full h-[2px] bg-green-500 my-2" />
+        <div className="w-full h-[2px] bg-black my-2" />
         <UserOrders />
       </div>
     </div>

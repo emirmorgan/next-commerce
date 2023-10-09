@@ -19,7 +19,7 @@ export default function MobileNav() {
   return (
     <div className="z-20 fixed md:hidden bottom-0 w-full bg-white shadow-xl border-t-2 border-gray-300">
       <ul className="flex w-full justify-between whitespace-nowrap px-5 py-1">
-        <li className="p-2 text-gray-800 hover:text-green-600">
+        <li className="p-2 text-gray-800 hover:text-black">
           <Link
             href="/category?=best-seller"
             className="flex flex-col justify-center items-center text-center "
@@ -28,7 +28,7 @@ export default function MobileNav() {
             <span className="text-xs">Trending</span>
           </Link>
         </li>
-        <li className="p-2 text-gray-800 hover:text-green-600">
+        <li className="p-2 text-gray-800 hover:text-black">
           <Link
             href="/favorites"
             className="flex flex-col justify-center items-center text-center "
@@ -37,7 +37,7 @@ export default function MobileNav() {
             <span className="text-xs">Favorites</span>
           </Link>
         </li>
-        <li className="p-2 text-gray-800 hover:text-green-600">
+        <li className="p-2 text-gray-800 hover:text-black">
           <div
             onClick={openCart}
             className="flex flex-col justify-center items-center text-center cursor-pointer"
@@ -46,7 +46,7 @@ export default function MobileNav() {
             <span className="text-xs">Shop Cart</span>
           </div>
         </li>
-        <li className="p-2 text-gray-800 hover:text-green-600">
+        <li className="p-2 text-gray-800 hover:text-black">
           {authenticated ? (
             <Link
               href="/profile"

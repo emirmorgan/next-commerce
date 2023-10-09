@@ -49,15 +49,15 @@ export default function ProductCard(props: ProductCardProps) {
   return (
     <div
       onClick={handleNavigate}
-      className="relative z-0 group flex flex-col items-center flex-shrink-0 w-56 h-[360px] border cursor-pointer bg-white border-gray-300 hover:shadow-md transition-all ease-linear overflow-hidden"
+      className="relative z-0 group flex flex-col items-center flex-shrink-0 w-56 h-[360px] border cursor-pointer bg-white border-gray-300 hover:border-gray-400 transition-all ease-linear overflow-hidden"
     >
       <div className="absolute top-2 right-2 z-[2]">
         <div
           className={
-            "border border-gray-300 p-2 transition-all ease-linear " +
+            "border bg-white border-gray-300 p-2 transition-all ease-linear " +
             (props.isFavorite
               ? " text-red-600 border-red-600 hover:border-red-400 hover:text-red-400"
-              : " hover:text-black hover:bg-black/5 hover:border-black")
+              : " hover:text-black hover:bg-slate-100 hover:border-black")
           }
           onClick={(e) => handleFavorite(e, props.isFavorite, props.id)}
         >
@@ -87,12 +87,12 @@ export default function ProductCard(props: ProductCardProps) {
               <span className="font-bold text-sm text-gray-500 line-through">
                 {props.price} USD
               </span>
-              <span className="font-bold text-green-700">
+              <span className="font-bold text-black">
                 {props.discountPrice} USD
               </span>
             </>
           ) : (
-            <span className="font-bold text-green-700">{props.price} USD</span>
+            <span className="font-bold text-black">{props.price} USD</span>
           )}
         </div>
       </div>

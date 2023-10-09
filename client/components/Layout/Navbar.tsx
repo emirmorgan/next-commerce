@@ -7,18 +7,17 @@ import {
   AiOutlineShopping,
   AiOutlineUser,
 } from "react-icons/ai";
-
 import { useState } from "react";
-
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
-import MobileCategories from "./MobileCategories";
-
 import { categories } from "@/lib/constants";
+
 import { useShoppingCart } from "@/context/ShoppingCartContext";
 import { useAuth } from "@/context/AuthContext";
+
+import MobileCategories from "./MobileCategories";
 
 export default function Navbar() {
   const router = useRouter();
@@ -55,13 +54,13 @@ export default function Navbar() {
                 setCategoriesVisible={setCategoriesVisible}
               />
               <Link className="mx-3" href="/">
-                <div className="relative aspect-square w-32 h-8 overflow-hidden my-2 sm:my-0">
+                <div className="relative aspect-square w-8 h-8 overflow-hidden my-2 sm:my-0">
                   <Image
                     fill
                     src="/assets/logo.png"
                     alt="Logo"
                     className="object-contain w-full h-full"
-                    sizes="(min-width: 640px) 50vw, 100vw"
+                    sizes="(min-width: 320px) 50vw, 100vw"
                     priority={true}
                   />
                 </div>
@@ -71,20 +70,20 @@ export default function Navbar() {
                 className="relative flex md:hidden items-center justify-center cursor-pointer"
               >
                 {cartQuantity > 0 && (
-                  <div className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-[8px] bg-green-500 text-white font-bold rounded-full">
+                  <div className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-[8px] bg-black text-white font-bold rounded-full">
                     <span>{cartQuantity > 9 ? "9+" : cartQuantity}</span>
                   </div>
                 )}
                 <AiOutlineShopping size={28} />
               </div>
             </div>
-            <div className="flex items-center justify-center w-full md:max-w-[500px] bg-slate-50 border-2 border-gray-200 px-1 py-2 focus-within:border-gray-700 transition-all ease-linear group mt-1 md:mt-0">
+            <div className="flex items-center justify-center w-full md:max-w-[500px] border border-gray-200 px-1 py-2 focus-within:border-gray-600 transition-all ease-linear group mt-1 md:mt-0">
               <AiOutlineSearch
                 size={22}
                 className="text-gray-500 mx-1 transition-all ease-linear"
               />
               <input
-                className="w-full bg-slate-50 text-gray-600 focus:outline-none px-1"
+                className="w-full text-gray-600 focus:outline-none px-1"
                 type="text"
                 placeholder="Search..."
               />
@@ -93,7 +92,7 @@ export default function Navbar() {
               {authenticated ? (
                 <div
                   onClick={() => router.push("/profile")}
-                  className="w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600"
+                  className="w-16 flex flex-col justify-center items-center text-center text-gray-800 cursor-pointer hover:text-black"
                 >
                   <AiOutlineUser size={24} />
                   <b className="text-xs">Profile</b>
@@ -101,7 +100,7 @@ export default function Navbar() {
               ) : (
                 <div
                   onClick={() => router.push("/login")}
-                  className="w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600"
+                  className="w-16 flex flex-col justify-center items-center text-center text-gray-800 cursor-pointer hover:text-black"
                 >
                   <AiOutlineUser size={24} />
                   <b className="text-xs">Log in</b>
@@ -109,17 +108,17 @@ export default function Navbar() {
               )}
               <div
                 onClick={() => router.push("/favorites")}
-                className="w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600"
+                className="w-16 flex flex-col justify-center items-center text-center text-gray-800 cursor-pointer hover:text-black"
               >
                 <AiOutlineHeart size={24} />
                 <b className="text-xs">Favorites</b>
               </div>
               <div
                 onClick={openCart}
-                className="relative w-16 flex flex-col justify-center items-center text-center cursor-pointer hover:text-green-600"
+                className="relative w-16 flex flex-col justify-center items-center text-center text-gray-800 cursor-pointer hover:text-black"
               >
                 {cartQuantity > 0 && (
-                  <div className="absolute top-0 right-[16px] flex items-center justify-center w-4 h-4 text-[8px] bg-green-500 text-white font-bold rounded-full">
+                  <div className="absolute top-0 right-[16px] flex items-center justify-center w-4 h-4 text-[8px] bg-gray-800 text-white font-bold rounded-full">
                     <span>{cartQuantity > 9 ? "9+" : cartQuantity}</span>
                   </div>
                 )}
@@ -133,7 +132,7 @@ export default function Navbar() {
               {categories.map((category, index) => {
                 return (
                   <li
-                    className="border-b-2 border-[transparent] text-gray-700 hover:border-green-600 hover:text-green-600 cursor-pointer p-2"
+                    className="border-b-2 border-[transparent] text-gray-600 hover:border-black hover:text-black cursor-pointer p-2"
                     key={index}
                   >
                     <Link
