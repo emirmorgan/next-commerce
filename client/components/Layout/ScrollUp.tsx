@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { AiOutlineArrowUp } from "react-icons/ai";
+import { AiFillCaretUp, AiOutlineArrowUp } from "react-icons/ai";
 
 export default function ScrollUp() {
   const [visible, setVisible] = useState<boolean>(false);
@@ -30,8 +30,8 @@ export default function ScrollUp() {
         visible ? "z-50 fixed right-5 bottom-20 md:bottom-5" : "hidden"
       }
     >
-      <div className="bg-white border-2 border-gray-300 rounded-full cursor-pointer p-2 hover:border-green-400 hover:shadow-md transition-all ease-linear">
-        <AiOutlineArrowUp size={24} />
+      <div className="bg-white border-2 border-gray-300 cursor-pointer p-2 hover:border-black hover:shadow-md transition-all ease-linear">
+        <AiFillCaretUp size={24} />
       </div>
     </div>
   );

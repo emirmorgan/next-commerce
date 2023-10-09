@@ -78,7 +78,7 @@ export default function Navbar() {
                 <AiOutlineShopping size={28} />
               </div>
             </div>
-            <div className="flex items-center justify-center w-full md:max-w-[500px] bg-slate-50 border-2 border-gray-100 px-1 py-2 rounded-lg focus-within:border-gray-300 transition-all ease-linear group mt-1 md:mt-0">
+            <div className="flex items-center justify-center w-full md:max-w-[500px] bg-slate-50 border-2 border-gray-200 px-1 py-2 focus-within:border-gray-700 transition-all ease-linear group mt-1 md:mt-0">
               <AiOutlineSearch
                 size={22}
                 className="text-gray-500 mx-1 transition-all ease-linear"
