@@ -6,9 +6,10 @@ import { useProducts } from "@/context/ProductsContext";
 import ProductCard from "@/components/ProductCard";
 import FilterTab from "@/components/Products/FilterTab";
 import Sort from "@/components/Products/Sort";
+import ProductCardSkeleton from "@/components/ProductCard/ProductCardSkeleton";
 
 export default function ProductsPage() {
-  const { productsResponse } = useProducts();
+  const { productsResponse, isLoading } = useProducts();
 
   return (
     <div className="flex justify-center mx-auto gap-3 my-3">
@@ -23,20 +24,24 @@ export default function ProductsPage() {
           <Sort />
         </div>
         <div className="flex gap-3 flex-wrap">
-          {productsResponse.products.map((product) => (
-            <ProductCard
-              key={crypto.randomUUID()}
-              id={product.id}
-              brand={product.brand}
-              name={product.name}
-              src={product.src}
-              alt="Product Image"
-              slug={product.slug}
-              price={product.price}
-              discountPrice={product.discountPrice}
-              isFavorite={product.isFavorite}
-            />
-          ))}
+          {isLoading
+            ? Array.from({ length: 20 }).map((_, index) => (
+                <ProductCardSkeleton key={index} />
+              ))
+            : productsResponse.products.map((product) => (
+                <ProductCard
+                  id={product.id}
+                  key={product.id}
+                  brand={product.brand}
+                  name={product.name}
+                  src={product.src}
+                  alt="Product Image"
+                  slug={product.slug}
+                  price={product.price}
+                  discountPrice={product.discountPrice}
+                  isFavorite={product.isFavorite}
+                />
+              ))}
         </div>
       </div>
     </div>

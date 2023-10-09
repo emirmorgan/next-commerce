@@ -6,7 +6,7 @@ import axios from "axios";
 import setCookies from "@/lib/setCookies";
 import { ProductCardType } from "@/lib/types";
 import { useAuth } from "./AuthContext";
-import { useParams, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useURLParams } from "./ParamsContext";
 
 export const ProductsContext = createContext({} as IProductsContext);
@@ -28,6 +28,7 @@ type ProductsContextProvider = {
 
 type IProductsContext = {
   productsResponse: ProductsResponseProps;
+  isLoading: boolean;
   fetchProducts: () => void;
   updateFavorites: (type: string, productId: number) => void;
 };
@@ -44,6 +45,7 @@ export function ProductsProvider({ children }: ProductsContextProvider) {
   const searchParams = useSearchParams();
 
   const { user } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [productsResponse, setProductsResponse] =
     useState<ProductsResponseProps>({
@@ -58,6 +60,7 @@ export function ProductsProvider({ children }: ProductsContextProvider) {
   }, [user, searchParams]);
 
   async function fetchProducts() {
+    setIsLoading(true);
     try {
       const token = await setCookies({ type: "GET", tag: "token", data: "" });
 
@@ -78,6 +81,9 @@ export function ProductsProvider({ children }: ProductsContextProvider) {
         })
         .then((response) => {
           setProductsResponse(response.data);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     } catch (error) {
       console.log(error);
@@ -110,7 +116,7 @@ export function ProductsProvider({ children }: ProductsContextProvider) {
 
   return (
     <ProductsContext.Provider
-      value={{ productsResponse, fetchProducts, updateFavorites }}
+      value={{ productsResponse, isLoading, fetchProducts, updateFavorites }}
     >
       {children}
     </ProductsContext.Provider>
