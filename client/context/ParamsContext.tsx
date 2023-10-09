@@ -11,6 +11,7 @@ type ParamsContextProvider = {
 type IParamsContext = {
   currentCategory: string;
   currentSubcategory: string;
+  currentBrand: string;
   currentColor: string;
   priceFrom: string;
   priceTo: string;
@@ -29,6 +30,7 @@ export function ParamsProvider({ children }: ParamsContextProvider) {
 
   const currentCategory = searchParams.get("category") as string;
   const currentSubcategory = searchParams.get("subcategory") as string;
+  const currentBrand = searchParams.get("brand") as string;
   const currentColor = searchParams.get("color") as string;
   const priceFrom = searchParams.get("priceFrom") as string;
   const priceTo = searchParams.get("priceTo") as string;
@@ -49,6 +51,7 @@ export function ParamsProvider({ children }: ParamsContextProvider) {
       value={{
         currentCategory,
         currentSubcategory,
+        currentBrand,
         currentColor,
         priceFrom,
         priceTo,

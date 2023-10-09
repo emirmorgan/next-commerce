@@ -1,10 +1,22 @@
+"use client";
+
 import Image from "next/image";
 
 import { Campaigns } from "@/lib/types";
+import { useRouter } from "next/navigation";
 
 export default function CampaignCard(props: Campaigns) {
+  const router = useRouter();
+
+  const handleRoute = () => {
+    router.push(`/products?brand=${props.brand}`);
+  };
+
   return (
-    <div className="w-full cursor-pointer group border border-gray-300 hover:border-gray-400 transition-all ease-linear">
+    <div
+      onClick={handleRoute}
+      className="w-full cursor-pointer group border border-gray-300 hover:border-gray-400 transition-all ease-linear"
+    >
       <div className="relative aspect-square max-h-[280px] w-full h-full overflow-hidden">
         <Image
           fill

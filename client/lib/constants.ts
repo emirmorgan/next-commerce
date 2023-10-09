@@ -39,6 +39,8 @@ export const sorts = [
   { name: "priceDesc", value: "Price: highest first" },
 ];
 
+export const brands = ["Nike", "Adidas", "Lacoste", "The North Face"];
+
 export const campaigns: Campaigns[] = [
   {
     brand: "The Nort Face",

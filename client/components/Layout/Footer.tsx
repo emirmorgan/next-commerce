@@ -17,28 +17,28 @@ export default function Footer() {
               <h1 className="text-2xl font-bold select-none">SHOP</h1>
               <ul className="flex flex-col gap-2 mt-2 text-gray-700">
                 <li>
-                  <Link href="/category?=best-sellers">
+                  <Link href="/products?category=Best Sellers">
                     <span className="hover:text-black hover:underline transition-all ease-linear">
                       Best Sellers
                     </span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/category?=womens">
+                  <Link href="/products?category=Womens">
                     <span className="hover:text-black hover:underline transition-all ease-linear">
                       Womens
                     </span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/category?=mens">
+                  <Link href="/products?category=Mens">
                     <span className="hover:text-black hover:underline transition-all ease-linear">
                       Mens
                     </span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/category?=kids">
+                  <Link href="/products?category=Kids">
                     <span className="hover:text-black hover:underline transition-all ease-linear">
                       Kids
                     </span>
@@ -50,21 +50,21 @@ export default function Footer() {
               <h1 className="text-2xl font-bold mb-2 select-none">CAMPAIGNS</h1>
               <ul className="flex flex-col gap-2 text-gray-700">
                 <li>
-                  <Link href="/campaign?=nike">
+                  <Link href="/products?brand=Nike">
                     <span className="hover:text-black hover:underline transition-all ease-linear">
                       %15 off Nike
                     </span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/campaign?=lacoste">
+                  <Link href="/products?brand=Lacoste">
                     <span className="hover:text-black hover:underline transition-all ease-linear">
                       %30 off Lacoste
                     </span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/campaign?=adidas">
+                  <Link href="/products?brand=Adidas">
                     <span className="hover:text-black hover:underline transition-all ease-linear">
                       %40 off Adidas
                     </span>
@@ -111,6 +111,7 @@ export default function Footer() {
                 <li className="hover:bg-black/5 border rounded-full transition-all ease-linear">
                   <Link
                     className="flex justify-start items-center gap-2 p-2"
+                    target="_blank"
                     href="https://instagram.com"
                   >
                     <AiOutlineInstagram size={20} />
@@ -119,6 +120,7 @@ export default function Footer() {
                 <li className="hover:bg-black/5 border rounded-full transition-all ease-linear">
                   <Link
                     className="flex justify-start items-center gap-2 p-2"
+                    target="_blank"
                     href="https://x.com"
                   >
                     <AiOutlineTwitter size={20} />
@@ -127,6 +129,7 @@ export default function Footer() {
                 <li className="hover:bg-black/5 border rounded-full transition-all ease-linear">
                   <Link
                     className="flex justify-start items-center gap-2 p-2"
+                    target="_blank"
                     href="https://facebook.com"
                   >
                     <AiOutlineFacebook size={20} />
@@ -140,6 +143,7 @@ export default function Footer() {
               <h1 className="text-lg font-bold mb-2 select-none">APPS</h1>
               <Link
                 className="relative w-36 h-12 mb-1 rounded-lg"
+                target="_blank"
                 href="https://www.apple.com/"
               >
                 <Image
@@ -150,6 +154,7 @@ export default function Footer() {
               </Link>
               <Link
                 className="relative w-36 h-12 rounded-lg"
+                target="_blank"
                 href="https://play.google.com/"
               >
                 <Image

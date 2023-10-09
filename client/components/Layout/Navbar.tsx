@@ -27,6 +27,10 @@ export default function Navbar() {
 
   const [isCategoriesVisible, setCategoriesVisible] = useState<boolean>(false);
 
+  const handleRoute = (category: string) => {
+    router.push(`/products?category=${category}`);
+  };
+
   return (
     <header className="bg-white border-b border-gray-200">
       <div className="container mx-auto px-1">
@@ -132,6 +136,7 @@ export default function Navbar() {
               {categories.map((category, index) => {
                 return (
                   <li
+                    onClick={() => handleRoute(category as string)}
                     className="border-b-2 border-[transparent] text-gray-600 hover:border-black hover:text-black cursor-pointer p-2"
                     key={index}
                   >

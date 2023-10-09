@@ -3,7 +3,7 @@ import { useState, FormEvent } from "react";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { categories, colors, subcategories } from "@/lib/constants";
+import { brands, categories, colors, subcategories } from "@/lib/constants";
 import { useURLParams } from "@/context/ParamsContext";
 
 export default function FilterTab() {
@@ -14,11 +14,13 @@ export default function FilterTab() {
     currentCategory,
     currentColor,
     currentSubcategory,
+    currentBrand,
     createQueryString,
   } = useURLParams();
 
   const [toggleCategory, setToggleCategory] = useState(false);
   const [toggleSubcategory, setToggleSubcategory] = useState(false);
+  const [toggleBrand, setToggleBrand] = useState(false);
   const [toggleColor, setToggleColor] = useState(false);
 
   const handlePrice = (e: FormEvent<HTMLFormElement>) => {
@@ -162,6 +164,62 @@ export default function FilterTab() {
               >
                 <div className="w-[16px] h-[2px] bg-gray-500 mx-2" />
                 {subcategory}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="flex flex-col border-t cursor-pointer">
+          <div
+            onClick={() => setToggleBrand(!toggleBrand)}
+            className="flex w-full justify-between items-center p-2"
+          >
+            <div className="flex flex-col">
+              <span className="text-gray-600 text-sm">Brands</span>
+              <span>{currentBrand ? currentBrand : "Any"}</span>
+            </div>
+            <AiFillCaretDown
+              className={
+                "transition-all ease-linear duration-[250ms] " +
+                (toggleSubcategory ? " -rotate-180" : "")
+              }
+              size={20}
+            />
+          </div>
+          <ul
+            className={
+              " flex flex-col transition-all ease-linear overflow-auto scrollbar-cart" +
+              (toggleBrand ? "  h-[150px]" : "  h-[0px]")
+            }
+          >
+            <li
+              onClick={() =>
+                router.push(
+                  pathname + "?" + createQueryString("brand", "Any"),
+                  {
+                    scroll: false,
+                  }
+                )
+              }
+              className="flex items-center border-t border-gray-200 p-1 hover:bg-black/5"
+            >
+              <div className="w-[16px] h-[2px] bg-gray-500 mx-2" />
+              Any
+            </li>
+            {brands.map((brand, index) => (
+              <li
+                key={index}
+                onClick={() =>
+                  router.push(
+                    pathname + "?" + createQueryString("brand", brand),
+                    {
+                      scroll: false,
+                    }
+                  )
+                }
+                className="flex items-center border-t border-gray-200 p-1 hover:bg-black/5"
+              >
+                <div className="w-[16px] h-[2px] bg-gray-500 mx-2" />
+                {brand}
               </li>
             ))}
           </ul>
