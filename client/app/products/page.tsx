@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+
 import { useProducts } from "@/context/ProductsContext";
 
 //Components
@@ -9,11 +12,16 @@ import Sort from "@/components/Products/Sort";
 import ProductCardSkeleton from "@/components/ProductCard/ProductCardSkeleton";
 
 export default function ProductsPage() {
-  const { productsResponse, isLoading } = useProducts();
+  const params = useSearchParams();
+  const { productsResponse, isLoading, fetchProducts } = useProducts();
+
+  useEffect(() => {
+    fetchProducts();
+  }, [params]);
 
   return (
     <div className="flex justify-center mx-auto gap-3 my-3">
-      <FilterTab />
+      <FilterTab params={params} />
       <div className="flex flex-1 flex-col gap-2">
         <div className="flex justify-between items-center">
           <span className="font-semibold">

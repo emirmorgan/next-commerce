@@ -1,15 +1,23 @@
 import { AiFillCaretDown } from "react-icons/ai";
 import { useState, FormEvent } from "react";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  ReadonlyURLSearchParams,
+  usePathname,
+  useRouter,
+} from "next/navigation";
 
 import { brands, categories, colors, subcategories } from "@/lib/constants";
 import { useURLParams } from "@/context/ParamsContext";
 
-export default function FilterTab() {
+type FilterProps = {
+  params: ReadonlyURLSearchParams;
+};
+
+export default function FilterTab({ params }: FilterProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const params = useSearchParams();
+
   const {
     currentCategory,
     currentColor,

@@ -5,8 +5,8 @@ import axios from "axios";
 
 import setCookies from "@/lib/setCookies";
 import { ProductCardType } from "@/lib/types";
+
 import { useAuth } from "./AuthContext";
-import { useSearchParams } from "next/navigation";
 import { useURLParams } from "./ParamsContext";
 
 export const ProductsContext = createContext({} as IProductsContext);
@@ -43,7 +43,6 @@ export function ProductsProvider({ children }: ProductsContextProvider) {
     priceTo,
     sort,
   } = useURLParams();
-  const searchParams = useSearchParams();
 
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
@@ -58,7 +57,7 @@ export function ProductsProvider({ children }: ProductsContextProvider) {
 
   useEffect(() => {
     fetchProducts();
-  }, [user, searchParams]);
+  }, [user]);
 
   async function fetchProducts() {
     setIsLoading(true);

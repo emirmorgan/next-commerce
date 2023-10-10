@@ -3,7 +3,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useSearchParams, useParams } from "next/navigation";
+import { useSearchParams, useParams, useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 import { Product, ProductImages } from "@/lib/types";
 
@@ -11,8 +12,10 @@ import AddToCart from "./AddToCart";
 import VariantSelector from "./VariantSelector";
 import DetailsTab from "./DetailsTab";
 import Gallery from "./Gallery";
+import ProductDetailsSkeleton from "./ProductDetailsSkeleton";
 
 export default function ProductDetails() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const params = useParams();
 
@@ -20,8 +23,11 @@ export default function ProductDetails() {
   const currentColor = searchParams.get("color");
 
   const [product, setProduct] = useState<Product>();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
+
     const slug: string = params.slug as string;
     const match = slug.match(/p-(\d+)/);
 
@@ -36,13 +42,28 @@ export default function ProductDetails() {
           )
           .then((response) => {
             return response.data;
+          })
+          .finally(() => {
+            setIsLoading(false);
+          })
+          .catch(() => {
+            toast.error("Something went wrong.");
+
+            router.push("/");
           });
         setProduct(product);
       };
 
       fetchProduct();
+    } else {
+      setIsLoading(false);
+      router.push("/");
     }
   }, [params.slug]);
+
+  if (isLoading) {
+    return <ProductDetailsSkeleton />;
+  }
 
   return (
     <>
