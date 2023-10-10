@@ -22,6 +22,7 @@ public class ProductsController : BaseController
         [FromQuery] string? sort,
         [FromQuery] string? category,
         [FromQuery] string? subcategory,
+        [FromQuery] string? brand,
         [FromQuery] string? color,
         [FromQuery] decimal? priceFrom,
         [FromQuery] decimal? priceTo,
@@ -49,6 +50,11 @@ public class ProductsController : BaseController
         if (!string.IsNullOrEmpty(color) && color != "Any")
         {
             query = query.Where(p => p.Color == color);
+        }
+
+        if (!string.IsNullOrEmpty(brand) && brand != "Any")
+        {
+            query = query.Where(p => p.Brand == brand);
         }
 
         if (priceFrom.HasValue)

@@ -34,7 +34,7 @@ export default function ProductDetails() {
       setProduct(product);
     };
     fetchProduct();
-  }, []);
+  }, [params.id]);
 
   return (
     <>
@@ -43,19 +43,19 @@ export default function ProductDetails() {
           <span className="hover:text-gray-900 hover:underline">Homepage</span>
         </Link>
         <span>/</span>
-        <Link href="/">
+        <Link href={"/products?brand=" + product?.brand}>
           <span className="hover:text-gray-900 hover:underline">
             {product?.brand}
           </span>
         </Link>
         <span>/</span>
-        <Link href="/">
+        <Link href={"/products?category=" + product?.category}>
           <span className="hover:text-gray-900 hover:underline">
             {product?.category}
           </span>
         </Link>
         <span>/</span>
-        <Link href="/">
+        <Link href={"/products?subcategory=" + product?.subcategory}>
           <span className="hover:text-gray-900 hover:underline">
             {product?.subcategory}
           </span>
