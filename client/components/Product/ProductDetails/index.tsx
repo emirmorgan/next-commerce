@@ -22,19 +22,27 @@ export default function ProductDetails() {
   const [product, setProduct] = useState<Product>();
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      const product = await axios
-        .get(
-          process.env.NEXT_PUBLIC_API_URL +
-            `/products/details?productId=${params.id}`
-        )
-        .then((response) => {
-          return response.data;
-        });
-      setProduct(product);
-    };
-    fetchProduct();
-  }, [params.id]);
+    const slug: string = params.slug as string;
+    const match = slug.match(/p-(\d+)/);
+
+    if (match && match[1]) {
+      const pid = parseInt(match[1], 10);
+
+      const fetchProduct = async () => {
+        const product = await axios
+          .get(
+            process.env.NEXT_PUBLIC_API_URL +
+              `/products/details?productId=${pid}`
+          )
+          .then((response) => {
+            return response.data;
+          });
+        setProduct(product);
+      };
+
+      fetchProduct();
+    }
+  }, [params.slug]);
 
   return (
     <>

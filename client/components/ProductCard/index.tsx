@@ -43,7 +43,7 @@ export default function ProductCard(props: ProductCardProps) {
   };
 
   const handleNavigate = () => {
-    router.push(`/product/${props.id}/`);
+    router.push(`/product/${props.slug + "-p-" + props.id}/`);
   };
 
   return (
