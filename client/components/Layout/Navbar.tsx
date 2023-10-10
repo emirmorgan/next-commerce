@@ -3,7 +3,6 @@
 import {
   AiOutlineHeart,
   AiOutlineMenu,
-  AiOutlineSearch,
   AiOutlineShopping,
   AiOutlineUser,
 } from "react-icons/ai";
@@ -18,6 +17,7 @@ import { useShoppingCart } from "@/context/ShoppingCartContext";
 import { useAuth } from "@/context/AuthContext";
 
 import MobileCategories from "./MobileCategories";
+import SearchBar from "./SearchBar";
 
 export default function Navbar() {
   const router = useRouter();
@@ -81,17 +81,7 @@ export default function Navbar() {
                 <AiOutlineShopping size={28} />
               </div>
             </div>
-            <div className="flex items-center justify-center w-full md:max-w-[500px] border border-gray-200 px-1 py-2 focus-within:border-gray-600 transition-all ease-linear group mt-1 md:mt-0">
-              <AiOutlineSearch
-                size={22}
-                className="text-gray-500 mx-1 transition-all ease-linear"
-              />
-              <input
-                className="w-full text-gray-600 focus:outline-none px-1"
-                type="text"
-                placeholder="Search..."
-              />
-            </div>
+            <SearchBar />
             <div className="hidden md:flex justify-center items-center gap-4 mt-3 md:mt-0">
               {authenticated ? (
                 <div
