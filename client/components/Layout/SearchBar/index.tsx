@@ -1,10 +1,18 @@
+import { useURLParams } from "@/context/ParamsContext";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 
 export default function SearchBar() {
   const router = useRouter();
+  const { q } = useURLParams();
   const [searchParam, setSearchParam] = useState("");
+
+  useEffect(() => {
+    if (q) {
+      setSearchParam(q);
+    }
+  }, [q]);
 
   const handleSearch = (e: any) => {
     if (

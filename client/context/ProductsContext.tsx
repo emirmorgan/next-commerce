@@ -42,6 +42,7 @@ export function ProductsProvider({ children }: ProductsContextProvider) {
     priceFrom,
     priceTo,
     sort,
+    q,
   } = useURLParams();
 
   const { user } = useAuth();
@@ -78,6 +79,7 @@ export function ProductsProvider({ children }: ProductsContextProvider) {
             priceFrom: priceFrom,
             priceTo: priceTo,
             pn: productsResponse.pageNumber,
+            q: q,
           },
         })
         .then((response) => {

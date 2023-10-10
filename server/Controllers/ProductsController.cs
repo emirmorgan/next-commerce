@@ -26,6 +26,7 @@ public class ProductsController : BaseController
         [FromQuery] string? color,
         [FromQuery] decimal? priceFrom,
         [FromQuery] decimal? priceTo,
+        [FromQuery] string? q,
         [FromQuery] int pn = 1
     )
     {
@@ -55,6 +56,12 @@ public class ProductsController : BaseController
         if (!string.IsNullOrEmpty(brand) && brand != "Any")
         {
             query = query.Where(p => p.Brand == brand);
+        }
+
+        if (!string.IsNullOrEmpty(q))
+        {
+            var qLower = q.ToLower();
+            query = query.Where(p => p.Name.ToLower().Contains(qLower));
         }
 
         if (priceFrom.HasValue)

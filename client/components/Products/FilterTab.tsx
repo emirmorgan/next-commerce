@@ -188,7 +188,7 @@ export default function FilterTab({ params }: FilterProps) {
             <AiFillCaretDown
               className={
                 "transition-all ease-linear duration-[250ms] " +
-                (toggleSubcategory ? " -rotate-180" : "")
+                (toggleBrand ? " -rotate-180" : "")
               }
               size={20}
             />

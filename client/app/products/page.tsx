@@ -10,9 +10,11 @@ import ProductCard from "@/components/ProductCard";
 import FilterTab from "@/components/Products/FilterTab";
 import Sort from "@/components/Products/Sort";
 import ProductCardSkeleton from "@/components/ProductCard/ProductCardSkeleton";
+import { useURLParams } from "@/context/ParamsContext";
 
 export default function ProductsPage() {
   const params = useSearchParams();
+  const { q } = useURLParams();
   const { productsResponse, isLoading, fetchProducts } = useProducts();
 
   useEffect(() => {
@@ -22,7 +24,10 @@ export default function ProductsPage() {
   return (
     <div className="flex justify-center mx-auto gap-3 my-3">
       <FilterTab params={params} />
-      <div className="flex flex-1 flex-col gap-2">
+      <div className="flex flex-1 flex-col">
+        {q && (
+          <span className="font-semibold text-xl">{`"${q}" search shows ${productsResponse.totalProducts} results`}</span>
+        )}
         <div className="flex justify-between items-center">
           <span className="font-semibold">
             Showing {productsResponse.pageNumber * 1} -{" "}
@@ -31,7 +36,8 @@ export default function ProductsPage() {
           </span>
           <Sort />
         </div>
-        <div className="flex gap-3 flex-wrap">
+
+        <div className="flex gap-3 flex-wrap mt-2">
           {isLoading
             ? Array.from({ length: 20 }).map((_, index) => (
                 <ProductCardSkeleton key={index} />
