@@ -1,22 +1,15 @@
 import { AiFillCaretDown } from "react-icons/ai";
 import { useState, FormEvent } from "react";
 
-import {
-  ReadonlyURLSearchParams,
-  usePathname,
-  useRouter,
-} from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { brands, categories, colors, subcategories } from "@/lib/constants";
 import { useURLParams } from "@/context/ParamsContext";
 
-type FilterProps = {
-  params: ReadonlyURLSearchParams;
-};
-
-export default function FilterTab({ params }: FilterProps) {
+export default function FilterTab() {
   const router = useRouter();
   const pathname = usePathname();
+  const { searchParams } = useURLParams();
 
   const {
     currentCategory,
@@ -38,7 +31,7 @@ export default function FilterTab({ params }: FilterProps) {
     const from = data.get("priceFrom") as string;
     const to = data.get("priceTo") as string;
 
-    const queryParams = new URLSearchParams(params);
+    const queryParams = new URLSearchParams(searchParams);
 
     if (from !== "") {
       queryParams.set("priceFrom", from);

@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useCallback } from "react";
 
-import { useSearchParams } from "next/navigation";
+import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 
 type ParamsContextProvider = {
   children: React.ReactNode;
@@ -17,6 +17,7 @@ type IParamsContext = {
   priceTo: string;
   sort: string;
   q: string;
+  searchParams: ReadonlyURLSearchParams;
   createQueryString: (name: string, value: string) => void;
 };
 
@@ -59,6 +60,7 @@ export function ParamsProvider({ children }: ParamsContextProvider) {
         priceTo,
         sort,
         q,
+        searchParams,
         createQueryString,
       }}
     >

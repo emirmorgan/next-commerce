@@ -58,7 +58,19 @@ export function ProductsProvider({ children }: ProductsContextProvider) {
 
   useEffect(() => {
     fetchProducts();
-  }, [user]);
+
+    // eslint-disable-next-line
+  }, [
+    user,
+    currentCategory,
+    currentSubcategory,
+    currentColor,
+    currentBrand,
+    priceFrom,
+    priceTo,
+    sort,
+    q,
+  ]);
 
   async function fetchProducts() {
     setIsLoading(true);

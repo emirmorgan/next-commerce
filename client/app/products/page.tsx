@@ -1,29 +1,21 @@
 "use client";
 
-import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-
 import { useProducts } from "@/context/ProductsContext";
+import { useURLParams } from "@/context/ParamsContext";
 
 //Components
 import ProductCard from "@/components/ProductCard";
 import FilterTab from "@/components/Products/FilterTab";
 import Sort from "@/components/Products/Sort";
 import ProductCardSkeleton from "@/components/ProductCard/ProductCardSkeleton";
-import { useURLParams } from "@/context/ParamsContext";
 
 export default function ProductsPage() {
-  const params = useSearchParams();
   const { q } = useURLParams();
-  const { productsResponse, isLoading, fetchProducts } = useProducts();
-
-  useEffect(() => {
-    fetchProducts();
-  }, [params]);
+  const { productsResponse, isLoading } = useProducts();
 
   return (
     <div className="flex justify-center mx-auto gap-3 my-3">
-      <FilterTab params={params} />
+      <FilterTab />
       <div className="flex flex-1 flex-col">
         {q && (
           <span className="font-semibold text-xl">{`"${q}" search shows ${productsResponse.totalProducts} results`}</span>
@@ -36,7 +28,6 @@ export default function ProductsPage() {
           </span>
           <Sort />
         </div>
-
         <div className="flex gap-3 flex-wrap mt-2">
           {isLoading
             ? Array.from({ length: 20 }).map((_, index) => (
