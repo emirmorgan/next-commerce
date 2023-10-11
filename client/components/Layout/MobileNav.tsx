@@ -21,7 +21,7 @@ export default function MobileNav() {
       <ul className="flex w-full justify-between whitespace-nowrap px-5 py-1">
         <li className="p-2 text-gray-800 hover:text-black">
           <Link
-            href="/category?=best-seller"
+            href="/products?category=Best Sellers"
             className="flex flex-col justify-center items-center text-center "
           >
             <AiOutlineFire size={22} />
