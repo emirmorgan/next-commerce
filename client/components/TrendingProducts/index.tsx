@@ -21,18 +21,19 @@ export default function TrendingProducts() {
                 <ProductCardSkeleton key={index} />
               ))
             : productsResponse.products.map((product) => (
-                <ProductCard
-                  id={product.id}
-                  key={product.id}
-                  brand={product.brand}
-                  name={product.name}
-                  src={product.src}
-                  alt="Product Image"
-                  slug={product.slug}
-                  price={product.price}
-                  discountPrice={product.discountPrice}
-                  isFavorite={product.isFavorite}
-                />
+                <div key={product.id} className="min-w-[230px]">
+                  <ProductCard
+                    id={product.id}
+                    brand={product.brand}
+                    name={product.name}
+                    src={product.src}
+                    alt={product.src}
+                    slug={product.slug}
+                    price={product.price}
+                    discountPrice={product.discountPrice}
+                    isFavorite={product.isFavorite}
+                  />
+                </div>
               ))}
         </Scrollable>
       </article>

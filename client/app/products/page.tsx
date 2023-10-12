@@ -39,7 +39,7 @@ export default function ProductsPage() {
           </span>
           <Sort />
         </div>
-        <div className="flex gap-3 flex-wrap mt-2">
+        <div className="grid justify-start grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-6 place-items-center gap-3 mt-3">
           {isLoading
             ? Array.from({ length: 20 }).map((_, index) => (
                 <ProductCardSkeleton key={index} />
@@ -51,7 +51,7 @@ export default function ProductsPage() {
                   brand={product.brand}
                   name={product.name}
                   src={product.src}
-                  alt="Product Image"
+                  alt={product.alt}
                   slug={product.slug}
                   price={product.price}
                   discountPrice={product.discountPrice}

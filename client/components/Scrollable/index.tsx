@@ -78,11 +78,11 @@ export default function Scrollable(userProps: ScrollableProps) {
   };
 
   return (
-    <div className="relative flex justify-center items-center rounded-md border-2 border-gray-100 bg-slate-50 py-4 px-3">
+    <div className="relative rounded-md border-2 border-gray-100 bg-slate-50 py-4 px-3">
       {isLeftArrowVisible && (
         <div
           onClick={() => arrowMovementControl("left")}
-          className="absolute z-10 left-[-14px] w-10 h-10 flex items-center justify-center border-2 border-gray-300 bg-gray-100 text-black rounded-full cursor-pointer transition-all ease-linear hover:bg-gray-200 hover:border-gray-400 hover:shadow"
+          className="absolute z-10 flex items-center justify-center my-auto w-10 h-10 left-[-14px] top-2/4 bottom-2/4 border-2 border-gray-300 bg-gray-100 text-black rounded-full cursor-pointer transition-all ease-linear hover:bg-gray-200 hover:border-gray-400 hover:shadow"
         >
           <AiOutlineLeft />
         </div>
@@ -95,7 +95,7 @@ export default function Scrollable(userProps: ScrollableProps) {
         onScroll={arrowVisibilityControl}
         onMouseLeave={() => setDragging(false)}
         className={
-          "flex gap-3 mx-auto overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] select-none" +
+          "flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] select-none" +
           (isDragging ? " scroll-auto" : " scroll-smooth")
         }
       >
@@ -104,7 +104,7 @@ export default function Scrollable(userProps: ScrollableProps) {
       {isRightArrowVisible && (
         <div
           onClick={() => arrowMovementControl("right")}
-          className="absolute z-10 right-[-14px] w-10 h-10 flex items-center justify-center border-2 border-gray-300 bg-gray-100 text-black rounded-full cursor-pointer transition-all ease-linear hover:bg-gray-200 hover:border-gray-400 hover:shadow"
+          className="absolute z-10 flex items-center justify-center my-auto w-10 h-10 right-[-14px] top-2/4 bottom-2/4 border-2 border-gray-300 bg-gray-100 text-black rounded-full cursor-pointer transition-all ease-linear hover:bg-gray-200 hover:border-gray-400 hover:shadow"
         >
           <AiOutlineRight />
         </div>

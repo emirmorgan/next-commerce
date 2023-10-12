@@ -49,7 +49,7 @@ export default function ProductCard(props: ProductCardProps) {
   return (
     <div
       onClick={handleNavigate}
-      className="relative z-0 group flex flex-col items-center flex-shrink-0 w-56 h-[360px] border cursor-pointer bg-white border-gray-300 hover:border-gray-400 transition-all ease-linear overflow-hidden"
+      className="relative z-0 group flex flex-auto w-full max-w-[280px] h-[360px] flex-col items-center border cursor-pointer bg-white border-gray-300 hover:border-gray-400 transition-all ease-linear overflow-hidden"
     >
       <div className="absolute top-2 right-2 z-[2]">
         <div
