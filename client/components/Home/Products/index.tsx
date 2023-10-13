@@ -13,7 +13,7 @@ export default function Products() {
   return (
     <section id="products">
       <article className="w-full px-5 my-5">
-        <div className="grid justify-start grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 place-items-center gap-3">
+        <div className="grid justify-start grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 place-items-center gap-3">
           {isLoading
             ? Array.from({ length: 20 }).map((_, index) => (
                 <ProductCardSkeleton key={index} />

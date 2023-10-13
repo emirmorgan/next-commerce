@@ -12,6 +12,7 @@ import FilterTab from "@/components/Products/FilterTab";
 import Sort from "@/components/Products/Sort";
 import ProductCardSkeleton from "@/components/ProductCard/ProductCardSkeleton";
 import MobileFilterTab from "@/components/Products/MobileFilterTab";
+import PaginationBar from "@/components/Products/PaginationBar";
 
 export default function ProductsPage() {
   const { q } = useURLParams();
@@ -20,7 +21,7 @@ export default function ProductsPage() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex justify-center mx-auto gap-3 my-3">
+    <div className="flex justify-center mx-auto gap-3 mt-2">
       <div className="hidden md:flex h-fit flex-col min-w-[250px] max-w-[250px] border border-gray-300">
         <div className="p-3">
           <span className="font-semibold">Filters</span>
@@ -33,13 +34,16 @@ export default function ProductsPage() {
         )}
         <div className="flex flex-col justify-between items-center gap-2 sm:gap-0 sm:flex-row">
           <span className="font-semibold">
-            Showing {productsResponse.pageNumber * 1} -{" "}
-            {productsResponse.pageNumber * productsResponse.pageSize} of{" "}
-            {productsResponse.totalProducts} results
+            Showing{" "}
+            {productsResponse.totalProducts >
+            productsResponse.pageNumber * productsResponse.pageSize
+              ? productsResponse.pageNumber * productsResponse.pageSize
+              : productsResponse.totalProducts}{" "}
+            of {productsResponse.totalProducts} results
           </span>
           <Sort />
         </div>
-        <div className="grid justify-start grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-6 place-items-center gap-3 mt-3">
+        <div className="grid justify-start grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 place-items-center gap-3 mt-3">
           {isLoading
             ? Array.from({ length: 20 }).map((_, index) => (
                 <ProductCardSkeleton key={index} />
@@ -59,6 +63,7 @@ export default function ProductsPage() {
                 />
               ))}
         </div>
+        <PaginationBar />
       </div>
       <MobileFilterTab isOpen={isOpen} setIsOpen={setIsOpen} />
       <div

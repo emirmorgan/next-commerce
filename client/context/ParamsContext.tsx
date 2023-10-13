@@ -17,6 +17,7 @@ type IParamsContext = {
   priceTo: string;
   sort: string;
   q: string;
+  pn: string;
   searchParams: ReadonlyURLSearchParams;
   createQueryString: (name: string, value: string) => void;
 };
@@ -38,6 +39,7 @@ export function ParamsProvider({ children }: ParamsContextProvider) {
   const priceTo = searchParams.get("priceTo") as string;
   const sort = searchParams.get("sort") as string;
   const q = searchParams.get("q") as string;
+  const pn = searchParams.get("pn") as string;
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -60,6 +62,7 @@ export function ParamsProvider({ children }: ParamsContextProvider) {
         priceTo,
         sort,
         q,
+        pn,
         searchParams,
         createQueryString,
       }}
