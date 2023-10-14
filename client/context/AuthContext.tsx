@@ -18,7 +18,7 @@ import setCookies from "@/lib/setCookies";
 import { User } from "@/lib/types";
 import verifyToken from "@/lib/verifyToken";
 
-import LoadingScreen from "@/components/Layout/LoadingScreen";
+import LoadingScreen from "@/components/Loading/LoadingScreen";
 
 type AuthContextProvider = {
   children: React.ReactNode;

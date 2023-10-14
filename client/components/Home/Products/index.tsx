@@ -4,8 +4,9 @@ import Link from "next/link";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
 import { useProducts } from "@/context/ProductsContext";
-import ProductCard from "@/components/ProductCard";
-import ProductCardSkeleton from "@/components/ProductCard/ProductCardSkeleton";
+
+import ProductCardSkeleton from "../ProductCard/Skeleton";
+import ProductCard from "../ProductCard";
 
 export default function Products() {
   const { productsResponse, isLoading } = useProducts();

@@ -5,9 +5,11 @@ import { useRef, useEffect, MutableRefObject } from "react";
 import { useModal } from "@/context/ModalContext";
 
 import useClickOutside from "@/hooks/useClickOutside";
-import PasswordModal from "./PasswordModal";
-import OrderModal from "./OrderModal";
-import AddressModal from "./AddressModal";
+
+//Modals
+import PasswordModal from "./Modals/PasswordModal";
+import OrderModal from "./Modals/OrderModal";
+import AddressModal from "./Modals/AddressModal";
 
 export default function Modal({ type }: { type: string }) {
   const modalType = {

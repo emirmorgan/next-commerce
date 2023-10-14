@@ -2,11 +2,11 @@
 
 import { createContext, useContext, useState } from "react";
 
-import ShoppingCart from "@/components/Layout/ShoppingCart";
-
 import { Cart, CartItem } from "@/lib/types";
 
 import useLocalStorage from "@/hooks/useLocalStorage";
+
+import ShoppingCart from "@/components/Home/Layout/ShoppingCart";
 
 type CartProvider = {
   children: React.ReactNode;
