@@ -115,8 +115,8 @@ export default function Navbar() {
                 <b className="text-xs">Shop Cart</b>
               </div>
             </div>
-            <Categories />
           </div>
+          <Categories />
         </div>
       </div>
     </header>
