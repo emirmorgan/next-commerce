@@ -25,7 +25,7 @@ export default function Sidebar() {
         (toggleSidebar ? " max-w-[230px]" : " max-w-[50px]")
       }
     >
-      <div className="flex justify-between items-center font-semibold w-full h-[50px] px-3 gap-3">
+      <div className="flex justify-between items-center font-semibold w-full h-[50px] border-b px-3 gap-3">
         <div
           onClick={() => router.push("/")}
           className={
@@ -46,7 +46,7 @@ export default function Sidebar() {
           )}
         </div>
       </div>
-      <ul className="flex flex-col font-semibold border-t gap-1">
+      <ul className="flex flex-col font-semibold gap-1">
         <li className="flex items-center w-full h-[42px] cursor-pointer select-none px-3 gap-2 hover:bg-neutral-100 ">
           <div className="min-w-[24px]">
             <AiOutlineHome size={24} />
