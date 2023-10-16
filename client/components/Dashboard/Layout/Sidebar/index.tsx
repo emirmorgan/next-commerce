@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Sidebar() {
   const router = useRouter();
@@ -47,38 +48,54 @@ export default function Sidebar() {
         </div>
       </div>
       <ul className="flex flex-col font-semibold gap-1">
-        <li className="flex items-center w-full h-[42px] cursor-pointer select-none px-3 gap-2 hover:bg-neutral-100 ">
-          <div className="min-w-[24px]">
-            <AiOutlineHome size={24} />
-          </div>
-          <span className={toggleSidebar ? " block" : " hidden"}>
-            Dashboard
-          </span>
-        </li>
-        <li className="flex items-center w-full h-[42px] cursor-pointer select-none px-3 gap-2 hover:bg-neutral-100 ">
-          <div className="min-w-[24px]">
-            <AiOutlineAppstoreAdd size={24} />
-          </div>
-          <span className={toggleSidebar ? " block" : " hidden"}>Products</span>
-        </li>
-        <li className="flex items-center w-full h-[42px] cursor-pointer select-none px-3 gap-2 hover:bg-neutral-100 ">
-          <div className="min-w-[24px]">
-            <AiOutlineApartment size={24} />
-          </div>
-          <span className={toggleSidebar ? " block" : " hidden"}>Orders</span>
-        </li>
-        <li className="flex items-center w-full h-[42px] cursor-pointer select-none px-3 gap-2 hover:bg-neutral-100 ">
-          <div className="min-w-[24px]">
-            <AiOutlineCreditCard size={24} />
-          </div>
-          <span className={toggleSidebar ? " block" : " hidden"}>Payments</span>
-        </li>
-        <li className="flex items-center w-full h-[42px] cursor-pointer select-none px-3 gap-2 hover:bg-neutral-100 ">
-          <div className="min-w-[24px]">
-            <AiOutlineMail size={24} />
-          </div>
-          <span className={toggleSidebar ? " block" : " hidden"}>Tickets</span>
-        </li>
+        <Link href="/dashboard">
+          <li className="flex items-center w-full h-[42px] cursor-pointer select-none px-3 gap-2 hover:bg-neutral-100 ">
+            <div className="min-w-[24px]">
+              <AiOutlineHome size={24} />
+            </div>
+            <span className={toggleSidebar ? " block" : " hidden"}>
+              Dashboard
+            </span>
+          </li>
+        </Link>
+        <Link href="/dashboard/products">
+          <li className="flex items-center w-full h-[42px] cursor-pointer select-none px-3 gap-2 hover:bg-neutral-100 ">
+            <div className="min-w-[24px]">
+              <AiOutlineAppstoreAdd size={24} />
+            </div>
+            <span className={toggleSidebar ? " block" : " hidden"}>
+              Products
+            </span>
+          </li>
+        </Link>
+        <Link href="/dashboard/orders">
+          <li className="flex items-center w-full h-[42px] cursor-pointer select-none px-3 gap-2 hover:bg-neutral-100 ">
+            <div className="min-w-[24px]">
+              <AiOutlineApartment size={24} />
+            </div>
+            <span className={toggleSidebar ? " block" : " hidden"}>Orders</span>
+          </li>
+        </Link>
+        <Link href="/dashboard/payments">
+          <li className="flex items-center w-full h-[42px] cursor-pointer select-none px-3 gap-2 hover:bg-neutral-100 ">
+            <div className="min-w-[24px]">
+              <AiOutlineCreditCard size={24} />
+            </div>
+            <span className={toggleSidebar ? " block" : " hidden"}>
+              Payments
+            </span>
+          </li>
+        </Link>
+        <Link href="/dashboard/tickets">
+          <li className="flex items-center w-full h-[42px] cursor-pointer select-none px-3 gap-2 hover:bg-neutral-100 ">
+            <div className="min-w-[24px]">
+              <AiOutlineMail size={24} />
+            </div>
+            <span className={toggleSidebar ? " block" : " hidden"}>
+              Tickets
+            </span>
+          </li>
+        </Link>
       </ul>
     </div>
   );
