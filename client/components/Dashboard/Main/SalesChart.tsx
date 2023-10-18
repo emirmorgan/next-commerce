@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+
 import { Bar } from "react-chartjs-2";
 
 ChartJS.register(
@@ -31,6 +32,11 @@ export const options = {
     y: {
       grid: {
         display: false,
+      },
+      ticks: {
+        callback: function (value: string) {
+          return "$" + value;
+        },
       },
     },
   },
@@ -64,15 +70,15 @@ export const data = {
       data: [800, 700, 800, 900, 600, 700, 700, 600, 500, 500, 400, 500],
       barPercentage: 0.5,
       borderRadius: 14,
-      backgroundColor: "rgb(0, 0, 0)",
+      backgroundColor: "rgb(138,43,226)",
     },
     {
       label: "Last Month",
       data: [400, 500, 500, 600, 500, 400, 300, 300, 200, 300, 400, 300],
       barPercentage: 0.4,
       borderRadius: 14,
-      backgroundColor: "rgba(0, 0, 0, 0.3)",
-      barThickness: 5,
+      backgroundColor: "rgba(138,43,226, 0.5)",
+      barThickness: 6,
     },
   ],
 };

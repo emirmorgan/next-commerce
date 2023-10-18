@@ -1,10 +1,12 @@
-import SalesChart from "@/components/Dashboard/Main/SalesChart";
 import {
   AiOutlineAppstore,
   AiOutlineDollarCircle,
   AiOutlineShoppingCart,
   AiOutlineUser,
 } from "react-icons/ai";
+
+import SalesChart from "@/components/Dashboard/Main/SalesChart";
+import { VisitorChart } from "@/components/Dashboard/Main/VisitorChart";
 
 export default function DashboardPage() {
   return (
@@ -40,21 +42,16 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-between xl:flex-row gap-3 mt-5">
-        <div className="flex flex-col w-full border rounded p-3">
+      <div className="flex flex-col gap-2 xl:flex-row">
+        <div className="flex flex-col w-full border mt-3 p-3 xl:w-2/4">
           <h1 className="text-lg font-semibold mb-3">Sales statistics</h1>
-          <div className="max-w-[700px]">
-            <SalesChart />
-          </div>
+          <SalesChart />
         </div>
-        <div className="flex flex-col w-full border rounded p-3">
-          <h1 className="font-semibold mb-3">Visitors</h1>
-          <div className="max-w-[700px]">
-            <SalesChart />
-          </div>
+        <div className="flex flex-col w-full justify-center items-center border mt-3 p-3 xl:w-2/4">
+          <h1 className="text-lg font-semibold mb-3">Visitor statistics</h1>
+          <VisitorChart />
         </div>
       </div>
-      <div className="flex flex-col mt-5">Latest Orders</div>
     </div>
   );
 }
