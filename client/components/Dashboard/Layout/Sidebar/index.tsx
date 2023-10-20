@@ -3,6 +3,8 @@
 import {
   AiOutlineApartment,
   AiOutlineAppstoreAdd,
+  AiOutlineArrowLeft,
+  AiOutlineBorder,
   AiOutlineCreditCard,
   AiOutlineHome,
   AiOutlineMail,
@@ -23,7 +25,7 @@ export default function Sidebar() {
     <div
       className={
         "flex flex-col border-r w-full transition-all ease-linear" +
-        (toggleSidebar ? " max-w-[230px]" : " max-w-[50px]")
+        (toggleSidebar ? " max-w-[50px] md:max-w-[230px]" : " max-w-[50px]")
       }
     >
       <div className="flex justify-between items-center font-semibold w-full h-[50px] border-b px-3 gap-3">
@@ -31,14 +33,20 @@ export default function Sidebar() {
           onClick={() => router.push("/")}
           className={
             "relative cursor-pointer w-8 h-8 min-w-8" +
-            (toggleSidebar ? " block" : " hidden")
+            (toggleSidebar ? " hidden md:block" : " hidden")
           }
         >
           <Image fill src="/assets/logo.png" alt="Logo" />
         </div>
         <div
+          onClick={() => router.push("/")}
+          className="block cursor-pointer md:hidden"
+        >
+          <AiOutlineArrowLeft size={24} />
+        </div>
+        <div
           onClick={() => setToggleSidebar(!toggleSidebar)}
-          className="flex items-center justify-center rounded-full cursor-pointer"
+          className="hidden md:flex items-center justify-center rounded-full cursor-pointer"
         >
           {toggleSidebar ? (
             <AiOutlineMenuFold size={24} />
@@ -53,7 +61,7 @@ export default function Sidebar() {
             <div className="min-w-[24px]">
               <AiOutlineHome size={24} />
             </div>
-            <span className={toggleSidebar ? " block" : " hidden"}>
+            <span className={toggleSidebar ? " hidden md:block" : " hidden"}>
               Dashboard
             </span>
           </li>
@@ -63,7 +71,7 @@ export default function Sidebar() {
             <div className="min-w-[24px]">
               <AiOutlineAppstoreAdd size={24} />
             </div>
-            <span className={toggleSidebar ? " block" : " hidden"}>
+            <span className={toggleSidebar ? " hidden md:block" : " hidden"}>
               Products
             </span>
           </li>
@@ -73,7 +81,9 @@ export default function Sidebar() {
             <div className="min-w-[24px]">
               <AiOutlineApartment size={24} />
             </div>
-            <span className={toggleSidebar ? " block" : " hidden"}>Orders</span>
+            <span className={toggleSidebar ? " hidden md:block" : " hidden"}>
+              Orders
+            </span>
           </li>
         </Link>
         <Link href="/dashboard/payments">
@@ -81,7 +91,7 @@ export default function Sidebar() {
             <div className="min-w-[24px]">
               <AiOutlineCreditCard size={24} />
             </div>
-            <span className={toggleSidebar ? " block" : " hidden"}>
+            <span className={toggleSidebar ? " hidden md:block" : " hidden"}>
               Payments
             </span>
           </li>
@@ -91,7 +101,7 @@ export default function Sidebar() {
             <div className="min-w-[24px]">
               <AiOutlineMail size={24} />
             </div>
-            <span className={toggleSidebar ? " block" : " hidden"}>
+            <span className={toggleSidebar ? " hidden md:block" : " hidden"}>
               Tickets
             </span>
           </li>

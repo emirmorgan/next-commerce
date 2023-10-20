@@ -34,7 +34,7 @@ export default function Order({
       <div className="flex flex-1 items-start justify-start">
         <span>{contact}</span>
       </div>
-      <div className="flex flex-1 items-start justify-start">
+      <div className="hidden md:flex flex-1 items-start justify-start">
         <span>{"$" + orderTotal}</span>
       </div>
       <div className="flex flex-1 items-start justify-start">{status}</div>
@@ -47,7 +47,7 @@ export default function Order({
 
 const Preparing = () => {
   return (
-    <div className="bg-orange-100 text-orange-600 py-1 px-2 rounded-full text-sm font-semibold">
+    <div className="bg-orange-100 text-orange-600 py-1 px-2 rounded-full text-xs font-semibold md:text-sm">
       Preparing
     </div>
   );
@@ -55,7 +55,7 @@ const Preparing = () => {
 
 const Shipping = () => {
   return (
-    <div className="bg-purple-100 text-purple-600 py-1 px-2 rounded-full text-sm font-semibold">
+    <div className="bg-purple-100 text-purple-600 py-1 px-2 rounded-full text-xs font-semibold md:text-sm">
       Shipping
     </div>
   );
@@ -63,7 +63,7 @@ const Shipping = () => {
 
 const Delivered = () => {
   return (
-    <div className="bg-green-100 text-green-600 py-1 px-2 rounded-full text-sm font-semibold">
+    <div className="bg-green-100 text-green-600 py-1 px-2 rounded-full text-xs font-semibold md:text-sm">
       Delivered
     </div>
   );
