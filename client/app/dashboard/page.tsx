@@ -2,12 +2,13 @@ import {
   AiFillDollarCircle,
   AiFillShopping,
   AiOutlineAppstore,
-  AiOutlineShoppingCart,
   AiOutlineUser,
 } from "react-icons/ai";
 
+//Components
 import SalesChart from "@/components/Dashboard/Main/SalesChart";
-import { VisitorChart } from "@/components/Dashboard/Main/VisitorChart";
+import VisitorChart from "@/components/Dashboard/Main/VisitorChart";
+import LastOrders from "@/components/Dashboard/Main/LastOrders";
 
 export default function DashboardPage() {
   return (
@@ -56,11 +57,12 @@ export default function DashboardPage() {
           <h1 className="text-lg font-semibold mb-3">Sales statistics</h1>
           <SalesChart />
         </div>
-        <div className="flex flex-col w-full justify-center items-center border mt-3 p-3 xl:w-2/4">
+        <div className="flex flex-col w-full justify-center items-center border overflow-hidden mt-3 p-3 xl:w-2/4">
           <h1 className="text-lg font-semibold mb-3">Visitor statistics</h1>
           <VisitorChart />
         </div>
       </div>
+      <LastOrders />
     </div>
   );
 }

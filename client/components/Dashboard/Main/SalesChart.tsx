@@ -34,7 +34,7 @@ export const options = {
         display: false,
       },
       ticks: {
-        callback: function (value: string) {
+        callback: (value: string) => {
           return "$" + value;
         },
       },

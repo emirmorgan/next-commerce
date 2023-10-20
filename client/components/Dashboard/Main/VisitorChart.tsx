@@ -50,7 +50,7 @@ export const data = {
   ],
 };
 
-export function VisitorChart() {
+export default function VisitorChart() {
   return (
     <div className="w-[340px] h-[340px]">
       <Doughnut options={options} data={data} />
