@@ -4,5 +4,6 @@
     <Import Project="$(NuGetPackageRoot)system.text.json\7.0.0\buildTransitive\net6.0\System.Text.Json.targets" Condition="Exists('$(NuGetPackageRoot)system.text.json\7.0.0\buildTransitive\net6.0\System.Text.Json.targets')" />
     <Import Project="$(NuGetPackageRoot)sqlitepclraw.lib.e_sqlite3\2.1.4\buildTransitive\net7.0\SQLitePCLRaw.lib.e_sqlite3.targets" Condition="Exists('$(NuGetPackageRoot)sqlitepclraw.lib.e_sqlite3\2.1.4\buildTransitive\net7.0\SQLitePCLRaw.lib.e_sqlite3.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.extensions.logging.abstractions\7.0.0\buildTransitive\net6.0\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.logging.abstractions\7.0.0\buildTransitive\net6.0\Microsoft.Extensions.Logging.Abstractions.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.identity.ui\7.0.12\buildTransitive\Microsoft.AspNetCore.Identity.UI.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.identity.ui\7.0.12\buildTransitive\Microsoft.AspNetCore.Identity.UI.targets')" />
   </ImportGroup>
 </Project>

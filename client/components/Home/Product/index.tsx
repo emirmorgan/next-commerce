@@ -59,6 +59,7 @@ export default function ProductDetails() {
       setIsLoading(false);
       router.push("/");
     }
+    // eslint-disable-next-line
   }, [params.slug]);
 
   if (isLoading) {

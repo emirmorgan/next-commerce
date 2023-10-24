@@ -20,6 +20,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     fetchOrders();
+    // eslint-disable-next-line
   }, []);
 
   if (!user) {

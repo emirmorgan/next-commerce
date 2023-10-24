@@ -1,115 +1,118 @@
-﻿using System.Security.Cryptography;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
-
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
-using server.Data;
+using Microsoft.IdentityModel.Tokens;
 using server.DTOs;
-using server.Interfaces;
-using server.Models;
 
 namespace server.Controllers;
 
 public class AuthController : BaseController
 {
-    private readonly CommerceContext _context;
-    private readonly ITokenService _tokenService;
+    private readonly UserManager<User> userManager;
+    private readonly RoleManager<IdentityRole> roleManager;
+    private readonly IConfiguration _configuration;
 
-    public AuthController(CommerceContext context, ITokenService tokenService)
+    public AuthController(
+        UserManager<User> userManager,
+        RoleManager<IdentityRole> roleManager,
+        IConfiguration configuration
+    )
     {
-        _context = context;
-        _tokenService = tokenService;
+        this.userManager = userManager;
+        this.roleManager = roleManager;
+        _configuration = configuration;
     }
 
-    [HttpPost] // POST: api/auth
-    public async Task<ActionResult<UserDTO>> Auth(AuthDTO authDTO)
+    [HttpPost("register")]
+    public async Task<IActionResult> Register(AuthDTO authDTO)
     {
-        if (authDTO.Type == "register")
+        if (await AlreadyExist(authDTO.Email))
+            return Unauthorized("already-exist");
+
+        var user = new User
         {
-            if (await AlreadyExist(authDTO.Email))
-                return BadRequest("already-exist");
+            UserName = authDTO.Email,
+            Email = authDTO.Email,
+            SecurityStamp = Guid.NewGuid().ToString(),
+        };
 
-            using var hmac = new HMACSHA256();
+        var result = await userManager.CreateAsync(user, authDTO.Password);
 
-            var register = new User
-            {
-                Email = authDTO.Email,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(authDTO.Password)),
-                PasswordSalt = hmac.Key,
-            };
-
-            _context.Users.Add(register);
-            await _context.SaveChangesAsync();
-
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == authDTO.Email);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return new UserDTO
-            {
-                UserID = user.Id,
-                Token = await _tokenService.CreateToken(user),
-                Email = user.Email,
-                Role = user.Role,
-            };
-        }
-        else if (authDTO.Type == "login")
+        if (!result.Succeeded)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == authDTO.Email);
-
-            if (user == null)
-                return Unauthorized("wrong-email-or-password");
-
-            using var hmac = new HMACSHA256(user.PasswordSalt);
-
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(authDTO.Password));
-
-            for (int i = 0; i < computedHash.Length; i++)
-            {
-                if (computedHash[i] != user.PasswordHash[i])
-                    return Unauthorized("wrong-email-or-password");
-            }
-
-            var userData = await _context.Users
-                .Include(u => u.Address)
-                .FirstOrDefaultAsync(u => u.Id == user.Id);
-
-            if (userData == null)
-            {
-                return NotFound();
-            }
-
-            var userDTO = new UserDTO
-            {
-                UserID = userData.Id,
-                Token = await _tokenService.CreateToken(user),
-                Email = userData.Email,
-                Role = userData.Role,
-                Address =
-                    userData.Address != null
-                        ? new AddressDTO
-                        {
-                            Title = userData.Address.Title,
-                            Details = userData.Address.Details,
-                            ContactNumber = userData.Address.ContactNumber,
-                        }
-                        : null
-            };
-
-            return Ok(userDTO);
+            return BadRequest("Something went wrong, please try again. " + result.Errors);
         }
-        else
+
+        if (!await roleManager.RoleExistsAsync("USER"))
+            await roleManager.CreateAsync(new IdentityRole("USER"));
+
+        if (await roleManager.RoleExistsAsync("USER"))
+            await userManager.AddToRoleAsync(user, "USER");
+
+        return Ok("Account successfully created.");
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(AuthDTO authDTO)
+    {
+        var user = await userManager.FindByNameAsync(authDTO.Email);
+
+        Console.WriteLine(authDTO.Email + " " + authDTO.Password);
+
+        if (user == null)
+            return Unauthorized("wrong-email-or-password");
+        if (!await userManager.CheckPasswordAsync(user, authDTO.Password))
+            return Unauthorized("wrong-email-or-password");
+
+        var userRoles = await userManager.GetRolesAsync(user);
+        var authClaims = new List<Claim>
         {
-            return BadRequest("Unknown type.");
+            new Claim(ClaimTypes.Name, user.Email),
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        };
+
+        foreach (var userRole in userRoles)
+        {
+            authClaims.Add(new Claim(ClaimTypes.Role, userRole));
         }
+
+        string token = CreateToken(authClaims);
+
+        return Ok(token);
     }
 
     private async Task<bool> AlreadyExist(string email)
     {
-        return await _context.Users.AnyAsync(x => x.Email == email.ToLower());
+        var user = await userManager.FindByNameAsync(email);
+        return user != null;
+    }
+
+    private string CreateToken(IEnumerable<Claim> claims)
+    {
+        var authSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(_configuration["JWTKey:Secret"])
+        );
+        var _TokenExpiryTimeInHour = Convert.ToInt64(
+            _configuration["JWTKey:TokenExpiryTimeInHour"]
+        );
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Issuer = _configuration["JWTKey:ValidIssuer"],
+            Audience = _configuration["JWTKey:ValidAudience"],
+            Expires = DateTime.UtcNow.AddHours(_TokenExpiryTimeInHour),
+            SigningCredentials = new SigningCredentials(
+                authSigningKey,
+                SecurityAlgorithms.HmacSha256
+            ),
+            Subject = new ClaimsIdentity(claims)
+        };
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        return tokenHandler.WriteToken(token);
     }
 }

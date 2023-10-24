@@ -5,34 +5,34 @@ namespace server.DTOs
     public class ProductDTO
     {
         [Required]
-        public int Id { get; set; }
+        public required int Id { get; set; }
 
         [Required]
-        public string Brand { get; set; }
+        public required string Brand { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         [Required]
-        public string Src { get; set; }
+        public required string Src { get; set; }
 
         [Required]
-        public string Alt { get; set; }
+        public required string Alt { get; set; }
 
         [Required]
-        public decimal Price { get; set; }
+        public required decimal Price { get; set; }
 
         public decimal? DiscountPrice { get; set; }
 
         public string? Color { get; set; }
 
         [Required]
-        public DateTime Date { get; set; }
+        public required DateTime Date { get; set; }
 
         [Required]
-        public string Slug { get; set; }
+        public required string Slug { get; set; }
 
         [Required]
-        public bool IsFavorite { get; set; } = false;
+        public required bool IsFavorite { get; set; } = false;
     }
 }

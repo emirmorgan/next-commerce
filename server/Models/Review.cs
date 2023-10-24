@@ -7,9 +7,9 @@ public class Review
     public int Rating { get; set; }
     public DateTime ReviewDate { get; set; }
 
-    public Product Product { get; set; }
+    public required Product Product { get; set; }
     public int ProductId { get; set; }
 
-    public User User { get; set; }
-    public int UserId { get; set; }
+    public required User User { get; set; }
+    public required string UserId { get; set; }
 }

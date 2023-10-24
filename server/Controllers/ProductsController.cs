@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,10 +10,12 @@ namespace server.Controllers;
 
 public class ProductsController : BaseController
 {
+    private readonly UserManager<User> userManager;
     private readonly CommerceContext _context;
 
-    public ProductsController(CommerceContext context)
+    public ProductsController(UserManager<User> userManager, CommerceContext context)
     {
+        this.userManager = userManager;
         _context = context;
     }
 
@@ -101,9 +104,9 @@ public class ProductsController : BaseController
 
         if (User.Identity.IsAuthenticated)
         {
-            var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
+            var user = await userManager.GetUserAsync(User);
 
-            if (uid == 0)
+            if (user == null)
             {
                 return Unauthorized();
             }
@@ -123,7 +126,7 @@ public class ProductsController : BaseController
                             Date = p.Date,
                             Slug = p.Slug,
                             IsFavorite = _context.Favorites.Any(
-                                f => f.UserId == uid && f.ProductId == p.Id
+                                f => f.UserId == user.Id && f.ProductId == p.Id
                             ),
                         }
                 )

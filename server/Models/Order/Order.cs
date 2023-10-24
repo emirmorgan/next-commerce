@@ -13,7 +13,7 @@ public class Order
     public string? DeliveryTrace { get; set; }
     public string? DeliveryInvoice { get; set; }
 
-    public int UserID { get; set; }
+    public string UserID { get; set; }
     public virtual User User { get; set; }
 
     public virtual ICollection<OrderItem> OrderItems { get; set; }

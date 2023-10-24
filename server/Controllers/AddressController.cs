@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,19 +11,21 @@ namespace server.Controllers;
 [Authorize]
 public class AddressController : BaseController
 {
+    private readonly UserManager<User> userManager;
     private readonly CommerceContext _context;
 
-    public AddressController(CommerceContext context)
+    public AddressController(UserManager<User> userManager, CommerceContext context)
     {
+        this.userManager = userManager;
         _context = context;
     }
 
     [HttpPost("add")] //api/address/add
     public async Task<ActionResult<AddressDTO>> AddAddress(AddressDTO addressDTO)
     {
-        var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
+        var user = await userManager.GetUserAsync(User);
 
-        if (uid == 0)
+        if (user == null)
         {
             return Unauthorized();
         }
@@ -32,7 +35,7 @@ public class AddressController : BaseController
             Title = addressDTO.Title,
             Details = addressDTO.Details,
             ContactNumber = addressDTO.ContactNumber,
-            UserId = uid
+            UserId = user.Id
         };
 
         _context.Address.Add(address);
@@ -44,14 +47,16 @@ public class AddressController : BaseController
     [HttpPost("update")] //api/address/update
     public async Task<ActionResult<AddressDTO>> UpdateAddress(AddressDTO addressDTO)
     {
-        var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
+        var user = await userManager.GetUserAsync(User);
 
-        if (uid == 0)
+        if (user == null)
         {
             return Unauthorized();
         }
 
-        var userAddress = await _context.Address.Where(a => a.UserId == uid).FirstOrDefaultAsync();
+        var userAddress = await _context.Address
+            .Where(a => a.UserId == user.Id)
+            .FirstOrDefaultAsync();
 
         if (userAddress == null)
         {
@@ -70,14 +75,16 @@ public class AddressController : BaseController
     [HttpPost("delete")] //api/address/delete
     public async Task<ActionResult<AddressDTO>> DeleteAddress()
     {
-        var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
+        var user = await userManager.GetUserAsync(User);
 
-        if (uid == 0)
+        if (user == null)
         {
             return Unauthorized();
         }
 
-        var userAddress = await _context.Address.Where(a => a.UserId == uid).FirstOrDefaultAsync();
+        var userAddress = await _context.Address
+            .Where(a => a.UserId == user.Id)
+            .FirstOrDefaultAsync();
 
         if (userAddress == null)
         {

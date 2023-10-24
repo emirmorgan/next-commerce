@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using server.Models;
 
 public class Address
 {
@@ -7,15 +6,15 @@ public class Address
     public int Id { get; set; }
 
     [Required]
-    public string Title { get; set; }
+    public required string Title { get; set; }
 
     [Required]
-    public string ContactNumber { get; set; }
+    public required string ContactNumber { get; set; }
 
     [Required]
-    public string Details { get; set; }
+    public required string Details { get; set; }
 
     [Required]
-    public int UserId { get; set; }
-    public User User { get; set; }
+    public required string UserId { get; set; }
+    public User? User { get; set; }
 }

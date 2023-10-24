@@ -5,23 +5,23 @@ namespace server.DTOs
     public class FavoriteDTO
     {
         [Required]
-        public string Brand { get; set; }
+        public required string Brand { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         [Required]
-        public string Src { get; set; }
+        public required string Src { get; set; }
 
         [Required]
-        public string Alt { get; set; }
+        public required string Alt { get; set; }
 
         [Required]
-        public decimal Price { get; set; }
+        public required decimal Price { get; set; }
 
         public decimal? DiscountPrice { get; set; }
 
         [Required]
-        public string Slug { get; set; }
+        public required string Slug { get; set; }
     }
 }

@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
-  if (matchesProtectedPath && verifiedToken.userRole !== "ADMIN") {
+  if (matchesProtectedPath && verifiedToken.role !== "ADMIN") {
     const response = NextResponse.redirect(new URL("/login", request.url));
     response.cookies.delete("token");
     return response;

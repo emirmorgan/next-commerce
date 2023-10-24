@@ -1,10 +1,10 @@
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+
+using System.Text;
 using server.Data;
-using server.Interfaces;
-using server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,22 +22,49 @@ builder.Services
             .IgnoreCycles;
     });
 
+// DB Connection
 builder.Services.AddDbContext<CommerceContext>(
     options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
-builder.Services.AddScoped<ITokenService, TokenService>();
+
+// Identity
 builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<CommerceContext>()
+    .AddDefaultTokenProviders();
+
+// Identity Options
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 6;
+});
+
+// Authentication & Jwt Bearer
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
     .AddJwtBearer(options =>
     {
-        options.TokenValidationParameters = new TokenValidationParameters
+        options.SaveToken = true;
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new TokenValidationParameters()
         {
-            ValidateIssuerSigningKey = true,
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["JWTKey:ValidAudience"],
+            ValidIssuer = builder.Configuration["JWTKey:ValidIssuer"],
+            ClockSkew = TimeSpan.Zero,
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])
-            ),
-            ValidateIssuer = false,
-            ValidateAudience = false,
+                Encoding.UTF8.GetBytes(builder.Configuration["JWTKey:Secret"])
+            )
         };
     });
 
@@ -50,6 +77,7 @@ builder.Services.AddCors(
             policy.AllowAnyOrigin();
         })
 );
+
 var app = builder.Build();
 
 app.UseHttpsRedirection();
@@ -59,5 +87,20 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    var roles = new[] { "ADMIN", "USER" };
+
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+}
 
 app.Run();

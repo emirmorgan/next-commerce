@@ -5,11 +5,12 @@ namespace server.DTOs
     public class ProductSimilarDTO
     {
         [Required]
-        public int Id { get; set; }
+        public required int Id { get; set; }
 
         [Required]
-        public string Src { get; set; }
+        public required string Src { get; set; }
 
-        public string Alt { get; set; }
+        [Required]
+        public required string Alt { get; set; }
     }
 }

@@ -87,8 +87,7 @@ export function AuthProvider({ children }: AuthContextProvider) {
 
   async function authRegister(email: string, password: string) {
     axios
-      .post(process.env.NEXT_PUBLIC_API_URL + "/auth", {
-        type: "register",
+      .post(process.env.NEXT_PUBLIC_API_URL + "/auth/register", {
         email: email,
         password: password,
       })
@@ -117,13 +116,12 @@ export function AuthProvider({ children }: AuthContextProvider) {
 
   async function authLogin(email: string, password: string) {
     axios
-      .post(process.env.NEXT_PUBLIC_API_URL + "/auth", {
-        type: "login",
+      .post(process.env.NEXT_PUBLIC_API_URL + "/auth/login", {
         email: email,
         password: password,
       })
       .then(async (res) => {
-        const token = res.data.token;
+        const token = res.data;
 
         axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 
@@ -137,6 +135,7 @@ export function AuthProvider({ children }: AuthContextProvider) {
         setUser(user);
         setAuthenticated(true);
         toast.success("Successfully logged in.");
+        route.push("/");
       })
       .catch((err) => {
         if (err.response.data === "wrong-email-or-password") {

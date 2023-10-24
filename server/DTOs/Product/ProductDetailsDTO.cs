@@ -5,30 +5,30 @@ namespace server.DTOs
     public class ProductDetailsDTO
     {
         [Required]
-        public int Id { get; set; }
+        public required int Id { get; set; }
 
         [Required]
-        public string Brand { get; set; }
+        public required string Brand { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         [Required]
-        public string Desc { get; set; }
+        public required string Desc { get; set; }
 
         [Required]
-        public decimal Price { get; set; }
+        public required decimal Price { get; set; }
 
         public decimal? DiscountPrice { get; set; }
 
         [Required]
-        public string Slug { get; set; }
+        public required string Slug { get; set; }
 
         [Required]
-        public string Category { get; set; }
+        public required string Category { get; set; }
 
         [Required]
-        public string Subcategory { get; set; }
+        public required string Subcategory { get; set; }
 
         public List<ProductVariantDTO>? Variants { get; set; }
 

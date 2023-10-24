@@ -1,6 +1,8 @@
-﻿using System.Security.Cryptography;
+﻿using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,44 +14,42 @@ namespace server.Controllers;
 [Authorize]
 public class UserController : BaseController
 {
+    private readonly UserManager<User> userManager;
     private readonly CommerceContext _context;
 
-    public UserController(CommerceContext context)
+    public UserController(CommerceContext context, UserManager<User> userManager)
     {
         _context = context;
+        this.userManager = userManager;
     }
 
     [HttpGet] // api/user/
     public async Task<ActionResult<UserDTO>> GetUser()
     {
-        var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
+        var user = await userManager.Users
+            .Include(u => u.Address)
+            .SingleOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
-        if (uid == 0)
+        if (user == null)
         {
             return Unauthorized();
         }
 
-        var userData = await _context.Users
-            .Include(u => u.Address)
-            .FirstOrDefaultAsync(u => u.Id == uid);
-
-        if (userData == null)
-        {
-            return NotFound();
-        }
+        var userRoles = await userManager.GetRolesAsync(user);
+        var role = userRoles.FirstOrDefault();
 
         return new UserDTO
         {
-            UserID = userData.Id,
-            Email = userData.Email,
-            Role = userData.Role,
+            UserID = user.Id,
+            Email = user.Email,
+            Role = role,
             Address =
-                userData.Address != null
+                user.Address != null
                     ? new AddressDTO
                     {
-                        Title = userData.Address.Title,
-                        Details = userData.Address.Details,
-                        ContactNumber = userData.Address.ContactNumber,
+                        Title = user.Address.Title,
+                        Details = user.Address.Details,
+                        ContactNumber = user.Address.ContactNumber,
                     }
                     : null,
         };
@@ -58,15 +58,15 @@ public class UserController : BaseController
     [HttpGet("order")] // api/user/order
     public async Task<ActionResult<OrderDTO>> GetUserOrders()
     {
-        var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
+        var user = await userManager.GetUserAsync(User);
 
-        if (uid == 0)
+        if (user == null)
         {
             return Unauthorized();
         }
 
         var orders = await _context.Orders
-            .Where(o => o.UserID == uid)
+            .Where(o => o.UserID == user.Id)
             .Include(i => i.OrderItems)
             .ToListAsync();
 
@@ -110,39 +110,28 @@ public class UserController : BaseController
     [HttpPost("password/update")] // POST: api/user/password/update
     public async Task<ActionResult<UpdatePasswordDTO>> UpdatePassword(UpdatePasswordDTO request)
     {
-        if (request.newPassword == null || request.currentPassword == null)
-            return Unauthorized("Something is not right.");
+        var user = await userManager.GetUserAsync(User);
 
-        var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
-
-        if (uid == 0)
+        if (user == null)
         {
             return Unauthorized();
         }
 
-        var user = await _context.Users.Where(u => u.Id == uid).FirstOrDefaultAsync();
+        var changePasswordResult = await userManager.ChangePasswordAsync(
+            user,
+            request.currentPassword,
+            request.newPassword
+        );
 
-        if (user == null)
+        if (changePasswordResult.Succeeded)
         {
-            return NotFound();
+            return Ok("Password changed successfully.");
         }
-
-        using var hmac = new HMACSHA256(user.PasswordSalt);
-
-        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(request.currentPassword));
-
-        for (int i = 0; i < computedHash.Length; i++)
+        else
         {
-            if (computedHash[i] != user.PasswordHash[i])
-                return Unauthorized("wrong-password");
+            return BadRequest(
+                "Password change failed. Please check your old password and try again."
+            );
         }
-
-        var newPasswordHashed = hmac.ComputeHash(Encoding.UTF8.GetBytes(request.newPassword));
-
-        user.PasswordHash = newPasswordHashed;
-
-        await _context.SaveChangesAsync();
-
-        return Ok();
     }
 }

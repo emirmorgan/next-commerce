@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 using server.Models;
 
 namespace server.Data;
 
-public class CommerceContext : DbContext
+public class CommerceContext : IdentityDbContext<User>
 {
-    public DbSet<User> Users { get; set; }
     public DbSet<Cart> Cart { get; set; }
     public DbSet<Favorite> Favorites { get; set; }
     public DbSet<Review> Reviews { get; set; }
@@ -23,12 +24,6 @@ public class CommerceContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder
-            .Entity<User>()
-            .HasOne(u => u.Address)
-            .WithOne(a => a.User)
-            .HasForeignKey<Address>(a => a.UserId);
-
         base.OnModelCreating(modelBuilder);
     }
 

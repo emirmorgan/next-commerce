@@ -5,12 +5,12 @@ namespace server.DTOs
     public class ProductVariantDTO
     {
         [Required]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         [Required]
-        public string Value { get; set; }
+        public required string Value { get; set; }
 
         [Required]
-        public int Quantity { get; set; }
+        public required int Quantity { get; set; }
     }
 }

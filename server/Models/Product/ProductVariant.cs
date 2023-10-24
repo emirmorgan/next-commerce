@@ -3,10 +3,10 @@ using server.Models;
 public class ProductVariant
 {
     public int Id { get; set; }
-    public string Name { get; set; }
-    public string Value { get; set; }
-    public int Quantity { get; set; }
+    public required string Name { get; set; }
+    public required string Value { get; set; }
+    public required int Quantity { get; set; } = 0;
 
-    public Product Product { get; set; }
-    public int ProductId { get; set; }
+    public required Product Product { get; set; }
+    public required int ProductId { get; set; }
 }

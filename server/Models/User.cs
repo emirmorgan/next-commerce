@@ -1,24 +1,6 @@
-﻿namespace server.Models;
+using Microsoft.AspNetCore.Identity;
 
-using System.ComponentModel.DataAnnotations;
-
-public class User
+public class User : IdentityUser
 {
-    [Key]
-    public int Id { get; set; }
-
-    [Required]
-    [EmailAddress]
-    public string Email { get; set; }
-
-    [Required]
-    public byte[] PasswordHash { get; set; }
-
-    [Required]
-    public byte[] PasswordSalt { get; set; }
-
-    [Required]
-    public string Role { get; set; } = "USER";
-
-    public Address Address { get; set; }
+    public Address? Address { get; set; }
 }

@@ -10,7 +10,7 @@ namespace server.DTOs
             ErrorMessage = "Current password can't be shorter than 8 digit and longer than 128 digit.",
             MinimumLength = 6
         )]
-        public string currentPassword { get; set; }
+        public required string currentPassword { get; set; }
 
         [Required]
         [StringLength(
@@ -18,6 +18,6 @@ namespace server.DTOs
             ErrorMessage = "New password can't be shorter than 8 digit and longer than 128 digit.",
             MinimumLength = 6
         )]
-        public string newPassword { get; set; }
+        public required string newPassword { get; set; }
     }
 }

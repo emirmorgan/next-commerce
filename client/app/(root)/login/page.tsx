@@ -1,25 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
-import { useAuth } from "@/context/AuthContext";
-
-import LoadingScreen from "@/components/Loading/LoadingScreen";
 import LoginForm from "@/components/Home/Login/Forms/LoginForm";
 import RegisterForm from "@/components/Home/Login/Forms/RegisterForm";
 
 export default function LoginPage() {
-  const { authenticated } = useAuth();
-  const router = useRouter();
-
   const [currentForm, setCurrentForm] = useState("login");
-
-  if (authenticated) {
-    router.push("/");
-
-    return <LoadingScreen />;
-  }
 
   const formType = {
     login: <LoginForm setForm={setCurrentForm} />,

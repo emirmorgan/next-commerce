@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,19 +11,21 @@ namespace server.Controllers;
 [Authorize]
 public class FavoritesController : BaseController
 {
+    private readonly UserManager<User> userManager;
     private readonly CommerceContext _context;
 
-    public FavoritesController(CommerceContext context)
+    public FavoritesController(UserManager<User> userManager, CommerceContext context)
     {
+        this.userManager = userManager;
         _context = context;
     }
 
     [HttpPost("add/{productId}")] //api/favorites/add
     public async Task<ActionResult<Favorite>> AddFavorite(int productId)
     {
-        var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
+        var user = await userManager.GetUserAsync(User);
 
-        if (uid == 0)
+        if (user == null)
         {
             return Unauthorized();
         }
@@ -34,7 +37,7 @@ public class FavoritesController : BaseController
             return NotFound("product-not-exist");
         }
 
-        var favorite = new Favorite { UserId = uid, ProductId = productId, };
+        var favorite = new Favorite { UserId = user.Id, ProductId = productId, };
 
         _context.Favorites.Add(favorite);
         await _context.SaveChangesAsync();
@@ -45,15 +48,15 @@ public class FavoritesController : BaseController
     [HttpPost("delete/{productId}")] //api/favorites/delete
     public async Task<ActionResult<Favorite>> DeleteFavorite(int productId)
     {
-        var uid = int.Parse(User?.Claims.FirstOrDefault(c => c.Type == "userid")?.Value ?? "0");
+        var user = await userManager.GetUserAsync(User);
 
-        if (uid == 0)
+        if (user == null)
         {
             return Unauthorized();
         }
 
         var favorite = await _context.Favorites.FirstOrDefaultAsync(
-            f => f.UserId == uid && f.ProductId == productId
+            f => f.UserId == user.Id && f.ProductId == productId
         );
 
         if (favorite == null)
