@@ -5,6 +5,7 @@ import {
   AiOutlineLock,
   AiOutlineMail,
 } from "react-icons/ai";
+
 import { Form, Formik, Field, ErrorMessage } from "formik";
 
 import loginSchema from "@/validations/loginSchema";
@@ -28,7 +29,11 @@ export default function LoginForm({ setForm }: LoginFormProps) {
   };
 
   const handleSubmit = async (values: LoginSubmitProps) => {
-    authLogin(values.email, values.password);
+    try {
+      await authLogin(values.email, values.password);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

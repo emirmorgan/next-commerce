@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using server.Data;
+using server.DTOs;
 
 namespace server.Controllers;
 
@@ -14,5 +17,59 @@ public class DashboardController : BaseController
     {
         this.userManager = userManager;
         _context = context;
+    }
+
+    [HttpGet("orders")]
+    public async Task<ActionResult<OrderDTO>> GetOrders(
+        [FromQuery] int? orderId,
+        [FromQuery] string? sort,
+        [FromQuery] int pn = 1
+    )
+    {
+        const int listSize = 10;
+
+        var query = _context.Orders.AsQueryable();
+
+        if (orderId != null || orderId == 0)
+        {
+            query = query.Where(q => q.OrderID == orderId);
+        }
+
+        switch (sort)
+        {
+            case "priceAsc":
+                query = query.OrderBy(q => q.OrderTotal);
+                break;
+            case "priceDesc":
+                query = query.OrderByDescending(q => q.OrderTotal);
+                break;
+            case "dateAsc":
+                query = query.OrderBy(q => q.OrderDate);
+                break;
+            default:
+                // Default sorting: latest orders (dateDesc)
+                query = query.OrderByDescending(q => q.OrderDate);
+                break;
+        }
+
+        var orders = await query
+            .Select(
+                order =>
+                    new OrderDTO
+                    {
+                        OrderID = order.OrderID,
+                        OrderDate = order.OrderDate,
+                        OrderStatus = order.OrderStatus,
+                        DeliveryAddress = order.DeliveryAddress,
+                        DeliveryContact = order.DeliveryContact,
+                    }
+            )
+            .ToListAsync();
+
+        var totalProducts = orders.Count;
+
+        orders = orders.Skip((pn - 1) * listSize).Take(listSize).ToList();
+
+        return Ok(orders);
     }
 }

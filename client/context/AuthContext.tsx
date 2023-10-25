@@ -105,7 +105,8 @@ export function AuthProvider({ children }: AuthContextProvider) {
         setCookies({ type: "SET", tag: "token", data: token });
         setUser(user);
         setAuthenticated(true);
-        toast.success("You have successfully registered.");
+
+        route.push("/");
       })
       .catch((err) => {
         if (err.response.data === "already-exist") {
@@ -134,7 +135,7 @@ export function AuthProvider({ children }: AuthContextProvider) {
         setCookies({ type: "SET", tag: "token", data: token });
         setUser(user);
         setAuthenticated(true);
-        toast.success("Successfully logged in.");
+
         route.push("/");
       })
       .catch((err) => {

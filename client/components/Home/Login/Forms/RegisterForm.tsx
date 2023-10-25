@@ -1,11 +1,10 @@
-import { useState, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { AiOutlineLock, AiOutlineMail } from "react-icons/ai";
 
 import { Form, Formik, Field, ErrorMessage } from "formik";
 
 import registerSchema from "@/validations/registerSchema";
 import { useAuth } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
 
 type RegisterFormProps = {
   setForm: Dispatch<SetStateAction<string>>;
@@ -18,13 +17,11 @@ type RegisterSubmitProps = {
 };
 
 export default function RegisterForm({ setForm }: RegisterFormProps) {
-  const router = useRouter();
   const { authRegister } = useAuth();
 
   const handleSubmit = async (values: RegisterSubmitProps) => {
     try {
       await authRegister(values.email, values.password);
-      router.push("/");
     } catch (error) {
       console.log(error);
     }
