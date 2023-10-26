@@ -13,8 +13,6 @@ export default function Orders() {
     return <OrdersSkeleton />;
   }
 
-  console.log(ordersResponse);
-
   return (
     <div className="border rounded mt-3">
       <div className="border-b p-2">
