@@ -117,3 +117,12 @@ type OrderItem = {
   price: string;
   quantity: number;
 };
+
+export type OrderListProps = {
+  orderId: number;
+  name: string;
+  contact: string;
+  orderStatus: string;
+  orderTotal: number;
+  orderDate: string;
+};

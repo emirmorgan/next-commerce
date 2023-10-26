@@ -1,13 +1,4 @@
-import { AiOutlineSearch } from "react-icons/ai";
-
-type OrderProps = {
-  orderId: number;
-  name: string;
-  contact: string;
-  orderStatus: string;
-  orderTotal: number;
-  orderDate: string;
-};
+import { OrderListProps } from "@/lib/types";
 
 export default function Order({
   orderId,
@@ -16,7 +7,7 @@ export default function Order({
   orderStatus,
   orderTotal,
   orderDate,
-}: OrderProps) {
+}: OrderListProps) {
   const status = {
     preparing: <Preparing />,
     shipping: <Shipping />,

@@ -26,7 +26,7 @@ public class DashboardController : BaseController
         [FromQuery] int pn = 1
     )
     {
-        const int listSize = 10;
+        const int pageSize = 10;
 
         var query = _context.Orders.AsQueryable();
 
@@ -66,10 +66,18 @@ public class DashboardController : BaseController
             )
             .ToListAsync();
 
-        var totalProducts = orders.Count;
+        var totalOrders = orders.Count;
 
-        orders = orders.Skip((pn - 1) * listSize).Take(listSize).ToList();
+        orders = orders.Skip((pn - 1) * pageSize).Take(pageSize).ToList();
 
-        return Ok(orders);
+        return Ok(
+            new
+            {
+                TotalOrders = totalOrders,
+                PageSize = pageSize,
+                PageNumber = pn,
+                Orders = orders
+            }
+        );
     }
 }
