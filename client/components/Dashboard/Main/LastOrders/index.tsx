@@ -7,9 +7,9 @@ import OrdersSkeleton from "./Skeleton";
 import { randomUUID } from "crypto";
 
 export default function Orders() {
-  const { isLoading, ordersResponse } = useDashboard();
+  const { orders } = useDashboard();
 
-  if (isLoading) {
+  if (!orders) {
     return <OrdersSkeleton />;
   }
 
@@ -19,12 +19,12 @@ export default function Orders() {
         <h1 className="font-bold">Latest orders</h1>
       </div>
       <ul>
-        {ordersResponse.totalOrders === 0 && (
+        {orders.totalOrders === 0 && (
           <li className="flex justify-center items-center font-semibold text-lg p-3">
             <span>😵 Couldn&apos;t find any order.</span>
           </li>
         )}
-        {ordersResponse.orders?.map((order) => (
+        {orders.orders?.map((order) => (
           <Order
             key={randomUUID()}
             orderId={order.orderId}

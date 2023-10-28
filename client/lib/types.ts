@@ -126,3 +126,34 @@ export type OrderListProps = {
   orderTotal: number;
   orderDate: string;
 };
+
+export type OrderProps = {
+  totalOrders: number;
+  pageSize: number;
+  pageNumber: number;
+  orders: OrderListProps[];
+};
+
+export type StatisticsProps = {
+  totalSales: number;
+  totalCustomer: number;
+  totalProducts: number;
+  totalOrders: number;
+  visitors: VisitorData[];
+  sales: Sales;
+};
+
+type Sales = {
+  thisMonth: SaleData[];
+  lastMonth: SaleData[];
+};
+
+type SaleData = {
+  label: string;
+  data: number;
+};
+
+type VisitorData = {
+  label: string;
+  percentage: number;
+};
