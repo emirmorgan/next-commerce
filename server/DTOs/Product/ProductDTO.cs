@@ -34,5 +34,8 @@ namespace server.DTOs
 
         [Required]
         public required bool IsFavorite { get; set; } = false;
+
+        [Required]
+        public required int Quantity { get; set; }
     }
 }

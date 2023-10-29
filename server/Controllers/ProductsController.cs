@@ -128,6 +128,7 @@ public class ProductsController : BaseController
                             IsFavorite = _context.Favorites.Any(
                                 f => f.UserId == user.Id && f.ProductId == p.Id
                             ),
+                            Quantity = p.TotalQuantity
                         }
                 )
                 .ToListAsync();
@@ -169,7 +170,8 @@ public class ProductsController : BaseController
                             DiscountPrice = p.DiscountPrice,
                             Date = p.Date,
                             Slug = p.Slug,
-                            IsFavorite = false
+                            IsFavorite = false,
+                            Quantity = p.TotalQuantity
                         }
                 )
                 .ToListAsync();

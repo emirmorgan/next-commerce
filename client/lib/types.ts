@@ -30,6 +30,7 @@ export type ProductCardType = {
   color?: string;
   discountPrice: number;
   isFavorite: boolean;
+  quantity: number;
 };
 
 export type ProductImages = {
