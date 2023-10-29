@@ -1,6 +1,6 @@
 import { AiOutlineMinus, AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
 
-import ProductsList from "@/components/Dashboard/Products/ProductsList";
+import ProductsList from "@/components/Dashboard/Products/ProductList";
 
 export default function DashboardProducts() {
   return (

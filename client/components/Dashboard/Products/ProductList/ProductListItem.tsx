@@ -12,7 +12,7 @@ export type ProductListItemProps = {
   quantity: number;
 };
 
-export default function ProductsListItem(props: ProductListItemProps) {
+export default function ProductListItem(props: ProductListItemProps) {
   return (
     <li className="flex justify-center items-center border-b gap-3 py-2 px-3">
       <div className="font-semibold">

@@ -3,10 +3,15 @@
 import { useProducts } from "@/context/ProductsContext";
 
 import PaginationBar from "@/components/Home/Products/PaginationBar";
-import ProductsListItem from "./ProductsListItem";
+import ProductsListItem from "./ProductListItem";
+import ProductListSkeleton from "./Skeleton";
 
-export default function ProductsList() {
-  const { productsResponse } = useProducts();
+export default function ProductList() {
+  const { productsResponse, isLoading } = useProducts();
+
+  if (isLoading) {
+    return <ProductListSkeleton />;
+  }
 
   return (
     <>
