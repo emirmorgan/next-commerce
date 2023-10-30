@@ -27,7 +27,7 @@ namespace server.DTOs
         public string? Color { get; set; }
 
         [Required]
-        public required DateTime Date { get; set; }
+        public required string Date { get; set; }
 
         [Required]
         public required string Slug { get; set; }

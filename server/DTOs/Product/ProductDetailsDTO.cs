@@ -13,8 +13,7 @@ namespace server.DTOs
         [Required]
         public required string Name { get; set; }
 
-        [Required]
-        public required string Desc { get; set; }
+        public string? Desc { get; set; }
 
         [Required]
         public required decimal Price { get; set; }

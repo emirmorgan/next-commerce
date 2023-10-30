@@ -16,7 +16,7 @@ public class Product
     public decimal CurrentPrice { get; set; }
     public decimal? DiscountPrice { get; set; }
 
-    public DateTime Date { get; set; }
+    public string Date { get; set; }
 
     public List<ProductImage>? Images { get; set; }
     public List<Review>? Reviews { get; set; }
@@ -24,7 +24,7 @@ public class Product
     public List<ProductVariant>? ProductVariants { get; set; }
 
     public required int CategoryId { get; set; }
-    public required Category Category { get; set; }
+    public Category Category { get; set; }
     public required int SubcategoryId { get; set; }
-    public required Subcategory Subcategory { get; set; }
+    public Subcategory Subcategory { get; set; }
 }

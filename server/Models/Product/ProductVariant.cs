@@ -7,6 +7,6 @@ public class ProductVariant
     public required string Value { get; set; }
     public required int Quantity { get; set; } = 0;
 
-    public required Product Product { get; set; }
+    public Product? Product { get; set; }
     public required int ProductId { get; set; }
 }

@@ -6,6 +6,6 @@ public class ProductImage
     public required string src { get; set; }
     public required string alt { get; set; }
 
-    public required Product Product { get; set; }
-    public required int ProductId { get; set; }
+    public Product? Product { get; set; }
+    public int ProductId { get; set; }
 }

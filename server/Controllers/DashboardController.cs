@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using server.Data;
 using server.DTOs;
+using server.Models;
 
 namespace server.Controllers;
 
@@ -148,5 +149,74 @@ public class DashboardController : BaseController
                 Orders = orders
             }
         );
+    }
+
+    [HttpPost("product/create")]
+    public async Task<ActionResult<ProductCreateDTO>> CreateProduct(
+        [FromBody] ProductCreateDTO productCreateDTO
+    )
+    {
+        if (productCreateDTO == null)
+        {
+            return BadRequest();
+        }
+
+        var product = new Product
+        {
+            Brand = productCreateDTO.Brand,
+            Name = productCreateDTO.Name,
+            CurrentPrice = productCreateDTO.Price,
+            DiscountPrice = productCreateDTO.DiscountPrice,
+            Date = productCreateDTO.Date,
+            Slug = productCreateDTO.Slug,
+            TotalQuantity = productCreateDTO.Quantity,
+            CategoryId = productCreateDTO.CategoryId,
+            SubcategoryId = productCreateDTO.SubcategoryId,
+            Color = productCreateDTO.Color,
+        };
+
+        _context.Products.Add(product);
+
+        int productId = product.Id;
+
+        if (productCreateDTO.Images != null && productCreateDTO.Images.Any())
+        {
+            foreach (var image in productCreateDTO.Images)
+            {
+                var productImage = new ProductImage
+                {
+                    src = image.src,
+                    alt = image.alt,
+                    ProductId = productId,
+                };
+
+                _context.ProductImages.Add(productImage);
+            }
+        }
+        else
+        {
+            return NotFound("You can't upload a product without image.");
+        }
+
+        if (productCreateDTO.Variants != null && productCreateDTO.Variants.Any())
+        {
+            foreach (var variant in productCreateDTO.Variants)
+            {
+                var productVariant = new ProductVariant
+                {
+                    Name = variant.Name,
+                    Value = variant.Value,
+                    Quantity = variant.Quantity,
+                    ProductId = productId,
+                };
+
+                _context.ProductVariants.Add(productVariant);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        await _context.SaveChangesAsync();
+
+        return Ok("Product created successfully.");
     }
 }
