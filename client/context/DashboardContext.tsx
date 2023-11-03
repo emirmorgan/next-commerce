@@ -7,7 +7,8 @@ import { useURLParams } from "./ParamsContext";
 
 import setCookies from "@/lib/setCookies";
 
-import { OrderProps, StatisticsProps } from "@/lib/types";
+import { OrderProps, ProductRequest, StatisticsProps } from "@/lib/types";
+import { toast } from "react-toastify";
 
 type DashboardContextProvider = {
   children: React.ReactNode;
@@ -16,6 +17,7 @@ type DashboardContextProvider = {
 type IDashboardContext = {
   orders: OrderProps | undefined;
   statistics: StatisticsProps | undefined;
+  createProduct: (data: ProductRequest) => void;
 };
 
 export const DashboardContext = createContext({} as IDashboardContext);
@@ -85,8 +87,30 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
     }
   }
 
+  async function createProduct(data: ProductRequest) {
+    try {
+      const token = await setCookies({ type: "GET", tag: "token", data: "" });
+
+      await axios
+        .post(
+          process.env.NEXT_PUBLIC_API_URL + "/dashboard/product/create",
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((res) => toast.success(res.data));
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong, try again.");
+    }
+  }
+
   return (
-    <DashboardContext.Provider value={{ orders, statistics }}>
+    <DashboardContext.Provider value={{ orders, statistics, createProduct }}>
       {children}
     </DashboardContext.Provider>
   );

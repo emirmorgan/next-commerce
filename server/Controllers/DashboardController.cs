@@ -153,13 +153,30 @@ public class DashboardController : BaseController
 
     [HttpPost("product/create")]
     public async Task<ActionResult<ProductCreateDTO>> CreateProduct(
-        [FromBody] ProductCreateDTO productCreateDTO
+        [FromForm] ProductCreateDTO productCreateDTO
     )
     {
         if (productCreateDTO == null)
         {
             return BadRequest();
         }
+
+        productCreateDTO.Images.ForEach(async image =>
+        {
+            var uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+            var filePath = Path.Combine("assets", uniqueFileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await image.CopyToAsync(stream);
+            }
+
+            var fileUrl = Url.Content(filePath);
+
+            var newImage = new ProductImage { src = fileUrl, alt = productCreateDTO.Name };
+
+            _context.ProductImages.Add(newImage);
+        });
 
         var product = new Product
         {
@@ -172,31 +189,11 @@ public class DashboardController : BaseController
             TotalQuantity = productCreateDTO.Quantity,
             CategoryId = productCreateDTO.CategoryId,
             SubcategoryId = productCreateDTO.SubcategoryId,
-            Color = productCreateDTO.Color,
         };
 
         _context.Products.Add(product);
 
         int productId = product.Id;
-
-        if (productCreateDTO.Images != null && productCreateDTO.Images.Any())
-        {
-            foreach (var image in productCreateDTO.Images)
-            {
-                var productImage = new ProductImage
-                {
-                    src = image.src,
-                    alt = image.alt,
-                    ProductId = productId,
-                };
-
-                _context.ProductImages.Add(productImage);
-            }
-        }
-        else
-        {
-            return NotFound("You can't upload a product without image.");
-        }
 
         if (productCreateDTO.Variants != null && productCreateDTO.Variants.Any())
         {

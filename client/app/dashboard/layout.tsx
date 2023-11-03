@@ -1,3 +1,5 @@
+import { ToastContainer } from "react-toastify";
+
 import Sidebar from "@/components/Dashboard/Layout/Sidebar";
 import Topbar from "@/components/Dashboard/Layout/Topbar";
 
@@ -15,6 +17,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </main>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2000}
+        pauseOnHover={false}
+      />
     </DashboardProvider>
   );
 }

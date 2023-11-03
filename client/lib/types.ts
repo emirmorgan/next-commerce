@@ -158,3 +158,17 @@ type VisitorData = {
   label: string;
   percentage: number;
 };
+
+export type ProductRequest = {
+  brand: string;
+  name: string;
+  price: number;
+  discountPrice: number | null;
+  date: string;
+  slug: string;
+  quantity: number;
+  categoryId: number;
+  subcategoryId: number;
+  images: any;
+  variants: ProductVariant[] | null;
+};

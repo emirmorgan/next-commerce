@@ -4,10 +4,8 @@ import {
   AiOutlineApartment,
   AiOutlineAppstoreAdd,
   AiOutlineArrowLeft,
-  AiOutlineBorder,
   AiOutlineCreditCard,
   AiOutlineHome,
-  AiOutlineMail,
   AiOutlineMenuFold,
   AiOutlineMenuUnfold,
 } from "react-icons/ai";
