@@ -156,10 +156,10 @@ export function AuthProvider({ children }: AuthContextProvider) {
   }
 
   async function updatePassword(currentPassword: string, newPassword: string) {
-    try {
-      const token = await setCookies({ type: "GET", tag: "token", data: "" });
+    const token = await setCookies({ type: "GET", tag: "token", data: "" });
 
-      await axios.post(
+    await axios
+      .post(
         process.env.NEXT_PUBLIC_API_URL + "/user/password/update",
         { currentPassword, newPassword },
         {
@@ -167,20 +167,9 @@ export function AuthProvider({ children }: AuthContextProvider) {
             Authorization: `Bearer ${token}`,
           },
         }
-      );
-
-      toast.success("Password has been successfully changed.");
-    } catch (error: any) {
-      if (error.response.data === "wrong-password") {
-        toast.error("Your current password is incorrect.");
-      } else if (error.response.data === "current-password") {
-        toast.error(
-          "The new password cannot be the same as the current password."
-        );
-      } else {
-        toast.error("Something went wrong.");
-      }
-    }
+      )
+      .then((res) => toast.success(res.data))
+      .catch((err) => toast.error(err.response.data));
   }
 
   async function updateAddress(

@@ -207,7 +207,10 @@ public class ProductsController : BaseController
             return NotFound();
         }
 
-        var SlugProducts = await _context.Products.Where(p => p.Slug == product.Slug).ToListAsync();
+        var SlugProducts = await _context.Products
+            .Where(p => p.Slug == product.Slug)
+            .Include(i => i.Images)
+            .ToListAsync();
 
         var ProductDTO = new ProductDetailsDTO
         {
@@ -241,12 +244,12 @@ public class ProductsController : BaseController
                         {
                             Id = sp.Id,
                             Src = sp.Images[0].src,
-                            Alt = sp.Images[0].alt
+                            Alt = sp.Images[0].alt,
+                            Slug = sp.Slug
                         }
                 )
                 .ToList()
         };
-
         return Ok(ProductDTO);
     }
 }

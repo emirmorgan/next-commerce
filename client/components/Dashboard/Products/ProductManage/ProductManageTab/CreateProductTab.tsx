@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { toast } from "react-toastify";
 
-import { ProductRequest, ProductVariant } from "@/lib/types";
+import { ProductVariant } from "@/lib/types";
 import { categories, subcategories } from "@/lib/constants";
 import { useDashboard } from "@/context/DashboardContext";
 import productCreateSchema from "@/validations/productCreateSchema";
@@ -68,11 +68,14 @@ export default function CreateProductTab() {
     }
 
     // Get current date - Format: dd/mm/yyyy
-    const now = new Date();
-    const day = String(now.getDate()).padStart(2, "0");
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const year = now.getFullYear();
-    const date = `${day}/${month}/${year}`;
+    const currentDate = new Date();
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+    const year = currentDate.getFullYear();
+    const hours = String(currentDate.getHours()).padStart(2, "0");
+    const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+    const seconds = String(currentDate.getSeconds()).padStart(2, "0");
+    const date = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 
     // Calculating the total quantity
     let totalQuantity = 0;
@@ -80,24 +83,26 @@ export default function CreateProductTab() {
       totalQuantity += Number(variant.quantity);
     });
 
-    const formData = new FormData();
-    formData.append("brand", values.brand);
-    formData.append("name", values.name);
-    formData.append("slug", values.slug);
-    formData.append("price", values.price);
-    formData.append("discountPrice", values.discountPrice);
-    formData.append("date", date);
-    formData.append("categoryId", values.categoryId);
-    formData.append("subcategoryId", values.subcategoryId);
+    const data = {
+      brand: values.brand,
+      name: values.name,
+      slug: values.slug,
+      price: values.price,
+      discountPrice: values.discountPrice,
+      categoryId: values.categoryId,
+      subcategoryId: values.subcategoryId,
+      date: date,
+      quantity: totalQuantity,
+      variants: variants,
+    };
 
-    formData.append("variants", JSON.stringify(variants));
+    const formData = new FormData();
 
     for (let i = 0; i < images.length; i++) {
       formData.append("images", images[i]);
     }
 
-    // @ts-ignore
-    createProduct(formData);
+    createProduct(data, formData);
 
     // Resets the inputs
     formikHelpers.resetForm();

@@ -48,6 +48,7 @@ export type ProductSimilar = {
   id: number;
   src: string;
   alt: string;
+  slug: string;
 };
 
 export type Cart = {
@@ -169,6 +170,5 @@ export type ProductRequest = {
   quantity: number;
   categoryId: number;
   subcategoryId: number;
-  images: any;
-  variants: ProductVariant[] | null;
+  variants: any;
 };

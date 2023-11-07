@@ -32,15 +32,12 @@ namespace server.DTOs
 
         public decimal? DiscountPrice { get; set; }
 
-        public List<IFormFile> Images { get; set; }
-
         public List<ProductCreateVariant>? Variants { get; set; }
     }
 }
 
 public class ProductCreateVariant
 {
-    public int Id { get; set; }
     public required string Name { get; set; }
     public required string Value { get; set; }
     public required int Quantity { get; set; } = 0;

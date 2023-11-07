@@ -14,33 +14,26 @@ export type ProductListItemProps = {
 
 export default function ProductListItem(props: ProductListItemProps) {
   return (
-    <li className="flex justify-center items-center border-b gap-3 py-2 px-3">
-      <div className="font-semibold">
-        <span>{props.id}</span>
-      </div>
-      <div className="relative w-12 h-12">
-        <Image
-          fill
-          src={props.src}
-          alt={props.name}
-          className="object-contain w-full h-full group-hover:scale-110 transition-allease-linear pointer-events-none"
-          sizes="(min-width: 640px) 50vw, 100vw"
-          priority={true}
-        />
-      </div>
-      <div className="flex max-w-[125px]">
-        <span className="truncate ...">{props.name}</span>
-      </div>
-      <div className="flex items-center ml-auto gap-2">
-        <div className="border cursor-pointer transition-all ease-linear p-1 hover:border-gray-500">
-          <AiOutlinePlus />
+    <li className="flex items-center border-b gap-3 py-2 px-3">
+      <div className="flex justify-center items-center gap-3">
+        <div className="font-semibold">
+          <span>{props.id}</span>
         </div>
-        <span>{props.quantity}</span>
-        <div className="border cursor-pointer transition-all ease-linear p-1 hover:border-gray-500">
-          <AiOutlineMinus />
+        <div className="relative w-12 h-12">
+          <Image
+            fill
+            src={props.src}
+            alt={props.name}
+            className="object-contain w-full h-full group-hover:scale-110 transition-allease-linear pointer-events-none"
+            sizes="(min-width: 640px) 50vw, 100vw"
+            priority={true}
+          />
+        </div>
+        <div className="flex max-w-[125px]">
+          <span className="truncate ...">{props.name}</span>
         </div>
       </div>
-      <div className="border cursor-pointer transition-all ease-linear p-2 hover:border-gray-500">
+      <div className="ml-auto border cursor-pointer transition-all ease-linear p-2 hover:border-gray-500">
         <AiOutlineEdit size={24} />
       </div>
     </li>

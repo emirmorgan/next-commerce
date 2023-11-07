@@ -12,5 +12,8 @@ namespace server.DTOs
 
         [Required]
         public required string Alt { get; set; }
+
+        [Required]
+        public required string Slug { get; set; }
     }
 }

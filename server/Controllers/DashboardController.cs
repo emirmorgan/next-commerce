@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using server.Data;
@@ -11,12 +10,10 @@ namespace server.Controllers;
 [Authorize(Roles = "ADMIN")]
 public class DashboardController : BaseController
 {
-    private readonly UserManager<User> userManager;
     private readonly CommerceContext _context;
 
-    public DashboardController(UserManager<User> userManager, CommerceContext context)
+    public DashboardController(CommerceContext context)
     {
-        this.userManager = userManager;
         _context = context;
     }
 
@@ -153,30 +150,13 @@ public class DashboardController : BaseController
 
     [HttpPost("product/create")]
     public async Task<ActionResult<ProductCreateDTO>> CreateProduct(
-        [FromForm] ProductCreateDTO productCreateDTO
+        [FromBody] ProductCreateDTO productCreateDTO
     )
     {
         if (productCreateDTO == null)
         {
             return BadRequest();
         }
-
-        productCreateDTO.Images.ForEach(async image =>
-        {
-            var uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
-            var filePath = Path.Combine("assets", uniqueFileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await image.CopyToAsync(stream);
-            }
-
-            var fileUrl = Url.Content(filePath);
-
-            var newImage = new ProductImage { src = fileUrl, alt = productCreateDTO.Name };
-
-            _context.ProductImages.Add(newImage);
-        });
 
         var product = new Product
         {
@@ -192,10 +172,10 @@ public class DashboardController : BaseController
         };
 
         _context.Products.Add(product);
+        await _context.SaveChangesAsync();
 
-        int productId = product.Id;
-
-        if (productCreateDTO.Variants != null && productCreateDTO.Variants.Any())
+        // Handle Variants
+        if (productCreateDTO.Variants != null)
         {
             foreach (var variant in productCreateDTO.Variants)
             {
@@ -204,16 +184,70 @@ public class DashboardController : BaseController
                     Name = variant.Name,
                     Value = variant.Value,
                     Quantity = variant.Quantity,
-                    ProductId = productId,
+                    ProductId = product.Id,
                 };
 
                 _context.ProductVariants.Add(productVariant);
-                await _context.SaveChangesAsync();
             }
+
+            await _context.SaveChangesAsync();
         }
 
-        await _context.SaveChangesAsync();
+        return Ok(product);
+    }
 
-        return Ok("Product created successfully.");
+    [HttpPost("image/upload")]
+    public async Task<ActionResult> CreateProductImage(
+        [FromForm] IFormFile[] images,
+        [FromForm] string productName,
+        [FromForm] int productId
+    )
+    {
+        if (productName == null || productId == 0)
+        {
+            return BadRequest();
+        }
+
+        try
+        {
+            foreach (var image in images)
+            {
+                var currentDirectory = Directory.GetCurrentDirectory();
+                var parentDirectory = Path.GetDirectoryName(currentDirectory);
+                var uploadDirectory = Path.Combine(parentDirectory, "client", "public", "uploads");
+
+                if (!Directory.Exists(uploadDirectory))
+                {
+                    Directory.CreateDirectory(uploadDirectory);
+                }
+
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                var filePath = Path.Combine(uploadDirectory, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(stream);
+                }
+
+                var imageSrc = "/uploads/" + uniqueFileName;
+                var imageAlt = productName;
+
+                var productImage = new ProductImage
+                {
+                    src = imageSrc,
+                    alt = imageAlt,
+                    ProductId = productId
+                };
+
+                _context.ProductImages.Add(productImage);
+            }
+
+            await _context.SaveChangesAsync();
+            return Ok("Product created successfully.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "An error occurred while creating the product.");
+        }
     }
 }

@@ -49,15 +49,17 @@ export default function PaginationBar() {
       {Array.from({ length: boxCount }).map((_, index) => (
         <PaginationBox key={index} productNumber={String(index + 1)} />
       ))}
-      {Number(pn) < boxCount || (!pn && productsResponse.totalProducts > 0) ? (
-        <div
-          onClick={handleNext}
-          className="flex justify-center items-center cursor-pointer gap-1 ml-2"
-        >
-          <span>Next</span>
-          <AiFillCaretRight />
-        </div>
-      ) : null}
+      {pn &&
+        productsResponse.pageSize * productsResponse.pageNumber <
+          productsResponse.totalProducts && (
+          <div
+            onClick={handleNext}
+            className="flex justify-center items-center cursor-pointer gap-1 ml-2"
+          >
+            <span>Next</span>
+            <AiFillCaretRight />
+          </div>
+        )}
     </div>
   );
 }

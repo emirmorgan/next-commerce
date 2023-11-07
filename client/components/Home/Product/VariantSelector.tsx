@@ -17,8 +17,9 @@ export default function VariantSelector({
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleRoute = (id: number) => {
-    router.push("/product/" + id, { scroll: false });
+  const handleRoute = (slug: string, id: number) => {
+    const path = `/product/${slug}-p-` + id;
+    router.push(path, { scroll: false });
   };
 
   const handleColor = (color: string) => {
@@ -35,7 +36,7 @@ export default function VariantSelector({
         {product?.similarProducts?.map((similarProduct: ProductSimilar) => (
           <div
             key={similarProduct.id}
-            onClick={() => handleRoute(similarProduct.id)}
+            onClick={() => handleRoute(similarProduct.slug, similarProduct.id)}
             className={
               "border-b-2 shadow ring-1 ring-gray-100 cursor-pointer overflow-hidden" +
               (similarProduct.id === product.id

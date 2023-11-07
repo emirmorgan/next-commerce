@@ -1,7 +1,6 @@
 import { Carousel, Campaigns } from "@/lib/types";
 
 export const categories: String[] = [
-  "Best Sellers",
   "Womens",
   "Mens",
   "Kids",

@@ -122,7 +122,7 @@ public class UserController : BaseController
 
         if (changePasswordResult.Succeeded)
         {
-            return Ok("Password changed successfully.");
+            return Ok("Password has been successfully changed.");
         }
         else
         {

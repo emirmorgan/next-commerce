@@ -17,7 +17,7 @@ type DashboardContextProvider = {
 type IDashboardContext = {
   orders: OrderProps | undefined;
   statistics: StatisticsProps | undefined;
-  createProduct: (data: ProductRequest) => void;
+  createProduct: (data: ProductRequest, formData: FormData) => void;
 };
 
 export const DashboardContext = createContext({} as IDashboardContext);
@@ -87,7 +87,7 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
     }
   }
 
-  async function createProduct(data: ProductRequest) {
+  async function createProduct(data: ProductRequest, formData: FormData) {
     try {
       const token = await setCookies({ type: "GET", tag: "token", data: "" });
 
@@ -98,15 +98,32 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
             },
           }
         )
-        .then((res) => toast.success(res.data));
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong, try again.");
-    }
+        .then((res) => {
+          const product = res.data;
+
+          formData.append("productId", product.id);
+          formData.append("productName", product.name);
+
+          createProductImage(formData);
+        });
+    } catch (error) {}
+  }
+
+  async function createProductImage(data: FormData) {
+    const token = await setCookies({ type: "GET", tag: "token", data: "" });
+
+    await axios
+      .post(process.env.NEXT_PUBLIC_API_URL + "/dashboard/image/upload", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => toast.success(res.data))
+      .catch((err) => toast.error("Something went wrong, try again."));
   }
 
   return (
