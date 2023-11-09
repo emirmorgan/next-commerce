@@ -252,7 +252,7 @@ public class DashboardController : BaseController
         }
     }
 
-    [HttpPost("product/delete/")]
+    [HttpPost("product/delete")]
     public async Task<ActionResult<ProductDeleteDTO>> DeleteProduct(
         [FromBody] ProductDeleteDTO productDeleteDTO
     )
@@ -280,7 +280,25 @@ public class DashboardController : BaseController
             .ToListAsync();
 
         _context.Products.Remove(product);
-        _context.ProductImages.RemoveRange(productImages);
+
+        // Deleting product images
+        foreach (var productImage in productImages)
+        {
+            var currentDirectory = Directory.GetCurrentDirectory();
+            var parentDirectory = Path.GetDirectoryName(currentDirectory);
+            var uploadDirectory = Path.Combine(parentDirectory, "client", "public", "uploads");
+
+            var imagePath = productImage.src.Substring("/uploads/".Length);
+            var filePath = Path.Combine(uploadDirectory, imagePath);
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            _context.ProductImages.Remove(productImage);
+        }
+
         _context.ProductVariants.RemoveRange(productVariants);
 
         await _context.SaveChangesAsync();
