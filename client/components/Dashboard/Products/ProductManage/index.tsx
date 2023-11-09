@@ -1,6 +1,6 @@
 "use client";
 
-import { AiOutlineMinus, AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
+import { AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
 
 import { useState } from "react";
 
@@ -46,18 +46,6 @@ export default function ProductManage() {
         >
           <AiOutlinePlus size={22} />
           <span>Create Product</span>
-        </div>
-        <div
-          onClick={() => handleOpenTab("delete")}
-          className={
-            "flex justify-center items-center gap-2 border cursor-pointer transition-all ease-linear whitespace-nowrap select-none p-2 hover:border-gray-500" +
-            (currentType === "delete" && isTabVisible === true
-              ? " border-black"
-              : null)
-          }
-        >
-          <AiOutlineMinus size={22} />
-          <span>Delete Product</span>
         </div>
       </div>
       <ProductManageTab

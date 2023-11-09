@@ -1,5 +1,6 @@
-import { AiOutlineEdit, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import Image from "next/image";
+import { useDashboard } from "@/context/DashboardContext";
 
 export type ProductListItemProps = {
   id: number;
@@ -13,13 +14,15 @@ export type ProductListItemProps = {
 };
 
 export default function ProductListItem(props: ProductListItemProps) {
+  const { deleteProduct } = useDashboard();
+
   return (
     <li className="flex items-center border-b gap-3 py-2 px-3">
       <div className="flex justify-center items-center gap-3">
         <div className="font-semibold">
           <span>{props.id}</span>
         </div>
-        <div className="relative w-12 h-12">
+        <div className="relative w-16 h-16">
           <Image
             fill
             src={props.src}
@@ -33,8 +36,16 @@ export default function ProductListItem(props: ProductListItemProps) {
           <span className="truncate ...">{props.name}</span>
         </div>
       </div>
-      <div className="ml-auto border cursor-pointer transition-all ease-linear p-2 hover:border-gray-500">
-        <AiOutlineEdit size={24} />
+      <div className="flex gap-2 ml-auto">
+        <div className="border cursor-pointer transition-all ease-linear p-2 hover:border-gray-500">
+          <AiOutlineEdit size={20} />
+        </div>
+        <div
+          onClick={() => deleteProduct(props.id)}
+          className="border cursor-pointer transition-all ease-linear p-2 hover:border-gray-500"
+        >
+          <AiOutlineDelete size={20} />
+        </div>
       </div>
     </li>
   );

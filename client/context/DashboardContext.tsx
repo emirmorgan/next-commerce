@@ -18,6 +18,7 @@ type IDashboardContext = {
   orders: OrderProps | undefined;
   statistics: StatisticsProps | undefined;
   createProduct: (data: ProductRequest, formData: FormData) => void;
+  deleteProduct: (productId: number) => void;
 };
 
 export const DashboardContext = createContext({} as IDashboardContext);
@@ -126,8 +127,27 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
       .catch((err) => toast.error("Something went wrong, try again."));
   }
 
+  async function deleteProduct(productId: number) {
+    const token = await setCookies({ type: "GET", tag: "token", data: "" });
+
+    await axios
+      .post(
+        process.env.NEXT_PUBLIC_API_URL + "/dashboard/product/delete",
+        { productId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => toast.success(res.data))
+      .catch((err) => toast.error("Something went wrong, try again."));
+  }
+
   return (
-    <DashboardContext.Provider value={{ orders, statistics, createProduct }}>
+    <DashboardContext.Provider
+      value={{ orders, statistics, createProduct, deleteProduct }}
+    >
       {children}
     </DashboardContext.Provider>
   );

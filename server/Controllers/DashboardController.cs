@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -153,9 +154,9 @@ public class DashboardController : BaseController
         [FromBody] ProductCreateDTO productCreateDTO
     )
     {
-        if (productCreateDTO == null)
+        if (!ModelState.IsValid)
         {
-            return BadRequest();
+            return BadRequest(ModelState);
         }
 
         var product = new Product
@@ -203,9 +204,9 @@ public class DashboardController : BaseController
         [FromForm] int productId
     )
     {
-        if (productName == null || productId == 0)
+        if (!ModelState.IsValid)
         {
-            return BadRequest();
+            return BadRequest(ModelState);
         }
 
         try
@@ -249,5 +250,41 @@ public class DashboardController : BaseController
         {
             return StatusCode(500, "An error occurred while creating the product.");
         }
+    }
+
+    [HttpPost("product/delete/")]
+    public async Task<ActionResult<ProductDeleteDTO>> DeleteProduct(
+        [FromBody] ProductDeleteDTO productDeleteDTO
+    )
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var product = await _context.Products
+            .Where(p => p.Id == productDeleteDTO.ProductId)
+            .FirstOrDefaultAsync();
+
+        if (product == null)
+        {
+            return NotFound("Product not found.");
+        }
+
+        var productImages = await _context.ProductImages
+            .Where(i => i.ProductId == productDeleteDTO.ProductId)
+            .ToListAsync();
+
+        var productVariants = await _context.ProductVariants
+            .Where(v => v.ProductId == productDeleteDTO.ProductId)
+            .ToListAsync();
+
+        _context.Products.Remove(product);
+        _context.ProductImages.RemoveRange(productImages);
+        _context.ProductVariants.RemoveRange(productVariants);
+
+        await _context.SaveChangesAsync();
+
+        return Ok("Product successfully deleted.");
     }
 }

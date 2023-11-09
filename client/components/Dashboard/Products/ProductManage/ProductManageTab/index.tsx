@@ -14,10 +14,6 @@ export default function ProductManageTab(props: TabProps) {
       title: "Create Product",
       child: <CreateProductTab />,
     },
-    delete: {
-      title: "Delete Product",
-      child: <div>delete product</div>,
-    },
   }[props.type];
 
   return (
