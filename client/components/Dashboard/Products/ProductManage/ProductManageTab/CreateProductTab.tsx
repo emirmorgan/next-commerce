@@ -1,13 +1,16 @@
-import { AiOutlinePlus } from "react-icons/ai";
+import { AiFillCloseSquare, AiOutlinePlus } from "react-icons/ai";
 import { useState } from "react";
 
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
 import { ProductVariant } from "@/lib/types";
 import { categories, subcategories } from "@/lib/constants";
-import { useDashboard } from "@/context/DashboardContext";
+
 import productCreateSchema from "@/validations/productCreateSchema";
+
+import { useDashboard } from "@/context/DashboardContext";
 
 export default function CreateProductTab() {
   const { createProduct } = useDashboard();
@@ -51,6 +54,15 @@ export default function CreateProductTab() {
 
       setImages(selectedImages);
     }
+  };
+
+  const handleImageRemove = (index: number) => {
+    const updatedImages = [
+      ...images.slice(0, index),
+      ...images.slice(index + 1),
+    ];
+
+    setImages(updatedImages);
   };
 
   const handleVariant = () => {
@@ -374,34 +386,66 @@ export default function CreateProductTab() {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col flex-1 gap-1">
-              <label htmlFor="slug" className="select-none">
-                Images
-              </label>
-              <div className="relative flex items-center justify-center h-44 w-full border border-black cursor-pointer">
-                <Field
-                  type="file"
-                  name="images"
-                  id="images"
-                  className="absolute w-full h-full opacity-0"
-                  multiple
-                  onChange={handleImageChange}
-                  accept=".jpg, .jpeg, .png, .webp"
-                />
-                <AiOutlinePlus size={36} />
-              </div>
-              {variants.length > 0 && (
-                <div className="flex flex-col gap-1 mt-1">
-                  <span className="font-semibold">Variants</span>
-                  <div className="flex flex-wrap gap-2">
-                    {variants?.map((variant, index) => (
-                      <div key={index} className="bg-gray-100 select-none p-2">
-                        {variant.name + ": " + variant.value}
-                      </div>
-                    ))}
-                  </div>
+            <div className="flex flex-1 gap-5">
+              <div className="flex flex-col gap-1">
+                <label htmlFor="slug" className="select-none">
+                  Upload An Image
+                </label>
+                <div className="relative flex items-center justify-center h-44 w-44 border border-black cursor-pointer">
+                  <Field
+                    type="file"
+                    name="images"
+                    id="images"
+                    className="absolute w-full h-full opacity-0"
+                    multiple
+                    onChange={handleImageChange}
+                    accept=".jpg, .jpeg, .png, .webp"
+                  />
+                  <AiOutlinePlus size={36} />
                 </div>
-              )}
+              </div>
+              <div className="flex flex-col gap-2">
+                {images.length > 0 && (
+                  <div className="flex flex-col gap-1">
+                    <span className="font-semibold">Images</span>
+                    <div className="flex flex-wrap gap-2">
+                      {images.map((image, index) => (
+                        <div
+                          key={index}
+                          onClick={() => handleImageRemove(index)}
+                          className="relative group w-12 h-12"
+                        >
+                          <Image
+                            src={URL.createObjectURL(image)}
+                            alt={image.name}
+                            className="object-contain"
+                            sizes="(min-width: 640px) 50vw, 100vw"
+                            fill
+                          />
+                          <div className="relative hidden group-hover:flex items-center justify-center w-full h-full bg-black/70 text-white cursor-pointer">
+                            <AiFillCloseSquare size={22} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {variants.length > 0 && (
+                  <div className="flex flex-col gap-1 mt-1">
+                    <span className="font-semibold">Variants</span>
+                    <div className="flex flex-wrap gap-2">
+                      {variants?.map((variant, index) => (
+                        <div
+                          key={index}
+                          className="bg-gray-100 select-none p-2"
+                        >
+                          {variant.name + ": " + variant.value}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
           <div className="ml-auto mt-3">
