@@ -19,15 +19,38 @@ export default function CreateProductTab() {
   const [variantValue, setVariantValue] = useState<string>();
   const [variantQuantity, setVariantQuantity] = useState<number>();
 
-  const handleImageChange = (e: any) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
-    const selectedImages = [];
 
-    for (let i = 0; i < selectedFiles.length; i++) {
-      selectedImages.push(selectedFiles[i]);
+    if (selectedFiles) {
+      const selectedImages: File[] = [];
+
+      for (let i = 0; i < selectedFiles.length; i++) {
+        const file = selectedFiles[i];
+
+        // File type control
+        if (
+          file.type !== "image/png" &&
+          file.type !== "image/jpeg" &&
+          file.type !== "image/webp"
+        ) {
+          toast.error(
+            "Unsupported file format. Please upload only PNG, JPEG, or WebP images."
+          );
+        } else {
+          // File size control - Max limit 3MB
+          if (file.size > 3000000) {
+            toast.error(
+              "File size exceeds the maximum limit of 3MB. Please choose a smaller file."
+            );
+          } else {
+            selectedImages.push(file);
+          }
+        }
+      }
+
+      setImages(selectedImages);
     }
-
-    setImages(selectedImages);
   };
 
   const handleVariant = () => {
@@ -363,6 +386,7 @@ export default function CreateProductTab() {
                   className="absolute w-full h-full opacity-0"
                   multiple
                   onChange={handleImageChange}
+                  accept=".jpg, .jpeg, .png, .webp"
                 />
                 <AiOutlinePlus size={36} />
               </div>
