@@ -124,7 +124,7 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
         },
       })
       .then((res) => toast.success(res.data))
-      .catch((err) => toast.error("Something went wrong, try again."));
+      .catch((err) => toast.error(err.data));
   }
 
   async function deleteProduct(productId: number) {

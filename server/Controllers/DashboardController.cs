@@ -213,6 +213,40 @@ public class DashboardController : BaseController
         {
             foreach (var image in images)
             {
+                // Check file type
+                var allowedContentTypes = new[]
+                {
+                    "image/jpeg",
+                    "image/jpg",
+                    "image/png",
+                    "image/webp"
+                };
+                if (!allowedContentTypes.Contains(image.ContentType.ToLower()))
+                {
+                    return BadRequest(
+                        "Invalid file type. Only JPG, JPEG, PNG and WEBP images are allowed."
+                    );
+                }
+
+                // Check file extension
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+                var fileExtension = Path.GetExtension(image.FileName).ToLower();
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    return BadRequest(
+                        "Invalid file extension. Only JPG, JPEG, PNG and WEBP images are allowed."
+                    );
+                }
+
+                // Check file size
+                var maxFileSizeInBytes = 3 * 1024 * 1024; // 3 MB
+                if (image.Length > maxFileSizeInBytes)
+                {
+                    return BadRequest(
+                        "Type: " + "File size exceeds the maximum allowed limit (3 MB)."
+                    );
+                }
+
                 var currentDirectory = Directory.GetCurrentDirectory();
                 var parentDirectory = Path.GetDirectoryName(currentDirectory);
                 var uploadDirectory = Path.Combine(parentDirectory, "client", "public", "uploads");
