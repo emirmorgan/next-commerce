@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6FioQ0jh9dN40VmPhntst+wZSApS+EkxT/zladGmHXeJ2n0lFoNio2XiUmHuJNJY/kk5qhFfhLFzgPM1+7sWyA==",
+  "dgSpecHash": "p7uZX1PVa5CyfYDGyHRITmli27ZwsLBwCrbH80wqNUWdBxIBx6wBur81T6dNnaTcPMcWB+FZkfLjUrociWu5CA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\server.csproj",
   "expectedPackageFiles": [
@@ -42,6 +42,7 @@
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\sixlabors.imagesharp\\3.0.2\\sixlabors.imagesharp.3.0.2.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.1.4\\sqlitepclraw.bundle_e_sqlite3.2.1.4.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\sqlitepclraw.core\\2.1.4\\sqlitepclraw.core.2.1.4.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.4\\sqlitepclraw.lib.e_sqlite3.2.1.4.nupkg.sha512",

@@ -1,10 +1,14 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using server.Data;
 using server.DTOs;
 using server.Models;
+
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Webp;
+using SixLabors.ImageSharp.Processing;
 
 namespace server.Controllers;
 
@@ -256,12 +260,24 @@ public class DashboardController : BaseController
                     Directory.CreateDirectory(uploadDirectory);
                 }
 
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                var uniqueFileName = Guid.NewGuid().ToString() + ".webp";
                 var filePath = Path.Combine(uploadDirectory, uniqueFileName);
 
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                using (var outputStream = new FileStream(filePath, FileMode.Create))
                 {
-                    await image.CopyToAsync(stream);
+                    using (var inputStream = image.OpenReadStream())
+                    {
+                        var img = await Image.LoadAsync(inputStream);
+
+                        if (!fileExtension.Equals(".webp"))
+                        {
+                            img.Save(outputStream, new WebpEncoder());
+                        }
+                        else
+                        {
+                            await image.CopyToAsync(outputStream);
+                        }
+                    }
                 }
 
                 var imageSrc = "/uploads/" + uniqueFileName;
@@ -282,7 +298,10 @@ public class DashboardController : BaseController
         }
         catch (Exception ex)
         {
-            return StatusCode(500, "An error occurred while creating the product.");
+            return StatusCode(
+                500,
+                $"An error occurred while creating the product. Details: {ex.Message}"
+            );
         }
     }
 

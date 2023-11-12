@@ -79,3 +79,4 @@ C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net7.0\Micr
 C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
 C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\obj\Debug\net7.0\server.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net7.0\SixLabors.ImageSharp.dll
