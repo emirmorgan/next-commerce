@@ -19,8 +19,8 @@ export default function CreateProductTab() {
   const [variants, setVariants] = useState<ProductVariant[]>([]);
 
   const [variantName, setVariantName] = useState<string>("Size");
-  const [variantValue, setVariantValue] = useState<string>();
-  const [variantQuantity, setVariantQuantity] = useState<number>();
+  const [variantValue, setVariantValue] = useState<string>("");
+  const [variantQuantity, setVariantQuantity] = useState<number>(0);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
@@ -335,6 +335,7 @@ export default function CreateProductTab() {
                         name="variantName"
                         as="select"
                         className="w-20 outline-none m-2"
+                        value={variantName}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                           setVariantName(e.target.value)
                         }
@@ -347,10 +348,10 @@ export default function CreateProductTab() {
                       <Field
                         id="variantValue"
                         name="variantValue"
+                        value={variantValue}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                           setVariantValue(e.target.value)
                         }
-                        value={variantValue}
                         placeholder="XL / 42 / Red"
                         type="text"
                         className="w-32 p-2 focus:outline-none"
@@ -360,10 +361,10 @@ export default function CreateProductTab() {
                       <Field
                         id="variantQuantity"
                         name="variantQuantity"
+                        value={variantQuantity}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                           setVariantQuantity(Number(e.target.value))
                         }
-                        value={variantQuantity}
                         placeholder="Quantity"
                         type="number"
                         min={1}

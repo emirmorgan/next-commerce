@@ -1,5 +1,4 @@
 //Components
-
 import Carousel from "@/components/Carousel";
 import Campaings from "@/components/Home/Campaigns";
 import Products from "@/components/Home/Products";

@@ -9,6 +9,7 @@ import setCookies from "@/lib/setCookies";
 
 import { OrderProps, ProductRequest, StatisticsProps } from "@/lib/types";
 import { toast } from "react-toastify";
+import { useProducts } from "./ProductsContext";
 
 type DashboardContextProvider = {
   children: React.ReactNode;
@@ -28,6 +29,7 @@ export function useDashboard() {
 }
 
 export function DashboardProvider({ children }: DashboardContextProvider) {
+  const { fetchProducts } = useProducts();
   const { orderId, sort, pn } = useURLParams();
 
   const [statistics, setStatistics] = useState<StatisticsProps>();
@@ -123,7 +125,10 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then((res) => toast.success(res.data))
+      .then((res) => {
+        toast.success(res.data);
+        fetchProducts();
+      })
       .catch((err) => toast.error(err.data));
   }
 
@@ -140,7 +145,10 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
           },
         }
       )
-      .then((res) => toast.success(res.data))
+      .then((res) => {
+        toast.success(res.data);
+        fetchProducts();
+      })
       .catch((err) => toast.error("Something went wrong, try again."));
   }
 
