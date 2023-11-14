@@ -19,15 +19,15 @@ export default function VariantSelector({
 
   const handleRoute = (slug: string, id: number) => {
     const path = `/product/${slug}-p-` + id;
-    router.push(path, { scroll: false });
+    router.replace(path, { scroll: false });
   };
 
   const handleColor = (color: string) => {
-    router.push(pathname + "?color=" + color, { scroll: false });
+    router.replace(pathname + "?color=" + color, { scroll: false });
   };
 
   const handleSize = (size: string) => {
-    router.push(pathname + "?size=" + size, { scroll: false });
+    router.replace(pathname + "?size=" + size, { scroll: false });
   };
 
   return (

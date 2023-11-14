@@ -29,6 +29,7 @@ public class ProductsController : BaseController
         [FromQuery] decimal? priceFrom,
         [FromQuery] decimal? priceTo,
         [FromQuery] string? q,
+        [FromQuery] int? pid = 0,
         [FromQuery] int pn = 1
     )
     {
@@ -39,6 +40,11 @@ public class ProductsController : BaseController
             .Include(p => p.Subcategory)
             .Include(p => p.Images)
             .AsQueryable();
+
+        if (pid != 0)
+        {
+            query = query.Where(p => p.Id == pid);
+        }
 
         if (!string.IsNullOrEmpty(category) && category != "Any")
         {

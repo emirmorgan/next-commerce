@@ -16,6 +16,7 @@ type IParamsContext = {
   priceFrom: string;
   priceTo: string;
   q: string;
+  pid: string;
   orderId: string;
   sort: string;
   pn: string;
@@ -40,6 +41,7 @@ export function ParamsProvider({ children }: ParamsContextProvider) {
   const priceTo = searchParams.get("priceTo") as string;
   const q = searchParams.get("q") as string;
 
+  const pid = searchParams.get("pid") as string;
   const orderId = searchParams.get("orderId") as string;
 
   const sort = searchParams.get("sort") as string;
@@ -65,6 +67,7 @@ export function ParamsProvider({ children }: ParamsContextProvider) {
         priceFrom,
         priceTo,
         q,
+        pid,
         orderId,
         sort,
         pn,

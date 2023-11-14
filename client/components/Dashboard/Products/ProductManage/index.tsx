@@ -1,10 +1,11 @@
 "use client";
 
-import { AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
 
 import { useState } from "react";
 
 import ProductManageTab from "./ProductManageTab";
+import FindProductById from "./FindProductById";
 
 export default function ProductManage() {
   const [currentType, setCurrentType] = useState<string>();
@@ -27,14 +28,7 @@ export default function ProductManage() {
   return (
     <>
       <div className="flex flex-col lg:flex-row gap-2">
-        <div className="flex items-center border">
-          <div className="flex-1 border-r p-2">
-            <input type="text" placeholder="Search by product id" />
-          </div>
-          <div className="cursor-pointer p-2 hover:bg-gray-100">
-            <AiOutlineSearch size={24} />
-          </div>
-        </div>
+        <FindProductById />
         <div
           onClick={() => handleOpenTab("create")}
           className={

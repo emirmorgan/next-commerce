@@ -19,7 +19,7 @@ export default function PaginationBar() {
 
   const handlePrevious = () => {
     if (pn && Number(pn) > 1) {
-      router.push(
+      router.replace(
         pathname + "?" + createQueryString("pn", String(Number(pn) - 1))
       );
     }
@@ -27,9 +27,9 @@ export default function PaginationBar() {
 
   const handleNext = () => {
     if (!pn) {
-      router.push(pathname + "?" + createQueryString("pn", String(2)));
+      router.replace(pathname + "?" + createQueryString("pn", String(2)));
     } else if (Number(pn) < boxCount) {
-      router.push(
+      router.replace(
         pathname + "?" + createQueryString("pn", String(Number(pn) + 1))
       );
     }

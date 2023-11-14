@@ -45,7 +45,7 @@ export default function Sort() {
             <li
               key={index}
               onClick={() =>
-                router.push(
+                router.replace(
                   pathname + "?" + createQueryString("sort", sort.name),
                   { scroll: false }
                 )

@@ -43,6 +43,7 @@ export function ProductsProvider({ children }: ProductsContextProvider) {
     priceTo,
     sort,
     q,
+    pid,
     pn,
   } = useURLParams();
 
@@ -71,6 +72,7 @@ export function ProductsProvider({ children }: ProductsContextProvider) {
     priceTo,
     sort,
     q,
+    pid,
     pn,
   ]);
 
@@ -92,6 +94,7 @@ export function ProductsProvider({ children }: ProductsContextProvider) {
             color: currentColor,
             priceFrom: priceFrom,
             priceTo: priceTo,
+            pid: pid,
             pn: pn,
             q: q,
           },

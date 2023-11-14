@@ -36,7 +36,7 @@ export default function PaginationBox({ productNumber }: PaginationBoxProps) {
   }
 
   const handlePN = () => {
-    router.push(pathname + "?" + createQueryString("pn", productNumber));
+    router.replace(pathname + "?" + createQueryString("pn", productNumber));
   };
 
   if (

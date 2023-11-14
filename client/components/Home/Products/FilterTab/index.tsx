@@ -43,7 +43,7 @@ export default function FilterTab() {
 
     const queryString = queryParams.toString();
 
-    router.push(pathname + (queryString ? `?${queryString}` : ""), {
+    router.replace(pathname + (queryString ? `?${queryString}` : ""), {
       scroll: false,
     });
   };
@@ -75,7 +75,7 @@ export default function FilterTab() {
         >
           <li
             onClick={() =>
-              router.push(
+              router.replace(
                 pathname + "?" + createQueryString("category", "Any"),
                 {
                   scroll: false,
@@ -91,7 +91,7 @@ export default function FilterTab() {
             <li
               key={index}
               onClick={() =>
-                router.push(
+                router.replace(
                   pathname +
                     "?" +
                     createQueryString("category", category as string),
@@ -132,7 +132,7 @@ export default function FilterTab() {
         >
           <li
             onClick={() =>
-              router.push(
+              router.replace(
                 pathname + "?" + createQueryString("subcategory", "Any"),
                 {
                   scroll: false,
@@ -148,7 +148,7 @@ export default function FilterTab() {
             <li
               key={index}
               onClick={() =>
-                router.push(
+                router.replace(
                   pathname +
                     "?" +
                     createQueryString("subcategory", subcategory),
@@ -190,9 +190,12 @@ export default function FilterTab() {
         >
           <li
             onClick={() =>
-              router.push(pathname + "?" + createQueryString("brand", "Any"), {
-                scroll: false,
-              })
+              router.replace(
+                pathname + "?" + createQueryString("brand", "Any"),
+                {
+                  scroll: false,
+                }
+              )
             }
             className="flex items-center border-t border-gray-200 p-1 hover:bg-black/5"
           >
@@ -203,7 +206,7 @@ export default function FilterTab() {
             <li
               key={index}
               onClick={() =>
-                router.push(
+                router.replace(
                   pathname + "?" + createQueryString("brand", brand),
                   {
                     scroll: false,
@@ -253,9 +256,12 @@ export default function FilterTab() {
         >
           <li
             onClick={() =>
-              router.push(pathname + "?" + createQueryString("color", "Any"), {
-                scroll: false,
-              })
+              router.replace(
+                pathname + "?" + createQueryString("color", "Any"),
+                {
+                  scroll: false,
+                }
+              )
             }
             className="flex items-center border-t border-gray-200 p-1 hover:bg-black/5"
           >
@@ -266,7 +272,7 @@ export default function FilterTab() {
             <li
               key={index}
               onClick={() =>
-                router.push(
+                router.replace(
                   pathname + "?" + createQueryString("color", color.label),
                   {
                     scroll: false,
