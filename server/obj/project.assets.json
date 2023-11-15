@@ -3285,11 +3285,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\server.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\server.csproj",
       "projectName": "server",
-      "projectPath": "c:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\server.csproj",
+      "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\server.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\obj\\",
+      "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\fullstack-ecommerce\\server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -92,6 +92,7 @@ C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net8.0\ru\M
 C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net8.0\runtimes\browser-wasm\nativeassets\net8.0\e_sqlite3.a
 C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net8.0\runtimes\linux-arm\native\libe_sqlite3.so
 C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net8.0\runtimes\linux-arm64\native\libe_sqlite3.so
 C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net8.0\runtimes\linux-armel\native\libe_sqlite3.so
@@ -133,4 +134,3 @@ C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\obj\Debug\net8.0\refi
 C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\obj\Debug\net8.0\server.pdb
 C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\obj\Debug\net8.0\server.genruntimeconfig.cache
 C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\obj\Debug\net8.0\ref\server.dll
-C:\Users\Admin\Documents\GitHub\fullstack-ecommerce\server\bin\Debug\net8.0\runtimes\browser-wasm\nativeassets\net8.0\e_sqlite3.a
