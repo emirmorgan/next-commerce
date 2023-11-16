@@ -6,7 +6,7 @@ export default function FindProductById() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [productId, setProductId] = useState<number | null>(null);
+  const [productId, setProductId] = useState<number>();
 
   const handleFindById = (id: number) => {
     if (!id || id === 0) {
@@ -24,10 +24,10 @@ export default function FindProductById() {
     <div className="flex items-center border">
       <div className="flex-1 border-r p-2">
         <input
+          className="w-full"
           type="number"
           min={0}
           placeholder="Find the product by id"
-          value={productId as number}
           onChange={(e) => setProductId(Number(e.target.value))}
         />
       </div>

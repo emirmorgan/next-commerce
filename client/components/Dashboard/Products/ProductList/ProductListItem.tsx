@@ -1,6 +1,7 @@
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import Image from "next/image";
 import { useDashboard } from "@/context/DashboardContext";
+import { useModal } from "@/context/ModalContext";
 
 export type ProductListItemProps = {
   id: number;
@@ -15,6 +16,7 @@ export type ProductListItemProps = {
 
 export default function ProductListItem(props: ProductListItemProps) {
   const { deleteProduct } = useDashboard();
+  const { openModal } = useModal();
 
   return (
     <li className="flex items-center border-b gap-3 py-2 px-3">
@@ -37,7 +39,10 @@ export default function ProductListItem(props: ProductListItemProps) {
         </div>
       </div>
       <div className="flex gap-2 ml-auto">
-        <div className="border cursor-pointer transition-all ease-linear p-2 hover:border-gray-500">
+        <div
+          onClick={() => openModal("product")}
+          className="border cursor-pointer transition-all ease-linear p-2 hover:border-gray-500"
+        >
           <AiOutlineEdit size={20} />
         </div>
         <div

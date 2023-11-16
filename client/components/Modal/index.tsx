@@ -10,12 +10,14 @@ import useClickOutside from "@/hooks/useClickOutside";
 import PasswordModal from "./Modals/PasswordModal";
 import OrderModal from "./Modals/OrderModal";
 import AddressModal from "./Modals/AddressModal";
+import ProductModal from "./Modals/ProductModal";
 
 export default function Modal({ type }: { type: string }) {
   const modalType = {
     password: <PasswordModal />,
     order: <OrderModal />,
     address: <AddressModal />,
+    product: <ProductModal />,
   }[type];
 
   const elRef = useRef() as MutableRefObject<HTMLDivElement>;
