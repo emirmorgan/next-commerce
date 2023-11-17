@@ -16,7 +16,12 @@ export type ProductListItemProps = {
 
 export default function ProductListItem(props: ProductListItemProps) {
   const { deleteProduct } = useDashboard();
-  const { openModal } = useModal();
+  const { openModal, setProductId } = useModal();
+
+  const handleModal = () => {
+    setProductId(props.id);
+    openModal("product");
+  };
 
   return (
     <li className="flex items-center border-b gap-3 py-2 px-3">
@@ -40,7 +45,7 @@ export default function ProductListItem(props: ProductListItemProps) {
       </div>
       <div className="flex gap-2 ml-auto">
         <div
-          onClick={() => openModal("product")}
+          onClick={handleModal}
           className="border cursor-pointer transition-all ease-linear p-2 hover:border-gray-500"
         >
           <AiOutlineEdit size={20} />

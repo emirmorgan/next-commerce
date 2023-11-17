@@ -234,6 +234,7 @@ public class ProductsController : BaseController
                     pv =>
                         new ProductVariantDTO
                         {
+                            Id = pv.Id,
                             Name = pv.Name,
                             Value = pv.Value,
                             Quantity = pv.Quantity

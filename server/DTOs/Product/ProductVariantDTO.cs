@@ -5,6 +5,9 @@ namespace server.DTOs
     public class ProductVariantDTO
     {
         [Required]
+        public required int Id { get; set; }
+
+        [Required]
         public required string Name { get; set; }
 
         [Required]

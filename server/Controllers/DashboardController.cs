@@ -22,7 +22,7 @@ public class DashboardController : BaseController
         _context = context;
     }
 
-    [HttpGet("statistics")] // dashboard/statistics
+    [HttpGet("statistics")] // api/dashboard/statistics
     public async Task<ActionResult> GetStatistics()
     {
         const int totalSales = 34855;
@@ -91,7 +91,7 @@ public class DashboardController : BaseController
         );
     }
 
-    [HttpGet("orders")] // dashboard/statistics
+    [HttpGet("orders")] // api/dashboard/orders
     public async Task<ActionResult<OrderDTO>> GetOrders(
         [FromQuery] int? orderId,
         [FromQuery] string? sort,
@@ -153,7 +153,7 @@ public class DashboardController : BaseController
         );
     }
 
-    [HttpPost("product/create")]
+    [HttpPost("product/create")] // dashboard/product/create
     public async Task<ActionResult<ProductCreateDTO>> CreateProduct(
         [FromBody] ProductCreateDTO productCreateDTO
     )
@@ -201,7 +201,61 @@ public class DashboardController : BaseController
         return Ok(product);
     }
 
-    [HttpPost("image/upload")]
+    [HttpPost("product/delete")] // dashboard/product/delete
+    public async Task<ActionResult<ProductDeleteDTO>> DeleteProduct(
+        [FromBody] ProductDeleteDTO productDeleteDTO
+    )
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var product = await _context.Products
+            .Where(p => p.Id == productDeleteDTO.ProductId)
+            .FirstOrDefaultAsync();
+
+        if (product == null)
+        {
+            return NotFound("Product not found.");
+        }
+
+        var productImages = await _context.ProductImages
+            .Where(i => i.ProductId == productDeleteDTO.ProductId)
+            .ToListAsync();
+
+        var productVariants = await _context.ProductVariants
+            .Where(v => v.ProductId == productDeleteDTO.ProductId)
+            .ToListAsync();
+
+        _context.Products.Remove(product);
+
+        // Deleting product images
+        foreach (var productImage in productImages)
+        {
+            var currentDirectory = Directory.GetCurrentDirectory();
+            var parentDirectory = Path.GetDirectoryName(currentDirectory);
+            var uploadDirectory = Path.Combine(parentDirectory, "client", "public", "uploads");
+
+            var imagePath = productImage.src.Substring("/uploads/".Length);
+            var filePath = Path.Combine(uploadDirectory, imagePath);
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            _context.ProductImages.Remove(productImage);
+        }
+
+        _context.ProductVariants.RemoveRange(productVariants);
+
+        await _context.SaveChangesAsync();
+
+        return Ok("Product successfully deleted.");
+    }
+
+    [HttpPost("image/upload")] // dashboard/image/upload
     public async Task<ActionResult> CreateProductImage(
         [FromForm] IFormFile[] images,
         [FromForm] string productName,
@@ -303,59 +357,5 @@ public class DashboardController : BaseController
                 $"An error occurred while creating the product. Details: {ex.Message}"
             );
         }
-    }
-
-    [HttpPost("product/delete")]
-    public async Task<ActionResult<ProductDeleteDTO>> DeleteProduct(
-        [FromBody] ProductDeleteDTO productDeleteDTO
-    )
-    {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
-        var product = await _context.Products
-            .Where(p => p.Id == productDeleteDTO.ProductId)
-            .FirstOrDefaultAsync();
-
-        if (product == null)
-        {
-            return NotFound("Product not found.");
-        }
-
-        var productImages = await _context.ProductImages
-            .Where(i => i.ProductId == productDeleteDTO.ProductId)
-            .ToListAsync();
-
-        var productVariants = await _context.ProductVariants
-            .Where(v => v.ProductId == productDeleteDTO.ProductId)
-            .ToListAsync();
-
-        _context.Products.Remove(product);
-
-        // Deleting product images
-        foreach (var productImage in productImages)
-        {
-            var currentDirectory = Directory.GetCurrentDirectory();
-            var parentDirectory = Path.GetDirectoryName(currentDirectory);
-            var uploadDirectory = Path.Combine(parentDirectory, "client", "public", "uploads");
-
-            var imagePath = productImage.src.Substring("/uploads/".Length);
-            var filePath = Path.Combine(uploadDirectory, imagePath);
-
-            if (System.IO.File.Exists(filePath))
-            {
-                System.IO.File.Delete(filePath);
-            }
-
-            _context.ProductImages.Remove(productImage);
-        }
-
-        _context.ProductVariants.RemoveRange(productVariants);
-
-        await _context.SaveChangesAsync();
-
-        return Ok("Product successfully deleted.");
     }
 }

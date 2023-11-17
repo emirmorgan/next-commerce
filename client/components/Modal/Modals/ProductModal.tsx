@@ -4,15 +4,24 @@ import {
   AiOutlineMinus,
   AiOutlinePlus,
 } from "react-icons/ai";
-import Image from "next/image";
-import { useState } from "react";
 
-import { useModal } from "@/context/ModalContext";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { toast } from "react-toastify";
 
-export default function ProductModal() {
-  const { closeModal } = useModal();
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
+import { Product } from "@/lib/types";
+import { useModal } from "@/context/ModalContext";
+
+export default function ProductModal() {
+  const router = useRouter();
+  const { closeModal, productId } = useModal();
+
+  const [product, setProduct] = useState<Product>();
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isStockTabVisible, setStockTabVisible] = useState<boolean>(false);
   const [isPriceTabVisible, setPriceTabVisible] = useState<boolean>(true);
 
@@ -21,6 +30,39 @@ export default function ProductModal() {
 
   const [currentPrice, setCurrentPrice] = useState<number>(0);
   const [discountPrice, setDiscountPrice] = useState<number>(0);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const fetchProduct = async () => {
+      const product = await axios
+        .get(
+          process.env.NEXT_PUBLIC_API_URL +
+            `/products/details?productId=${productId}`
+        )
+        .then((response) => {
+          return response.data;
+        })
+        .finally(() => {
+          setIsLoading(false);
+        })
+        .catch(() => {
+          toast.error("Something went wrong.");
+
+          router.push("/");
+        });
+
+      setProduct(product);
+      console.log(product);
+    };
+
+    fetchProduct();
+    // eslint-disable-next-line
+  }, [productId]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   const handleSavePrice = () => {
     if (currentPrice) {
@@ -62,21 +104,25 @@ export default function ProductModal() {
         <div className="relative border w-[300px] h-[250px] mx-auto">
           <Image
             className="object-contain"
-            src="/uploads/508bb127-15bf-4d46-b05d-dabf3f5fa14c_v1-1.webp"
-            alt="Air Jordan"
+            src={product?.images[0].src as string}
+            alt={product?.images[0].alt as string}
             fill
           />
         </div>
         <div className="flex justify-between items-center gap-2">
           <div className="flex flex-col font-semibold mt-2">
-            <span className="text-sm text-gray-500">Nike</span>
-            <span>Air Jordan</span>
+            <span className="text-sm text-gray-500">{product?.brand}</span>
+            <span>{product?.name}</span>
           </div>
           <div className="flex flex-col font-semibold mt-2">
             <span className="font-bold text-sm text-gray-500 line-through">
-              49.99$
+              {product?.price + "$"}
             </span>
-            <span className="font-semibold text-black">39.99$</span>
+            {product?.discountPrice && (
+              <span className="font-semibold text-black">
+                {product.discountPrice + "$"}
+              </span>
+            )}
           </div>
         </div>
         <div className="flex flex-col mt-3">
@@ -114,33 +160,38 @@ export default function ProductModal() {
             <span className="text-sm font-semibold">Stock Management</span>
             <div className="h-[2px] bg-black/20 rounded-full my-1" />
             <ul className="mt-1">
-              <li className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-black animate-pulse rounded-full" />
-                <div className="flex w-full justify-between">
-                  <span>Size: 41</span>
-                  <div className="flex justify-center items-center gap-2">
-                    <div
-                      onClick={() => handleIncreaseStock(1)}
-                      className="border cursor-pointer p-1 hover:border-black"
-                    >
-                      <AiOutlinePlus size={14} />
-                    </div>
-                    <span className="select-none">3</span>
-                    <div
-                      onClick={() => handleDecreaseStock(1)}
-                      className="border cursor-pointer p-1 hover:border-black"
-                    >
-                      <AiOutlineMinus size={14} />
-                    </div>
-                    <div
-                      onClick={() => handleVariantRemove(1)}
-                      className="border cursor-pointer p-1 ml-3 hover:border-red-500"
-                    >
-                      <AiOutlineDelete />
+              {product?.variants.map((variant, index) => (
+                <li key={index} className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-black animate-pulse rounded-full" />
+                  <div className="flex w-full justify-between">
+                    <span>{variant.name + ": " + variant.value}</span>
+                    <div className="flex justify-center items-center gap-2">
+                      <div
+                        onClick={() => handleDecreaseStock(variant.id)}
+                        className="border cursor-pointer p-1 hover:border-black"
+                      >
+                        <AiOutlineMinus size={14} />
+                      </div>
+                      <div className="flex items-center justify-center w-4">
+                        <span className="select-none">{variant.quantity}</span>
+                      </div>
+
+                      <div
+                        onClick={() => handleIncreaseStock(variant.id)}
+                        className="border cursor-pointer p-1 hover:border-black"
+                      >
+                        <AiOutlinePlus size={14} />
+                      </div>
+                      <div
+                        onClick={() => handleVariantRemove(variant.id)}
+                        className="border cursor-pointer p-1 ml-3 hover:border-red-500"
+                      >
+                        <AiOutlineDelete />
+                      </div>
                     </div>
                   </div>
-                </div>
-              </li>
+                </li>
+              ))}
             </ul>
             <div className="flex flex-col gap-2 mt-2">
               <div className="flex border">
