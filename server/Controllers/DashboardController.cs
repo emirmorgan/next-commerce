@@ -6,9 +6,7 @@ using server.Data;
 using server.DTOs;
 using server.Models;
 
-using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Webp;
-using SixLabors.ImageSharp.Processing;
 
 namespace server.Controllers;
 
@@ -153,7 +151,7 @@ public class DashboardController : BaseController
         );
     }
 
-    [HttpPost("product/create")] // dashboard/product/create
+    [HttpPost("product/create")] // api/dashboard/product/create
     public async Task<ActionResult<ProductCreateDTO>> CreateProduct(
         [FromBody] ProductCreateDTO productCreateDTO
     )

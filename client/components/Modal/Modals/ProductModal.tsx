@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { Product } from "@/lib/types";
+import { Product, ProductVariant } from "@/lib/types";
 import { useModal } from "@/context/ModalContext";
 
 export default function ProductModal() {
@@ -27,6 +27,7 @@ export default function ProductModal() {
 
   const [variantName, setVariantName] = useState<string>("Size");
   const [variantValue, setVariantValue] = useState<string>("");
+  const [variantQuantity, setVariantQuantity] = useState<number>();
 
   const [currentPrice, setCurrentPrice] = useState<number>(0);
   const [discountPrice, setDiscountPrice] = useState<number>(0);
@@ -49,11 +50,10 @@ export default function ProductModal() {
         .catch(() => {
           toast.error("Something went wrong.");
 
-          router.push("/");
+          router.push("/dashboard/products");
         });
 
       setProduct(product);
-      console.log(product);
     };
 
     fetchProduct();
@@ -76,15 +76,62 @@ export default function ProductModal() {
 
   const handleDecreaseStock = (id: number) => {};
 
-  const handleVariantAdd = () => {
+  const handleCreateVariant = async () => {
     if (variantName && variantValue) {
-      // add
+      const variantReq = {
+        name: variantName,
+        value: variantValue,
+        quantity: variantQuantity,
+        productId: productId,
+      };
+
+      try {
+        const response = await axios.post(
+          process.env.NEXT_PUBLIC_API_URL + "/variant/create",
+          variantReq
+        );
+
+        if (response.data) {
+          setProduct({
+            ...product,
+            variants: [...(product?.variants as ProductVariant[]), variantReq],
+          } as Product);
+        } else {
+          toast.error("Something went wrong.");
+        }
+      } catch (error: any) {
+        if (error.response.data) {
+          toast.error(error.response.data);
+        } else {
+          console.error("API request failed:", error);
+        }
+      }
     } else {
       toast.error("Variant is not valid.");
     }
   };
 
-  const handleVariantRemove = (id: number) => {};
+  const handleDeleteVariant = async (id: number) => {
+    try {
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_API_URL + `/variant/delete?variantId=${id}`,
+        id
+      );
+
+      if (response.data) {
+        const updatedVariants = product?.variants.filter((v) => v.id != id);
+
+        setProduct({
+          ...product,
+          variants: updatedVariants,
+        } as Product);
+      } else {
+        toast.error("Something went wrong.");
+      }
+    } catch (error) {
+      console.error("API request failed:", error);
+    }
+  };
 
   return (
     <div className="flex flex-col w-[350px] py-4 px-4 gap-3">
@@ -102,12 +149,17 @@ export default function ProductModal() {
       </div>
       <div className="flex flex-col">
         <div className="relative border w-[300px] h-[250px] mx-auto">
-          <Image
-            className="object-contain"
-            src={product?.images[0].src as string}
-            alt={product?.images[0].alt as string}
-            fill
-          />
+          {product?.images ? (
+            <Image
+              className="object-contain"
+              src={product?.images[0].src as string}
+              alt={product?.images[0].alt as string}
+              sizes="(min-width: 480px) 50vw, 100vw"
+              fill
+            />
+          ) : (
+            <div className="bg-gray-200 w-[300px] h-[250px] animate-pulse mx-auto" />
+          )}
         </div>
         <div className="flex justify-between items-center gap-2">
           <div className="flex flex-col font-semibold mt-2">
@@ -175,7 +227,6 @@ export default function ProductModal() {
                       <div className="flex items-center justify-center w-4">
                         <span className="select-none">{variant.quantity}</span>
                       </div>
-
                       <div
                         onClick={() => handleIncreaseStock(variant.id)}
                         className="border cursor-pointer p-1 hover:border-black"
@@ -183,7 +234,7 @@ export default function ProductModal() {
                         <AiOutlinePlus size={14} />
                       </div>
                       <div
-                        onClick={() => handleVariantRemove(variant.id)}
+                        onClick={() => handleDeleteVariant(variant.id)}
                         className="border cursor-pointer p-1 ml-3 hover:border-red-500"
                       >
                         <AiOutlineDelete />
@@ -194,31 +245,49 @@ export default function ProductModal() {
               ))}
             </ul>
             <div className="flex flex-col gap-2 mt-2">
-              <div className="flex border">
-                <select
-                  name="variantName"
-                  id="variantName"
-                  value={variantName}
-                  onChange={(e) => setVariantName(e.target.value)}
-                  className="p-1 w-20 outline-none border-r hover:bg-black/10"
-                >
-                  <option value="Size">Size</option>
-                  <option value="Color">Color</option>
-                </select>
-                <input
-                  name="variantValue"
-                  id="variantValue"
-                  type="text"
-                  placeholder="41"
-                  value={variantValue}
-                  onChange={(e) => setVariantValue(e.target.value)}
-                  className="w-full h-8 p-2 focus:outline-none"
-                />
+              <div className="flex justify-between gap-1">
+                <div className="flex border">
+                  <select
+                    name="variantName"
+                    id="variantName"
+                    value={variantName}
+                    onChange={(e) => setVariantName(e.target.value)}
+                    className="w-20 p-1 outline-none border-r hover:bg-black/10"
+                  >
+                    <option value="Size">Size</option>
+                    <option value="Color">Color</option>
+                  </select>
+                  <input
+                    name="variantValue"
+                    id="variantValue"
+                    type="text"
+                    placeholder="41"
+                    value={variantValue}
+                    onChange={(e) => setVariantValue(e.target.value)}
+                    className="w-14 h-8 p-2 focus:outline-none"
+                  />
+                </div>
+                <div className="flex border">
+                  <div className="flex items-center justify-center border-r text-sm px-1">
+                    <span>Quantity</span>
+                  </div>
+                  <input
+                    name="variantQuantity"
+                    id="variantQuantity"
+                    type="number"
+                    placeholder="5"
+                    min={0}
+                    onChange={(e) => setVariantQuantity(Number(e.target.value))}
+                    className="w-16 h-8 p-2 focus:outline-none"
+                  />
+                </div>
+              </div>
+              <div className="flex ml-auto mt-auto">
                 <div
-                  onClick={handleVariantAdd}
-                  className="border-l cursor-pointer py-1 px-2 hover:bg-black/10"
+                  onClick={handleCreateVariant}
+                  className="border cursor-pointer py-1 px-2 hover:bg-black/10"
                 >
-                  Add
+                  Add Variant
                 </div>
               </div>
             </div>
