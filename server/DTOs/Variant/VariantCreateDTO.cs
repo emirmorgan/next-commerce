@@ -10,8 +10,7 @@ namespace server.DTOs
         [Required]
         public required string Value { get; set; }
 
-        [Required]
-        public required int Quantity { get; set; } = 0;
+        public int Quantity { get; set; } = 0;
 
         [Required]
         public required int ProductId { get; set; }

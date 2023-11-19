@@ -23,7 +23,7 @@ export default function ProductModal() {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isStockTabVisible, setStockTabVisible] = useState<boolean>(false);
-  const [isPriceTabVisible, setPriceTabVisible] = useState<boolean>(true);
+  const [isPriceTabVisible, setPriceTabVisible] = useState<boolean>(false);
 
   const [variantName, setVariantName] = useState<string>("Size");
   const [variantValue, setVariantValue] = useState<string>("");
@@ -32,29 +32,29 @@ export default function ProductModal() {
   const [currentPrice, setCurrentPrice] = useState<number>(0);
   const [discountPrice, setDiscountPrice] = useState<number>(0);
 
+  const fetchProduct = async () => {
+    const product = await axios
+      .get(
+        process.env.NEXT_PUBLIC_API_URL +
+          `/products/details?productId=${productId}`
+      )
+      .then((response) => {
+        return response.data;
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
+      .catch(() => {
+        toast.error("Something went wrong.");
+
+        router.push("/dashboard/products");
+      });
+
+    setProduct(product);
+  };
+
   useEffect(() => {
     setIsLoading(true);
-
-    const fetchProduct = async () => {
-      const product = await axios
-        .get(
-          process.env.NEXT_PUBLIC_API_URL +
-            `/products/details?productId=${productId}`
-        )
-        .then((response) => {
-          return response.data;
-        })
-        .finally(() => {
-          setIsLoading(false);
-        })
-        .catch(() => {
-          toast.error("Something went wrong.");
-
-          router.push("/dashboard/products");
-        });
-
-      setProduct(product);
-    };
 
     fetchProduct();
     // eslint-disable-next-line
@@ -72,65 +72,108 @@ export default function ProductModal() {
     }
   };
 
-  const handleIncreaseStock = (id: number) => {};
+  const handleIncreaseStock = async (id: number) => {
+    await axios
+      .post(
+        process.env.NEXT_PUBLIC_API_URL + `/variant/increase?variantId=${id}`
+      )
+      .then((response) => {
+        const updatedVariants = product?.variants.map((pv) =>
+          pv.id === id
+            ? {
+                ...pv,
+                quantity: pv.quantity >= 0 ? pv.quantity + 1 : pv.quantity,
+              }
+            : pv
+        );
 
-  const handleDecreaseStock = (id: number) => {};
+        setProduct({
+          ...product,
+          variants: updatedVariants,
+        } as Product);
+      })
+      .catch((error) => {
+        if (error.response.data) {
+          toast.error(error.response.data);
+        } else {
+          console.error("API request failed:", error);
+        }
+      });
+  };
+
+  const handleDecreaseStock = async (id: number) => {
+    await axios
+      .post(
+        process.env.NEXT_PUBLIC_API_URL + `/variant/decrease?variantId=${id}`
+      )
+      .then((response) => {
+        const updatedVariants = product?.variants.map((pv) =>
+          pv.id === id
+            ? {
+                ...pv,
+                quantity: pv.quantity > 0 ? pv.quantity - 1 : pv.quantity,
+              }
+            : pv
+        );
+
+        setProduct({
+          ...product,
+          variants: updatedVariants,
+        } as Product);
+      })
+      .catch((error) => {
+        if (error.response.data) {
+          toast.error(error.response.data);
+        } else {
+          console.error("API request failed:", error);
+        }
+      });
+  };
 
   const handleCreateVariant = async () => {
     if (variantName && variantValue) {
       const variantReq = {
         name: variantName,
         value: variantValue,
-        quantity: variantQuantity,
+        quantity: variantQuantity ? variantQuantity : 0,
         productId: productId,
       };
 
-      try {
-        const response = await axios.post(
-          process.env.NEXT_PUBLIC_API_URL + "/variant/create",
-          variantReq
-        );
-
-        if (response.data) {
-          setProduct({
-            ...product,
-            variants: [...(product?.variants as ProductVariant[]), variantReq],
-          } as Product);
-        } else {
-          toast.error("Something went wrong.");
-        }
-      } catch (error: any) {
-        if (error.response.data) {
-          toast.error(error.response.data);
-        } else {
-          console.error("API request failed:", error);
-        }
-      }
+      await axios
+        .post(process.env.NEXT_PUBLIC_API_URL + "/variant/create", variantReq)
+        .then((response) => {
+          fetchProduct();
+        })
+        .catch((error) => {
+          if (error.response.data) {
+            toast.error(error.response.data);
+          } else {
+            console.error("API request failed:", error);
+          }
+        });
     } else {
       toast.error("Variant is not valid.");
     }
   };
 
   const handleDeleteVariant = async (id: number) => {
-    try {
-      const response = await axios.post(
-        process.env.NEXT_PUBLIC_API_URL + `/variant/delete?variantId=${id}`,
-        id
-      );
-
-      if (response.data) {
+    await axios
+      .post(process.env.NEXT_PUBLIC_API_URL + `/variant/delete?variantId=${id}`)
+      .then((response) => {
         const updatedVariants = product?.variants.filter((v) => v.id != id);
 
         setProduct({
           ...product,
           variants: updatedVariants,
         } as Product);
-      } else {
-        toast.error("Something went wrong.");
-      }
-    } catch (error) {
-      console.error("API request failed:", error);
-    }
+      })
+      .catch((error) => {
+        if (error.response.data) {
+          toast.error(error.response.data);
+        } else {
+          console.error("API request failed:", error);
+        }
+      });
   };
 
   return (

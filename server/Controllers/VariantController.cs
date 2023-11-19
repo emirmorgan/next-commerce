@@ -16,8 +16,62 @@ public class VariantController : BaseController
         _context = context;
     }
 
+    [HttpPost("increase")] // api/variant/increase
+    public async Task<IActionResult> IncreaseVariantStock(int variantId)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var variant = await _context.ProductVariants
+            .Where(v => v.Id == variantId)
+            .FirstOrDefaultAsync();
+
+        if (variant == null)
+        {
+            return NotFound("Variant couldn't find.");
+        }
+
+        if (variant.Quantity >= 0)
+        {
+            variant.Quantity += 1;
+        }
+
+        await _context.SaveChangesAsync();
+
+        return Ok();
+    }
+
+    [HttpPost("decrease")] // api/variant/decrease
+    public async Task<IActionResult> DecreaseVariantStock(int variantId)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var variant = await _context.ProductVariants
+            .Where(v => v.Id == variantId)
+            .FirstOrDefaultAsync();
+
+        if (variant == null)
+        {
+            return NotFound("Variant couldn't find.");
+        }
+
+        if (variant.Quantity > 0)
+        {
+            variant.Quantity -= 1;
+        }
+
+        await _context.SaveChangesAsync();
+
+        return Ok();
+    }
+
     [HttpPost("create")] // api/variant/create
-    public async Task<ActionResult<VariantCreateDTO>> CreateVariant(
+    public async Task<ActionResult<string>> CreateVariant(
         [FromBody] VariantCreateDTO variantCreateDTO
     )
     {
@@ -50,7 +104,7 @@ public class VariantController : BaseController
     }
 
     [HttpPost("delete")] // api/variant/delete
-    public async Task<ActionResult> DeleteVariant(int variantId)
+    public async Task<ActionResult<string>> DeleteVariant(int variantId)
     {
         if (!ModelState.IsValid)
         {
