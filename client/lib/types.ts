@@ -39,7 +39,7 @@ export type ProductImages = {
 };
 
 export type ProductVariant = {
-  id: number;
+  id?: number;
   name: string;
   value: string;
   quantity: number;

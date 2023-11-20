@@ -64,11 +64,30 @@ export default function ProductModal() {
     return <div>Loading...</div>;
   }
 
-  const handleSavePrice = () => {
+  const handleSavePrice = async () => {
     if (currentPrice) {
-      console.log(currentPrice, discountPrice);
-    } else {
-      toast.error("Price is not valid.");
+      const req = {
+        price: currentPrice,
+        discount: discountPrice,
+        productId: productId,
+      };
+
+      await axios
+        .post(process.env.NEXT_PUBLIC_API_URL + `/products/update/price`, req)
+        .then((response) => {
+          setProduct({
+            ...product,
+            price: req.price,
+            discountPrice: req.discount != 0 ? discountPrice : null,
+          } as Product);
+        })
+        .catch((error) => {
+          if (error.response.data) {
+            toast.error(error.response.data);
+          } else {
+            console.error("API request failed:", error);
+          }
+        });
     }
   };
 
@@ -210,7 +229,13 @@ export default function ProductModal() {
             <span>{product?.name}</span>
           </div>
           <div className="flex flex-col font-semibold mt-2">
-            <span className="font-bold text-sm text-gray-500 line-through">
+            <span
+              className={
+                product?.discountPrice
+                  ? "font-bold text-sm text-gray-500 line-through"
+                  : "font-semibold text-black"
+              }
+            >
               {product?.price + "$"}
             </span>
             {product?.discountPrice && (
@@ -262,7 +287,9 @@ export default function ProductModal() {
                     <span>{variant.name + ": " + variant.value}</span>
                     <div className="flex justify-center items-center gap-2">
                       <div
-                        onClick={() => handleDecreaseStock(variant.id)}
+                        onClick={() =>
+                          handleDecreaseStock(variant.id as number)
+                        }
                         className="border cursor-pointer p-1 hover:border-black"
                       >
                         <AiOutlineMinus size={14} />
@@ -271,13 +298,17 @@ export default function ProductModal() {
                         <span className="select-none">{variant.quantity}</span>
                       </div>
                       <div
-                        onClick={() => handleIncreaseStock(variant.id)}
+                        onClick={() =>
+                          handleIncreaseStock(variant.id as number)
+                        }
                         className="border cursor-pointer p-1 hover:border-black"
                       >
                         <AiOutlinePlus size={14} />
                       </div>
                       <div
-                        onClick={() => handleDeleteVariant(variant.id)}
+                        onClick={() =>
+                          handleDeleteVariant(variant.id as number)
+                        }
                         className="border cursor-pointer p-1 ml-3 hover:border-red-500"
                       >
                         <AiOutlineDelete />

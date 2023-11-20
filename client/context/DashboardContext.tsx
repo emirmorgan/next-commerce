@@ -37,8 +37,6 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
 
   useEffect(() => {
     fetchStatistics();
-
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -48,78 +46,71 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
   }, [orderId, sort, pn]);
 
   async function fetchOrders() {
-    try {
-      const token = await setCookies({ type: "GET", tag: "token", data: "" });
+    const token = await setCookies({ type: "GET", tag: "token", data: "" });
 
-      const response = await axios.get(
-        process.env.NEXT_PUBLIC_API_URL + "/dashboard/orders",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          params: {
-            orderId: orderId,
-            sort: sort,
-            pn: pn,
-          },
-        }
-      );
-
-      setOrders(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+    await axios
+      .get(process.env.NEXT_PUBLIC_API_URL + "/dashboard/orders", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          orderId: orderId,
+          sort: sort,
+          pn: pn,
+        },
+      })
+      .then((response) => {
+        setOrders(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   async function fetchStatistics() {
-    try {
-      const token = await setCookies({ type: "GET", tag: "token", data: "" });
+    const token = await setCookies({ type: "GET", tag: "token", data: "" });
 
-      const response = await axios.get(
-        process.env.NEXT_PUBLIC_API_URL + "/dashboard/statistics",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      setStatistics(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+    await axios
+      .get(process.env.NEXT_PUBLIC_API_URL + "/dashboard/statistics", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setStatistics(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   async function createProduct(data: ProductRequest, formData: FormData) {
-    try {
-      const token = await setCookies({ type: "GET", tag: "token", data: "" });
+    const token = await setCookies({ type: "GET", tag: "token", data: "" });
 
-      await axios
-        .post(
-          process.env.NEXT_PUBLIC_API_URL + "/dashboard/product/create",
-          data,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((res) => {
-          const product = res.data;
+    await axios
+      .post(process.env.NEXT_PUBLIC_API_URL + "/products/create", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        const product = res.data;
 
-          formData.append("productId", product.id);
-          formData.append("productName", product.name);
+        formData.append("productId", product.id);
+        formData.append("productName", product.name);
 
-          createProductImage(formData);
-        });
-    } catch (error) {}
+        createProductImage(formData);
+      })
+      .catch((error) => {
+        toast.error("Something went wrong when creating the product.");
+      });
   }
 
   async function createProductImage(data: FormData) {
     const token = await setCookies({ type: "GET", tag: "token", data: "" });
 
     await axios
-      .post(process.env.NEXT_PUBLIC_API_URL + "/dashboard/image/upload", data, {
+      .post(process.env.NEXT_PUBLIC_API_URL + "/products/image/upload", data, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -137,7 +128,7 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
 
     await axios
       .post(
-        process.env.NEXT_PUBLIC_API_URL + "/dashboard/product/delete",
+        process.env.NEXT_PUBLIC_API_URL + "/products/delete",
         { productId },
         {
           headers: {
