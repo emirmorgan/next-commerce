@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 //Contexts
 import { useAuth } from "@/context/AuthContext";
@@ -14,6 +15,7 @@ import UserAddress from "@/components/Home/Profile/UserAddress";
 import UserOrders from "@/components/Home/Profile/UserOrders";
 
 export default function ProfilePage() {
+  const router = useRouter();
   const { fetchOrders } = useOrder();
   const { user, authLogout } = useAuth();
   const { openModal } = useModal();
@@ -50,6 +52,14 @@ export default function ProfilePage() {
             Log out
           </button>
         </div>
+        {user.role === "ADMIN" && (
+          <button
+            onClick={() => router.push("/dashboard")}
+            className="font-semibold border p-2 hover:border-black transition-all ease-linear"
+          >
+            Admin Dashboard
+          </button>
+        )}
       </div>
       <div className="flex flex-col flex-1 border p-4 rounded-md shadow-sm">
         <h1 className="text-md font-bold">Orders</h1>

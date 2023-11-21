@@ -2,7 +2,7 @@ export default function OrdersSkeleton() {
   return (
     <div className="border rounded mt-3">
       <div className="border-b p-2">
-        <h1 className="font-bold">Latest orders</h1>
+        <div className="h-2 w-28 bg-gray-300 rounded-full" />
       </div>
       <ul>
         <div className="flex justify-between p-3">

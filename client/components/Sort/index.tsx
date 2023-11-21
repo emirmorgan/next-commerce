@@ -16,7 +16,7 @@ export default function Sort() {
   return (
     <div
       onClick={() => setVisible(!isVisible)}
-      className="relative flex flex-col select-none"
+      className="relative flex flex-col text-sm select-none"
     >
       <div className="flex justify-between items-center w-52 min-w-52 border border-gray-300 gap-3 py-1 px-2 cursor-pointer">
         <div className="flex flex-col">
@@ -31,7 +31,7 @@ export default function Sort() {
             "transition-all ease-linear duration-[250ms] " +
             (isVisible ? " -rotate-180" : "")
           }
-          size={20}
+          size={16}
         />
       </div>
       <div

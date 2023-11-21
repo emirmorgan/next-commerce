@@ -12,7 +12,7 @@ import ProductCardSkeleton from "@/components/Home/ProductCard/Skeleton";
 import ProductCard from "@/components/Home/ProductCard";
 import PaginationBar from "@/components/Home/Products/PaginationBar";
 import MobileFilterTab from "@/components/Home/Products/FilterTab/Mobile";
-import Sort from "@/components/Home/Products/Sort";
+import Sort from "@/components/Sort";
 
 export default function ProductsPage() {
   const { q } = useURLParams();

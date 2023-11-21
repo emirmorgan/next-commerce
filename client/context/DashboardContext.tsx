@@ -49,7 +49,7 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
     const token = await setCookies({ type: "GET", tag: "token", data: "" });
 
     await axios
-      .get(process.env.NEXT_PUBLIC_API_URL + "/dashboard/orders", {
+      .get(process.env.NEXT_PUBLIC_API_URL + "/orders", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -2,11 +2,17 @@
 
 import { useDashboard } from "@/context/DashboardContext";
 
+//Components
 import Order from "./Order";
 import OrdersSkeleton from "./Skeleton";
-import { randomUUID } from "crypto";
+import Sort from "@/components/Sort";
 
-export default function Orders() {
+type OrderListProps = {
+  title?: string;
+  sort?: boolean;
+};
+
+export default function OrderList(props: OrderListProps) {
   const { orders } = useDashboard();
 
   if (!orders) {
@@ -15,8 +21,17 @@ export default function Orders() {
 
   return (
     <div className="border rounded mt-3">
-      <div className="border-b p-2">
-        <h1 className="font-bold">Latest orders</h1>
+      <div className="flex justify-between items-center p-2 border-b">
+        <div className="font-semibold">
+          {props.title ? (
+            <h1>
+              {props.title} {`(${orders.totalOrders})`}
+            </h1>
+          ) : (
+            <h1>Last Orders</h1>
+          )}
+        </div>
+        {props.sort && <Sort />}
       </div>
       <ul>
         {orders.totalOrders === 0 && (
@@ -24,9 +39,9 @@ export default function Orders() {
             <span>😵 Couldn&apos;t find any order.</span>
           </li>
         )}
-        {orders.orders?.map((order) => (
+        {orders.orders?.map((order, index) => (
           <Order
-            key={randomUUID()}
+            key={index}
             orderId={order.orderId}
             name={order.name}
             contact={order.contact}
