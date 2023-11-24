@@ -3,7 +3,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
-import setCookies from "@/lib/setCookies";
 import { ProductCardType } from "@/lib/types";
 
 import { useAuth } from "./AuthContext";
@@ -78,58 +77,41 @@ export function ProductsProvider({ children }: ProductsContextProvider) {
 
   async function fetchProducts() {
     setIsLoading(true);
-    try {
-      const token = await setCookies({ type: "GET", tag: "token", data: "" });
 
-      await axios
-        .get(process.env.NEXT_PUBLIC_API_URL + "/products", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          params: {
-            sort: sort,
-            category: currentCategory,
-            subcategory: currentSubcategory,
-            brand: currentBrand,
-            color: currentColor,
-            priceFrom: priceFrom,
-            priceTo: priceTo,
-            pid: pid,
-            pn: pn,
-            q: q,
-          },
-        })
-        .then((response) => {
-          setProductsResponse(response.data);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+    await axios
+      .get(process.env.NEXT_PUBLIC_API_URL + "/products", {
+        params: {
+          sort: sort,
+          category: currentCategory,
+          subcategory: currentSubcategory,
+          brand: currentBrand,
+          color: currentColor,
+          priceFrom: priceFrom,
+          priceTo: priceTo,
+          pid: pid,
+          pn: pn,
+          q: q,
+        },
+      })
+      .then((response) => {
+        setProductsResponse(response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   async function updateFavorites(type: string, productId: number) {
-    const token = await setCookies({ type: "GET", tag: "token", data: "" });
-
     if (type === "add") {
       axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/favorites/add/${productId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${process.env.NEXT_PUBLIC_API_URL}/favorites/add/${productId}`
       );
     } else if (type === "delete") {
       axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/favorites/delete/${productId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${process.env.NEXT_PUBLIC_API_URL}/favorites/delete/${productId}`
       );
     }
   }

@@ -5,8 +5,6 @@ import axios from "axios";
 
 import { useURLParams } from "./ParamsContext";
 
-import setCookies from "@/lib/setCookies";
-
 import { OrderProps, ProductRequest, StatisticsProps } from "@/lib/types";
 import { toast } from "react-toastify";
 import { useProducts } from "./ProductsContext";
@@ -46,13 +44,8 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
   }, [orderId, sort, pn]);
 
   async function fetchOrders() {
-    const token = await setCookies({ type: "GET", tag: "token", data: "" });
-
     await axios
       .get(process.env.NEXT_PUBLIC_API_URL + "/orders", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
         params: {
           orderId: orderId,
           sort: sort,
@@ -68,14 +61,8 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
   }
 
   async function fetchStatistics() {
-    const token = await setCookies({ type: "GET", tag: "token", data: "" });
-
     await axios
-      .get(process.env.NEXT_PUBLIC_API_URL + "/dashboard/statistics", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get(process.env.NEXT_PUBLIC_API_URL + "/dashboard/statistics")
       .then((response) => {
         setStatistics(response.data);
       })
@@ -85,14 +72,8 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
   }
 
   async function createProduct(data: ProductRequest, formData: FormData) {
-    const token = await setCookies({ type: "GET", tag: "token", data: "" });
-
     await axios
-      .post(process.env.NEXT_PUBLIC_API_URL + "/products/create", data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .post(process.env.NEXT_PUBLIC_API_URL + "/products/create", data)
       .then((res) => {
         const product = res.data;
 
@@ -102,17 +83,15 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
         createProductImage(formData);
       })
       .catch((error) => {
+        console.log(error);
         toast.error("Something went wrong when creating the product.");
       });
   }
 
   async function createProductImage(data: FormData) {
-    const token = await setCookies({ type: "GET", tag: "token", data: "" });
-
     await axios
       .post(process.env.NEXT_PUBLIC_API_URL + "/products/image/upload", data, {
         headers: {
-          Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       })
@@ -124,18 +103,8 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
   }
 
   async function deleteProduct(productId: number) {
-    const token = await setCookies({ type: "GET", tag: "token", data: "" });
-
     await axios
-      .post(
-        process.env.NEXT_PUBLIC_API_URL + "/products/delete",
-        { productId },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post(process.env.NEXT_PUBLIC_API_URL + "/products/delete", { productId })
       .then((res) => {
         toast.success(res.data);
         fetchProducts();

@@ -150,6 +150,7 @@ export default function Footer() {
                   fill
                   src="/assets/app-store.svg"
                   alt="Download on the App Store"
+                  sizes="(max-width: 380px) 50vw, 100vw"
                 />
               </Link>
               <Link
@@ -161,6 +162,7 @@ export default function Footer() {
                   fill
                   src="/assets/google-play.svg"
                   alt="Download on the Google Play"
+                  sizes="(max-width: 380px) 50vw, 100vw"
                 />
               </Link>
             </div>
@@ -170,6 +172,7 @@ export default function Footer() {
                 className="object-contain"
                 src="/assets/payment-methods.png"
                 alt="Payment Methods"
+                sizes="(max-width: 620px) 50vw, 100vw"
               />
             </div>
           </div>

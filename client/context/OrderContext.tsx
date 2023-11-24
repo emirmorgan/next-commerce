@@ -29,21 +29,14 @@ export function OrderProvider({ children }: OrderContextProvider) {
   const [currentOrder, setCurrentOrder] = useState<Order | null>(null);
 
   async function fetchOrders() {
-    const token = await setCookies({ type: "GET", tag: "token", data: "" });
-
-    const hasVerifiedToken = token && (await verifyToken(token as string));
-
-    if (hasVerifiedToken) {
-      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-
-      const orderData = await axios
-        .get(process.env.NEXT_PUBLIC_API_URL + "/user/order")
-        .then((response) => {
-          return response.data;
-        });
-
-      setOrders(orderData);
-    }
+    await axios
+      .get(process.env.NEXT_PUBLIC_API_URL + "/user/order")
+      .then((response) => {
+        setOrders(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   async function getOrder(orderId: number): Promise<Order | undefined> {

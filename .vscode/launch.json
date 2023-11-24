@@ -1,1 +1,16 @@
-{ "name": ".NET Core Attach", "type": "coreclr", "request": "attach" }
+{
+  "configurations": [
+    { "name": ".NET Core Attach", "type": "coreclr", "request": "attach" },
+    {
+      "name": "Next.js: debug",
+      "request": "launch",
+      "type": "node-terminal",
+      "command": "cd client | npm run dev",
+      "serverReadyAction": {
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
+      }
+    }
+  ]
+}

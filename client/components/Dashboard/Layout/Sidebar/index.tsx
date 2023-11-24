@@ -34,7 +34,12 @@ export default function Sidebar() {
             (toggleSidebar ? " hidden md:block" : " hidden")
           }
         >
-          <Image fill src="/assets/logo.png" alt="Logo" />
+          <Image
+            fill
+            src="/assets/logo.png"
+            alt="Logo"
+            sizes="(max-width: 380px) 50vw, 100vw"
+          />
         </div>
         <div
           onClick={() => router.push("/")}

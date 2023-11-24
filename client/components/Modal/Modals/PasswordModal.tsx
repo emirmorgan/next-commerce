@@ -74,6 +74,7 @@ export default function PasswordModal() {
                   placeholder="**************"
                   type="password"
                   className="p-2 focus:outline-none"
+                  autoComplete="on"
                 />
               </div>
               <ErrorMessage
@@ -97,6 +98,7 @@ export default function PasswordModal() {
                   placeholder="**************"
                   type="password"
                   className="p-2 focus:outline-none"
+                  autoComplete="new-password"
                 />
               </div>
               <ErrorMessage
@@ -120,6 +122,7 @@ export default function PasswordModal() {
                   placeholder="**************"
                   type="password"
                   className="p-2 focus:outline-none"
+                  autoComplete="new-password"
                 />
               </div>
               <ErrorMessage

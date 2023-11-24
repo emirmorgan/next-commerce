@@ -60,6 +60,7 @@ export default function MobileCategories({
               src="/assets/logo.png"
               alt="Logo"
               className="object-fill"
+              sizes="(max-width: 380px) 50vw, 100vw"
             />
           </div>
           <div

@@ -14,13 +14,17 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith(path)
   );
 
-  if (!verifiedToken) {
+  if (pathname.startsWith("/login") && verifiedToken) {
+    return NextResponse.redirect(new URL("/profile", request.url));
+  }
+
+  if (!verifiedToken && !pathname.startsWith("/login")) {
     const response = NextResponse.redirect(new URL("/login", request.url));
     response.cookies.delete("token");
     return response;
   }
 
-  if (matchesProtectedPath && verifiedToken.role !== "ADMIN") {
+  if (matchesProtectedPath && verifiedToken && verifiedToken.role !== "ADMIN") {
     const response = NextResponse.redirect(new URL("/login", request.url));
     response.cookies.delete("token");
     return response;
@@ -28,5 +32,10 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/profile/:path*", "/dashboard/:path*", "/favorites/:path*"],
+  matcher: [
+    "/login",
+    "/profile/:path*",
+    "/dashboard/:path*",
+    "/favorites/:path*",
+  ],
 };

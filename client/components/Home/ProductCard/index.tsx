@@ -71,8 +71,10 @@ export default function ProductCard(props: ProductCardProps) {
             src={props.src}
             alt={props.name}
             className="object-contain w-full h-full group-hover:scale-110 transition-all ease-linear pointer-events-none"
-            sizes="(min-width: 640px) 50vw, 100vw"
+            sizes="(max-width: 640px) 50vw, 100vw"
             priority={true}
+            placeholder="blur"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNc9R8AAlkBq1Ih+jkAAAAASUVORK5CYII="
           />
         </div>
       </div>

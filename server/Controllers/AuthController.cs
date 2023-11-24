@@ -59,8 +59,6 @@ public class AuthController : BaseController
     {
         var user = await userManager.FindByNameAsync(authDTO.Email);
 
-        Console.WriteLine(authDTO.Email + " " + authDTO.Password);
-
         if (user == null)
             return Unauthorized("wrong-email-or-password");
         if (!await userManager.CheckPasswordAsync(user, authDTO.Password))

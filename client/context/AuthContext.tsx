@@ -57,6 +57,10 @@ export function AuthProvider({ children }: AuthContextProvider) {
     fetchUser();
   }, []);
 
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
   async function fetchUser() {
     const token = await setCookies({ type: "GET", tag: "token", data: "" });
 
@@ -81,32 +85,14 @@ export function AuthProvider({ children }: AuthContextProvider) {
     setLoading(false);
   }
 
-  if (isLoading) {
-    return <LoadingScreen />;
-  }
-
   async function authRegister(email: string, password: string) {
     axios
       .post(process.env.NEXT_PUBLIC_API_URL + "/auth/register", {
         email: email,
         password: password,
       })
-      .then(async (res) => {
-        const token = res.data.token;
-
-        axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-
-        const user = await axios
-          .get(process.env.NEXT_PUBLIC_API_URL + "/user")
-          .then((response) => {
-            return response.data;
-          });
-
-        setCookies({ type: "SET", tag: "token", data: token });
-        setUser(user);
-        setAuthenticated(true);
-
-        route.push("/");
+      .then((res) => {
+        toast.success(res.data);
       })
       .catch((err) => {
         if (err.response.data === "already-exist") {
@@ -122,26 +108,17 @@ export function AuthProvider({ children }: AuthContextProvider) {
         password: password,
       })
       .then(async (res) => {
-        const token = res.data;
+        var token = JSON.parse(JSON.stringify(res.data));
 
         axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 
-        const user = await axios
-          .get(process.env.NEXT_PUBLIC_API_URL + "/user")
-          .then((response) => {
-            return response.data;
-          });
-
-        setCookies({ type: "SET", tag: "token", data: token });
-        setUser(user);
-        setAuthenticated(true);
+        await setCookies({ type: "SET", tag: "token", data: token });
+        await fetchUser();
 
         route.push("/");
       })
-      .catch((err) => {
-        if (err.response.data === "wrong-email-or-password") {
-          toast.error("Wrong e-mail or password.");
-        }
+      .catch((err: any) => {
+        console.log(err);
       });
   }
 
@@ -156,18 +133,11 @@ export function AuthProvider({ children }: AuthContextProvider) {
   }
 
   async function updatePassword(currentPassword: string, newPassword: string) {
-    const token = await setCookies({ type: "GET", tag: "token", data: "" });
-
     await axios
-      .post(
-        process.env.NEXT_PUBLIC_API_URL + "/user/password/update",
-        { currentPassword, newPassword },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post(process.env.NEXT_PUBLIC_API_URL + "/user/password/update", {
+        currentPassword,
+        newPassword,
+      })
       .then((res) => toast.success(res.data))
       .catch((err) => toast.error(err.response.data));
   }
@@ -190,24 +160,21 @@ export function AuthProvider({ children }: AuthContextProvider) {
       delete: "Address successfully removed.",
     }[type];
 
-    try {
-      const token = await setCookies({ type: "GET", tag: "token", data: "" });
+    await axios
+      .post((process.env.NEXT_PUBLIC_API_URL as string) + updateType, {
+        title,
+        details,
+        contactNumber,
+      })
+      .then((res) => {
+        fetchUser();
+        toast.success(toastMessage);
+      })
+      .catch((err) => {
+        console.log(err);
 
-      await axios.post(
-        (process.env.NEXT_PUBLIC_API_URL as string) + updateType,
-        { title, details, contactNumber },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      fetchUser();
-      toast.success(toastMessage);
-    } catch (error) {
-      toast.error("Something went wrong.");
-    }
+        toast.error("Something went wrong.");
+      });
   }
 
   return (

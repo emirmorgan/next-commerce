@@ -60,7 +60,6 @@ export default function Navbar() {
                     alt="Logo"
                     className="object-contain w-full h-full"
                     sizes="(min-width: 320px) 50vw, 100vw"
-                    priority={true}
                   />
                 </div>
               </Link>
