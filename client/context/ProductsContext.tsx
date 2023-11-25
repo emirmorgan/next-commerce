@@ -29,7 +29,7 @@ type IProductsContext = {
   productsResponse: ProductsResponseProps;
   isLoading: boolean;
   fetchProducts: () => void;
-  updateFavorites: (type: string, productId: number) => void;
+  updateFavorites: (productId: number) => void;
 };
 
 export function ProductsProvider({ children }: ProductsContextProvider) {
@@ -104,16 +104,10 @@ export function ProductsProvider({ children }: ProductsContextProvider) {
       });
   }
 
-  async function updateFavorites(type: string, productId: number) {
-    if (type === "add") {
-      axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/favorites/add/${productId}`
-      );
-    } else if (type === "delete") {
-      axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/favorites/delete/${productId}`
-      );
-    }
+  async function updateFavorites(productId: number) {
+    await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/favorites/update/${productId}`
+    );
   }
 
   return (

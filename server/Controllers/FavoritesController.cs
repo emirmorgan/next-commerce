@@ -20,34 +20,14 @@ public class FavoritesController : BaseController
         _context = context;
     }
 
-    [HttpPost("add/{productId}")] //api/favorites/add
-    public async Task<ActionResult<Favorite>> AddFavorite(int productId)
+    [HttpPost("update/{productId}")]
+    public async Task<ActionResult> HandleFavorite(int productId)
     {
-        var user = await userManager.GetUserAsync(User);
-
-        if (user == null)
+        if (!ModelState.IsValid)
         {
-            return Unauthorized();
+            return BadRequest(ModelState);
         }
 
-        var product = await _context.Products.Where(p => p.Id == productId).FirstOrDefaultAsync();
-
-        if (product == null)
-        {
-            return NotFound("product-not-exist");
-        }
-
-        var favorite = new Favorite { UserId = user.Id, ProductId = productId, };
-
-        _context.Favorites.Add(favorite);
-        await _context.SaveChangesAsync();
-
-        return Ok();
-    }
-
-    [HttpPost("delete/{productId}")] //api/favorites/delete
-    public async Task<ActionResult<Favorite>> DeleteFavorite(int productId)
-    {
         var user = await userManager.GetUserAsync(User);
 
         if (user == null)
@@ -61,12 +41,15 @@ public class FavoritesController : BaseController
 
         if (favorite == null)
         {
-            return Conflict("favorite-product-not-exist");
+            var favoriteProduct = new Favorite { UserId = user.Id, ProductId = productId, };
+            _context.Favorites.Add(favoriteProduct);
+        }
+        else
+        {
+            _context.Favorites.Remove(favorite);
         }
 
-        _context.Favorites.Remove(favorite);
         await _context.SaveChangesAsync();
-
         return Ok();
     }
 }

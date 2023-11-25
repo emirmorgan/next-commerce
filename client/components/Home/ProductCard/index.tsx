@@ -7,6 +7,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 import { useAuth } from "@/context/AuthContext";
 import { useProducts } from "@/context/ProductsContext";
+import { useState } from "react";
 
 export type ProductCardProps = {
   id: number;
@@ -23,20 +24,18 @@ export type ProductCardProps = {
 
 export default function ProductCard(props: ProductCardProps) {
   const router = useRouter();
-  const { authenticated } = useAuth();
-  const { fetchProducts, updateFavorites } = useProducts();
 
-  const handleFavorite = (e: any, isFavorite: boolean, productId: number) => {
+  const { authenticated } = useAuth();
+  const { updateFavorites } = useProducts();
+
+  const [isFavorite, setFavorite] = useState<boolean>(props.isFavorite);
+
+  const handleFavorite = (e: any, productId: number) => {
     e.stopPropagation();
 
     if (authenticated) {
-      if (isFavorite) {
-        updateFavorites("delete", productId);
-        fetchProducts();
-      } else {
-        updateFavorites("add", productId);
-        fetchProducts();
-      }
+      isFavorite ? setFavorite(false) : setFavorite(true);
+      updateFavorites(productId);
     } else {
       router.push("/login");
     }
@@ -55,13 +54,13 @@ export default function ProductCard(props: ProductCardProps) {
         <div
           className={
             "border bg-white border-gray-300 p-2 transition-all ease-linear " +
-            (props.isFavorite
+            (isFavorite
               ? " text-red-600 border-red-600 hover:border-red-400 hover:text-red-400"
               : " hover:text-black hover:bg-slate-100 hover:border-black")
           }
-          onClick={(e) => handleFavorite(e, props.isFavorite, props.id)}
+          onClick={(e) => handleFavorite(e, props.id)}
         >
-          {props.isFavorite ? <AiFillHeart /> : <AiOutlineHeart />}
+          {isFavorite ? <AiFillHeart /> : <AiOutlineHeart />}
         </div>
       </div>
       <div className="relative z-[-1] w-full flex overflow-hidden pointer-events-none">
