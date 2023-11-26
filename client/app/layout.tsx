@@ -11,6 +11,7 @@ import { ModalProvider } from "@/context/ModalContext";
 import { OrderProvider } from "@/context/OrderContext";
 import { ProductsProvider } from "@/context/ProductsContext";
 import { ParamsProvider } from "@/context/ParamsContext";
+import { ScrollableProvider } from "@/context/ScrollableContext";
 
 const montserrat = Montserrat({
   weight: ["400", "600", "700"],
@@ -20,9 +21,9 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Full-stack eCommerce",
+  title: "next-commerce | @emirmorgan",
   description:
-    "Full-stack eCommerce app that built with Next.js and ASP.NET Core",
+    "next-commerce - Full-stack eCommerce app that built with Next.js and ASP.NET Core",
 };
 
 export default function RootLayout({
@@ -38,7 +39,9 @@ export default function RootLayout({
             <ProductsProvider>
               <OrderProvider>
                 <ShoppingCartProvider>
-                  <ModalProvider>{children}</ModalProvider>
+                  <ModalProvider>
+                    <ScrollableProvider>{children}</ScrollableProvider>
+                  </ModalProvider>
                 </ShoppingCartProvider>
               </OrderProvider>
             </ProductsProvider>

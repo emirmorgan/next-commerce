@@ -4,6 +4,7 @@ import { MutableRefObject, useRef, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
 import { ScrollableProps, ScrollablePropsDefault } from "./scrollableProps";
+import { useScrollable } from "@/context/ScrollableContext";
 
 export default function Scrollable(userProps: ScrollableProps) {
   const props: Required<ScrollableProps> = {
@@ -11,9 +12,9 @@ export default function Scrollable(userProps: ScrollableProps) {
     ...userProps,
   };
 
-  const listRef = useRef() as MutableRefObject<HTMLDivElement>;
+  const scrollable = useRef() as MutableRefObject<HTMLDivElement>;
+  const { isDragging, setDragging } = useScrollable();
 
-  const [isDragging, setDragging] = useState<boolean>(false);
   const [startX, setStartX] = useState<number>(0);
   const [scrollLeft, setScrollLeft] = useState<number>(0);
 
@@ -21,36 +22,35 @@ export default function Scrollable(userProps: ScrollableProps) {
   const [isRightArrowVisible, setRightArrowVisible] = useState<boolean>(true);
 
   const mouseMove = (e: React.MouseEvent) => {
-    arrowVisibilityControl();
     if (isDragging) {
-      const x = e.pageX - listRef.current.offsetLeft;
+      const x = e.pageX - scrollable.current.offsetLeft;
 
       const scroll = x - startX;
 
-      listRef.current.scrollLeft = scrollLeft - scroll;
+      scrollable.current.scrollLeft = scrollLeft - scroll;
     }
   };
 
   const startDragging = (e: React.MouseEvent) => {
-    if (props.dragging !== false) {
+    setTimeout(() => {
       setDragging(true);
+    }, 75);
 
-      setStartX(e.pageX - listRef.current.offsetLeft);
-      setScrollLeft(listRef.current.scrollLeft);
-    }
+    setStartX(e.pageX - scrollable.current.offsetLeft);
+    setScrollLeft(scrollable.current.scrollLeft);
   };
 
   const stopDragging = () => {
-    if (props.dragging !== false) {
+    setTimeout(() => {
       setDragging(false);
-    }
+    }, 50);
   };
 
   const arrowVisibilityControl = () => {
     // Both control arrow has 20px deviation
 
     //Left Arrow Visibility
-    if (listRef.current.scrollLeft <= 20) {
+    if (scrollable.current.scrollLeft <= 20) {
       setLeftArrowVisible(false);
     } else {
       setLeftArrowVisible(true);
@@ -58,8 +58,8 @@ export default function Scrollable(userProps: ScrollableProps) {
 
     //Right Arrow Visibility
     if (
-      Math.round(listRef.current.scrollLeft) >=
-      listRef.current.scrollWidth - listRef.current.clientWidth - 20
+      Math.round(scrollable.current.scrollLeft) >=
+      scrollable.current.scrollWidth - scrollable.current.clientWidth - 20
     ) {
       setRightArrowVisible(false);
     } else {
@@ -71,9 +71,9 @@ export default function Scrollable(userProps: ScrollableProps) {
     arrowVisibilityControl();
 
     if (position === "left") {
-      listRef.current.scrollLeft -= listRef.current.clientWidth;
+      scrollable.current.scrollLeft -= scrollable.current.clientWidth;
     } else {
-      listRef.current.scrollLeft += listRef.current.clientWidth;
+      scrollable.current.scrollLeft += scrollable.current.clientWidth;
     }
   };
 
@@ -88,12 +88,12 @@ export default function Scrollable(userProps: ScrollableProps) {
         </div>
       )}
       <div
-        ref={listRef}
+        ref={scrollable}
         onMouseMove={mouseMove}
         onMouseUp={stopDragging}
         onMouseDown={startDragging}
         onScroll={arrowVisibilityControl}
-        onMouseLeave={() => setDragging(false)}
+        onMouseLeave={stopDragging}
         className={
           "flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] select-none" +
           (isDragging ? " scroll-auto" : " scroll-smooth")

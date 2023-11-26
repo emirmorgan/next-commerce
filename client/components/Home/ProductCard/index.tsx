@@ -1,13 +1,14 @@
 "use client";
 
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { useState } from "react";
+
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-
 import { useAuth } from "@/context/AuthContext";
 import { useProducts } from "@/context/ProductsContext";
-import { useState } from "react";
+import { useScrollable } from "@/context/ScrollableContext";
 
 export type ProductCardProps = {
   id: number;
@@ -27,10 +28,11 @@ export default function ProductCard(props: ProductCardProps) {
 
   const { authenticated } = useAuth();
   const { updateFavorites } = useProducts();
+  const { isDragging } = useScrollable();
 
   const [isFavorite, setFavorite] = useState<boolean>(props.isFavorite);
 
-  const handleFavorite = (e: any, productId: number) => {
+  const handleFavorite = (e: React.MouseEvent, productId: number) => {
     e.stopPropagation();
 
     if (authenticated) {
@@ -42,7 +44,9 @@ export default function ProductCard(props: ProductCardProps) {
   };
 
   const handleNavigate = () => {
-    router.push(`/product/${props.slug + "-p-" + props.id}/`);
+    if (!isDragging) {
+      router.push(`/product/${props.slug + "-p-" + props.id}/`);
+    }
   };
 
   return (
