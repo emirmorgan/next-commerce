@@ -1,11 +1,12 @@
 "use client";
 
+import { toast } from "react-toastify";
 import { createContext, useContext, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "./AuthContext";
 
 import { Cart, CartItem } from "@/lib/types";
-
 import useLocalStorage from "@/hooks/useLocalStorage";
-
 import ShoppingCart from "@/components/Home/Layout/ShoppingCart";
 
 type CartProvider = {
@@ -23,6 +24,7 @@ type CartContextType = {
   cartItems: Cart[];
   cartQuantity: number;
   addToCart: (product: CartItem) => void;
+  goCheckout: () => void;
 };
 
 const ShoppingCartContext = createContext({} as CartContextType);
@@ -32,6 +34,9 @@ export function useShoppingCart() {
 }
 
 export function ShoppingCartProvider({ children }: CartProvider) {
+  const router = useRouter();
+  const { user, authenticated } = useAuth();
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [cartItems, setCartItems] = useLocalStorage("shop/cart", []);
 
@@ -102,6 +107,20 @@ export function ShoppingCartProvider({ children }: CartProvider) {
     });
   }
 
+  function goCheckout() {
+    closeCart();
+
+    if (!user || !authenticated) {
+      return router.push("/login");
+    }
+
+    if (cartItems.length != 0) {
+      router.push("/order/");
+    } else {
+      toast.error("Your cart is empty.");
+    }
+  }
+
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -115,6 +134,7 @@ export function ShoppingCartProvider({ children }: CartProvider) {
         openCart,
         closeCart,
         cartQuantity,
+        goCheckout,
       }}
     >
       {children}

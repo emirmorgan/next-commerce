@@ -16,7 +16,6 @@ export default function useLocalStorage(key: string, initialValue: any) {
 
   useEffect(() => {
     setStoredValue(initialize());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setValue = (value: any) => {

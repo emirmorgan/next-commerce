@@ -1,15 +1,17 @@
+using Stripe;
+using System.Text;
+using server.Data;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-using System.Text;
-using server.Data;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+// Json Options
 builder.Services
     .AddControllers()
     .AddJsonOptions(options =>
@@ -77,6 +79,9 @@ builder.Services.AddCors(
             policy.AllowAnyOrigin();
         })
 );
+
+// Stripe
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
 var app = builder.Build();
 

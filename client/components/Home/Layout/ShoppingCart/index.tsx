@@ -27,6 +27,7 @@ export default function ShoppingCart({ isOpen }: ShoppingCartProps) {
     removeItem,
     getQuantity,
     getSubtotal,
+    goCheckout,
   } = useShoppingCart();
 
   const handleClickOutside = () => {
@@ -147,7 +148,10 @@ export default function ShoppingCart({ isOpen }: ShoppingCartProps) {
                     <span>${getSubtotal?.toFixed(2)} USD</span>
                   </div>
                 </div>
-                <div className="flex justify-center items-center w-full h-10 bg-black/90 hover:bg-black text-white font-bold text-sm cursor-pointer">
+                <div
+                  onClick={goCheckout}
+                  className="flex justify-center items-center w-full h-10 bg-black/90 hover:bg-black text-white font-bold text-sm cursor-pointer"
+                >
                   PROCEED TO CHECKOUT
                 </div>
               </div>
