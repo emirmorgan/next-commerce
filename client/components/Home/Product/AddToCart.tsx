@@ -50,7 +50,7 @@ export default function AddToCart({ size, color, product }: AddToCartProps) {
         brand: product.brand,
         name: product.name,
         src: product.images ? product.images[0].src : "/assets/logo.png",
-        price: product.price,
+        price: product.discountPrice ? product.discountPrice : product.price,
         size: size,
       } as CartItem;
 
