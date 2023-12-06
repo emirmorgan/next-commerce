@@ -19,6 +19,9 @@ public class PaymentController : BaseController
     public ActionResult Create(PaymentIntentCreateRequest request)
     {
         var paymentIntentService = new PaymentIntentService();
+
+        string productsJson = JsonConvert.SerializeObject(request.Products);
+
         var paymentIntent = paymentIntentService.Create(
             new PaymentIntentCreateOptions
             {
@@ -28,6 +31,7 @@ public class PaymentController : BaseController
                 {
                     Enabled = true,
                 },
+                Metadata = new Dictionary<string, string> { { "products", productsJson } },
             }
         );
 
@@ -40,7 +44,7 @@ public class PaymentController : BaseController
 
         foreach (var item in items)
         {
-            var product = _context.Products.Where(p => p.Id == item.Id).FirstOrDefault();
+            var product = _context.Products.Where(p => p.Id == item.ProductId).FirstOrDefault();
 
             if (product != null)
             {
@@ -49,7 +53,7 @@ public class PaymentController : BaseController
                     // Handle discount price mismatch error
                     BadRequest("stripe-err-2");
                 }
-                else if (product.CurrentPrice != item.Price)
+                else if (product.DiscountPrice == null && product.CurrentPrice != item.Price)
                 {
                     // Handle current price mismatch error
                     BadRequest("stripe-err-3");
@@ -72,14 +76,20 @@ public class PaymentController : BaseController
 
     public class Product
     {
-        [JsonProperty("id")]
-        public int Id { get; set; }
+        [JsonProperty("productId")]
+        public int ProductId { get; set; }
 
         [JsonProperty("price")]
         public decimal Price { get; set; }
 
         [JsonProperty("quantity")]
         public int Quantity { get; set; }
+
+        [JsonProperty("color")]
+        public string? Color { get; set; }
+
+        [JsonProperty("size")]
+        public string? Size { get; set; }
     }
 
     public class PaymentIntentCreateRequest

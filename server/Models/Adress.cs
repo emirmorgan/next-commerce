@@ -6,15 +6,15 @@ public class Address
     public int Id { get; set; }
 
     [Required]
-    public required string Title { get; set; }
+    public string Title { get; set; }
 
     [Required]
-    public required string ContactNumber { get; set; }
+    public string ContactNumber { get; set; }
 
     [Required]
-    public required string Details { get; set; }
+    public string Details { get; set; }
 
     [Required]
-    public required string UserId { get; set; }
+    public string UserId { get; set; }
     public User? User { get; set; }
 }

@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace server.Models;
 
 public class Review
@@ -7,9 +9,13 @@ public class Review
     public int Rating { get; set; }
     public DateTime ReviewDate { get; set; }
 
-    public required Product Product { get; set; }
+    [Required]
+    public Product Product { get; set; }
     public int ProductId { get; set; }
 
-    public required User User { get; set; }
-    public required string UserId { get; set; }
+    [Required]
+    public User User { get; set; }
+
+    [Required]
+    public string UserId { get; set; }
 }

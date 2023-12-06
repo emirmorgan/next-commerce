@@ -28,7 +28,7 @@ export default function CheckoutInfo({
 
         <h2 className="font-bold text-xl ml-2">next-commerce</h2>
       </div>
-      <ul>
+      <ul className="max-h-[300px] scrollbar-cart overflow-auto">
         {products.map((product, index) => (
           <li key={index}>
             <div className="flex p-1">
@@ -55,19 +55,19 @@ export default function CheckoutInfo({
         ))}
       </ul>
       <div className="flex flex-col font-semibold mt-6">
-        <h1 className="text-4xl">{`$${subtotal}`}</h1>
+        <h1 className="text-4xl">{`$${subtotal.toFixed(2)}`}</h1>
         <div className="flex justify-between items-center mt-4">
           <span>Shipment</span>
           <span>$0</span>
         </div>
         <div className="flex justify-between items-center mt-2">
           <span>Subtotal</span>
-          <span>{`$${subtotal}`}</span>
+          <span>{`$${subtotal.toFixed(2)}`}</span>
         </div>
         <div className="w-full h-[1px] bg-gray-200 my-2" />
         <div className="flex justify-between items-center">
           <span>Total due</span>
-          <span>{`$${subtotal}`}</span>
+          <span>{`$${subtotal.toFixed(2)}`}</span>
         </div>
       </div>
     </div>

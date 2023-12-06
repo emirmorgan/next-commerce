@@ -115,7 +115,7 @@ export function ShoppingCartProvider({ children }: CartProvider) {
     }
 
     if (cartItems.length != 0) {
-      router.push("/order/");
+      router.push("/checkout/");
     } else {
       toast.error("Your cart is empty.");
     }

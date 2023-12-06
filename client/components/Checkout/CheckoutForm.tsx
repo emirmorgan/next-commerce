@@ -62,7 +62,7 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${process.env.NEXT_PUBLIC_BASE_URL}`,
+        return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout/complete`,
       },
     });
 
@@ -81,7 +81,11 @@ export default function CheckoutForm() {
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
+    <form
+      id="payment-form"
+      onSubmit={handleSubmit}
+      className="max-h-[600px] p-1 scrollbar-cart overflow-y-auto"
+    >
       <div className="flex flex-col gap-2">
         <div className="flex justify-center items-center whitespace-nowrap text-gray-700 text-sm gap-2">
           <div className="w-full h-[1px] bg-gray-200" />

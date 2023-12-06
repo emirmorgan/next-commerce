@@ -5,12 +5,12 @@ namespace server.DTOs
     public class AddressDTO
     {
         [Required]
-        public required string Title { get; set; }
+        public string Title { get; set; }
 
         [Required]
-        public required string Details { get; set; }
+        public string Details { get; set; }
 
         [Required]
-        public required string ContactNumber { get; set; }
+        public string ContactNumber { get; set; }
     }
 }

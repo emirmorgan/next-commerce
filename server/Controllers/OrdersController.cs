@@ -1,9 +1,12 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using Newtonsoft.Json;
 using server.Data;
 using server.DTOs;
+using server.Models;
+using Stripe;
 
 namespace server.Controllers;
 
@@ -11,10 +14,12 @@ namespace server.Controllers;
 public class OrdersController : BaseController
 {
     private readonly CommerceContext _context;
+    private readonly IConfiguration _configuration;
 
-    public OrdersController(CommerceContext context)
+    public OrdersController(CommerceContext context, IConfiguration configuration)
     {
         _context = context;
+        _configuration = configuration;
     }
 
     // api/orders/
@@ -77,5 +82,31 @@ public class OrdersController : BaseController
                 Orders = orders
             }
         );
+    }
+
+    // api/orders/add
+    [HttpPost("add")]
+    public async Task<IActionResult> AddOrder([FromBody] string paymentIntent)
+    {
+        try
+        {
+            StripeConfiguration.ApiKey = _configuration["Stripe:SecretKey"];
+
+            var paymentIntentService = new PaymentIntentService();
+            var paymentIntentData = await paymentIntentService.GetAsync(paymentIntent);
+
+            if (paymentIntentData.Metadata.TryGetValue("products", out var productsJson))
+            {
+                List<OrderItem> products = JsonConvert.DeserializeObject<List<OrderItem>>(
+                    productsJson
+                );
+            }
+
+            return Ok("succeeded");
+        }
+        catch (System.Exception)
+        {
+            return BadRequest("failed");
+        }
     }
 }

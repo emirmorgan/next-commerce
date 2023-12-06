@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using server.Models;
 
 public class Order
 {

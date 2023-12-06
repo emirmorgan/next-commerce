@@ -5,9 +5,9 @@ namespace server.DTOs
     public class ProductImageDTO
     {
         [Required]
-        public required string src { get; set; }
+        public string src { get; set; }
 
         [Required]
-        public required string alt { get; set; }
+        public string alt { get; set; }
     }
 }

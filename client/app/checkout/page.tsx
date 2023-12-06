@@ -10,8 +10,8 @@ import { type StripeElementsOptions } from "@stripe/stripe-js";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
 import getStripe from "@/lib/getStripe";
 
-import CheckoutForm from "./CheckoutForm";
-import CheckoutInfo from "./CheckoutInfo";
+import CheckoutForm from "@/components/Checkout/CheckoutForm";
+import CheckoutInfo from "@/components/Checkout/CheckoutInfo";
 
 export default function OrderPage() {
   const router = useRouter();
@@ -25,11 +25,15 @@ export default function OrderPage() {
       return router.push("/");
     }
 
-    const productsData = cartItems.map(({ id, price, quantity }) => ({
-      id,
-      price,
-      quantity,
-    }));
+    const productsData = cartItems.map(
+      ({ id, price, quantity, size, color }) => ({
+        productId: id,
+        price,
+        quantity,
+        size: size ?? null,
+        color: color ?? null,
+      })
+    );
 
     axios
       .post(

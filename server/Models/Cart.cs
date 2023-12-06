@@ -5,9 +5,14 @@ using System.ComponentModel.DataAnnotations;
 public class Cart
 {
     [Key]
-    public required int Id { get; set; }
-    public required string UserId { get; set; }
+    [Required]
+    public int Id { get; set; }
+
+    [Required]
+    public string UserId { get; set; }
     public string? Color { get; set; }
     public string? Size { get; set; }
-    public required int Quantity { get; set; }
+
+    [Required]
+    public int Quantity { get; set; }
 }
