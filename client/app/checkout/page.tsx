@@ -3,6 +3,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { ToastContainer } from "react-toastify";
 
 import { Elements } from "@stripe/react-stripe-js";
 import { type StripeElementsOptions } from "@stripe/stripe-js";
@@ -26,8 +27,10 @@ export default function OrderPage() {
     }
 
     const productsData = cartItems.map(
-      ({ id, price, quantity, size, color }) => ({
+      ({ id, brand, name, price, quantity, size, color }) => ({
         productId: id,
+        brand,
+        name,
         price,
         quantity,
         size: size ?? null,
@@ -62,17 +65,24 @@ export default function OrderPage() {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row container h-[100vh] min-h-[600px] mx-auto">
-      <div className="flex flex-1 justify-center items-center p-4">
-        <CheckoutInfo products={cartItems} subtotal={getSubtotal} />
+    <>
+      <div className="flex flex-col sm:flex-row container h-[100vh] min-h-[600px] mx-auto">
+        <div className="flex flex-1 justify-center items-center p-4">
+          <CheckoutInfo products={cartItems} subtotal={getSubtotal} />
+        </div>
+        <div className="flex flex-1 justify-center items-center p-4">
+          {clientSecret && (
+            <Elements options={options} stripe={stripePromise}>
+              <CheckoutForm />
+            </Elements>
+          )}
+        </div>
       </div>
-      <div className="flex flex-1 justify-center items-center p-4">
-        {clientSecret && (
-          <Elements options={options} stripe={stripePromise}>
-            <CheckoutForm />
-          </Elements>
-        )}
-      </div>
-    </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2000}
+        pauseOnHover={false}
+      />
+    </>
   );
 }

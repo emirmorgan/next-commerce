@@ -95,9 +95,12 @@ export type User = {
 };
 
 export type UserAddress = {
-  title: string;
+  fullName: string;
   contactNumber: string;
-  details: string;
+  country: string;
+  city: string;
+  addressLine: string;
+  addressLineSecond: string | null;
 };
 
 export type Order = {

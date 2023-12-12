@@ -6,13 +6,21 @@ public class Address
     public int Id { get; set; }
 
     [Required]
-    public string Title { get; set; }
+    public string FullName { get; set; }
 
     [Required]
     public string ContactNumber { get; set; }
 
     [Required]
-    public string Details { get; set; }
+    public string Country { get; set; }
+
+    [Required]
+    public string City { get; set; }
+
+    [Required]
+    public string AddressLine { get; set; }
+
+    public string? AddressLineSecond { get; set; }
 
     [Required]
     public string UserId { get; set; }

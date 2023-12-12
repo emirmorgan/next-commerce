@@ -21,9 +21,11 @@ public class AddressController : BaseController
     }
 
     [HttpPost("add")] //api/address/add
-    public async Task<ActionResult<AddressDTO>> AddAddress(AddressDTO addressDTO)
+    public async Task<ActionResult> AddAddress(AddressDTO addressDTO)
     {
-        var user = await userManager.GetUserAsync(User);
+        var user = await userManager.Users
+            .Include(u => u.Address)
+            .SingleOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
         if (user == null)
         {
@@ -32,9 +34,12 @@ public class AddressController : BaseController
 
         var address = new Address
         {
-            Title = addressDTO.Title,
-            Details = addressDTO.Details,
+            FullName = addressDTO.FullName,
             ContactNumber = addressDTO.ContactNumber,
+            Country = addressDTO.Country,
+            City = addressDTO.City,
+            AddressLine = addressDTO.AddressLine,
+            AddressLineSecond = addressDTO.AddressLineSecond,
             UserId = user.Id
         };
 
@@ -45,27 +50,28 @@ public class AddressController : BaseController
     }
 
     [HttpPost("update")] //api/address/update
-    public async Task<ActionResult<AddressDTO>> UpdateAddress(AddressDTO addressDTO)
+    public async Task<ActionResult> UpdateAddress(AddressDTO addressDTO)
     {
-        var user = await userManager.GetUserAsync(User);
+        var user = await userManager.Users
+            .Include(u => u.Address)
+            .SingleOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
         if (user == null)
         {
             return Unauthorized();
         }
 
-        var userAddress = await _context.Address
-            .Where(a => a.UserId == user.Id)
-            .FirstOrDefaultAsync();
-
-        if (userAddress == null)
+        if (user.Address == null)
         {
             return NotFound();
         }
 
-        userAddress.Title = addressDTO.Title;
-        userAddress.Details = addressDTO.Details;
-        userAddress.ContactNumber = addressDTO.ContactNumber;
+        user.Address.FullName = addressDTO.FullName;
+        user.Address.ContactNumber = addressDTO.ContactNumber;
+        user.Address.Country = addressDTO.Country;
+        user.Address.City = addressDTO.City;
+        user.Address.AddressLine = addressDTO.AddressLine;
+        user.Address.AddressLineSecond = addressDTO.AddressLineSecond;
 
         await _context.SaveChangesAsync();
 
@@ -73,25 +79,23 @@ public class AddressController : BaseController
     }
 
     [HttpPost("delete")] //api/address/delete
-    public async Task<ActionResult<AddressDTO>> DeleteAddress()
+    public async Task<ActionResult> DeleteAddress()
     {
-        var user = await userManager.GetUserAsync(User);
+        var user = await userManager.Users
+            .Include(u => u.Address)
+            .SingleOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
         if (user == null)
         {
             return Unauthorized();
         }
 
-        var userAddress = await _context.Address
-            .Where(a => a.UserId == user.Id)
-            .FirstOrDefaultAsync();
-
-        if (userAddress == null)
+        if (user.Address == null)
         {
             return NotFound();
         }
 
-        _context.Address.Remove(userAddress);
+        _context.Address.Remove(user.Address);
         await _context.SaveChangesAsync();
 
         return Ok();

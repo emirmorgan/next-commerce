@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.Data;
 
@@ -10,9 +11,11 @@ using server.Data;
 namespace server.Migrations
 {
     [DbContext(typeof(CommerceContext))]
-    partial class CommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20231211172341_OrderTotal")]
+    partial class OrderTotal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
@@ -188,11 +191,11 @@ namespace server.Migrations
 
             modelBuilder.Entity("Order", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OrderID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AddressID")
+                    b.Property<int>("AddressId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("DeliveryInvoice")
@@ -216,9 +219,9 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("OrderID");
 
-                    b.HasIndex("AddressID");
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("UserID");
 
@@ -606,7 +609,7 @@ namespace server.Migrations
                 {
                     b.HasOne("Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressID")
+                        .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

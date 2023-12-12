@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.Data;
 
@@ -10,9 +11,11 @@ using server.Data;
 namespace server.Migrations
 {
     [DbContext(typeof(CommerceContext))]
-    partial class CommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20231212010308_OrderItemFix")]
+    partial class OrderItemFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
@@ -192,7 +195,7 @@ namespace server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AddressID")
+                    b.Property<int>("AddressId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("DeliveryInvoice")
@@ -218,7 +221,7 @@ namespace server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressID");
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("UserID");
 
@@ -606,7 +609,7 @@ namespace server.Migrations
                 {
                     b.HasOne("Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressID")
+                        .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

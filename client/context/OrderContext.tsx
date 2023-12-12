@@ -3,8 +3,6 @@
 import axios from "axios";
 import { createContext, useContext, useState } from "react";
 
-import setCookies from "@/lib/setCookies";
-import verifyToken from "@/lib/verifyToken";
 import { Order } from "@/lib/types";
 
 type OrderContextProvider = {

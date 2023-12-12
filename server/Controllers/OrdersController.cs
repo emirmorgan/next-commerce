@@ -1,11 +1,10 @@
-using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using server.Data;
 using server.DTOs;
-using server.Models;
 using Stripe;
 
 namespace server.Controllers;
@@ -15,9 +14,15 @@ public class OrdersController : BaseController
 {
     private readonly CommerceContext _context;
     private readonly IConfiguration _configuration;
+    private readonly UserManager<User> userManager;
 
-    public OrdersController(CommerceContext context, IConfiguration configuration)
+    public OrdersController(
+        CommerceContext context,
+        IConfiguration configuration,
+        UserManager<User> userManager
+    )
     {
+        this.userManager = userManager;
         _context = context;
         _configuration = configuration;
     }
@@ -35,7 +40,7 @@ public class OrdersController : BaseController
 
         if (orderId != null || orderId == 0)
         {
-            query = query.Where(q => q.OrderID == orderId);
+            query = query.Where(q => q.Id == orderId);
         }
 
         switch (sort)
@@ -57,15 +62,7 @@ public class OrdersController : BaseController
 
         var orders = await query
             .Select(
-                order =>
-                    new OrderDTO
-                    {
-                        OrderID = order.OrderID,
-                        OrderDate = order.OrderDate,
-                        OrderStatus = order.OrderStatus,
-                        DeliveryAddress = order.DeliveryAddress,
-                        DeliveryContact = order.DeliveryContact,
-                    }
+                order => new Order { OrderDate = order.OrderDate, OrderStatus = order.OrderStatus }
             )
             .ToListAsync();
 
@@ -86,7 +83,7 @@ public class OrdersController : BaseController
 
     // api/orders/add
     [HttpPost("add")]
-    public async Task<IActionResult> AddOrder([FromBody] string paymentIntent)
+    public async Task<ActionResult<string>> AddOrder([FromBody] string paymentIntent)
     {
         try
         {
@@ -97,10 +94,45 @@ public class OrdersController : BaseController
 
             if (paymentIntentData.Metadata.TryGetValue("products", out var productsJson))
             {
+                var user = await userManager.Users
+                    .Include(u => u.Address)
+                    .SingleOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+                if (user == null || user.Address == null)
+                {
+                    return BadRequest();
+                }
+
+                var invoiceExist = await _context.Orders.AnyAsync(
+                    o => o.DeliveryInvoice == paymentIntent
+                );
+
+                if (invoiceExist)
+                {
+                    return BadRequest("already-exist");
+                }
+
                 List<OrderItem> products = JsonConvert.DeserializeObject<List<OrderItem>>(
                     productsJson
                 );
+
+                var order = new Order
+                {
+                    UserID = user.Id,
+                    DeliveryInvoice = paymentIntent,
+                    OrderDate = DateTime.Now,
+                    AddressID = user.Address.Id,
+                    OrderItems = products,
+                };
+
+                _context.Orders.Add(order);
             }
+            else
+            {
+                return BadRequest("bad-payment-intent");
+            }
+
+            await _context.SaveChangesAsync();
 
             return Ok("succeeded");
         }

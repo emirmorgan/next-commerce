@@ -79,6 +79,12 @@ public class PaymentController : BaseController
         [JsonProperty("productId")]
         public int ProductId { get; set; }
 
+        [JsonProperty("brand")]
+        public string Brand { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
         [JsonProperty("price")]
         public decimal Price { get; set; }
 

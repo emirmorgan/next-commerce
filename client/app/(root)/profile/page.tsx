@@ -22,7 +22,6 @@ export default function ProfilePage() {
 
   useEffect(() => {
     fetchOrders();
-    // eslint-disable-next-line
   }, []);
 
   if (!user) {
@@ -34,9 +33,12 @@ export default function ProfilePage() {
       <div className="flex flex-col flex-1 border p-4 py-[20px] rounded-md shadow-sm gap-4">
         <UserInfo email={user?.email as string} />
         <UserAddress
-          title={user?.address?.title as string}
-          details={user?.address?.details as string}
+          fullName={user?.address?.fullName as string}
           contactNumber={user?.address?.contactNumber as string}
+          country={user?.address?.country as string}
+          city={user?.address?.city as string}
+          addressLine={user?.address?.addressLine as string}
+          addressLineSecond={user?.address?.addressLineSecond as string}
         />
         <div className="flex justify-end gap-2">
           <button

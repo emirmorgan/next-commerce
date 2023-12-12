@@ -38,7 +38,7 @@ export default function CheckoutComplete() {
     } else {
       setStatus("failed");
     }
-  }, [searchParams]);
+  }, []);
 
   const payment = {
     loading: <CheckoutCompleteSkeleton />,

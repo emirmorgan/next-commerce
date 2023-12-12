@@ -44,9 +44,12 @@ public class UserController : BaseController
                 user.Address != null
                     ? new AddressDTO
                     {
-                        Title = user.Address.Title,
-                        Details = user.Address.Details,
+                        FullName = user.Address.FullName,
                         ContactNumber = user.Address.ContactNumber,
+                        Country = user.Address.Country,
+                        City = user.Address.City,
+                        AddressLine = user.Address.AddressLine,
+                        AddressLineSecond = user.Address.AddressLineSecond
                     }
                     : null,
         };
@@ -71,7 +74,7 @@ public class UserController : BaseController
             orders.Select(async order =>
             {
                 var orderItemDTOs = await _context.OrderItems
-                    .Where(i => i.OrderId == order.OrderID)
+                    .Where(i => i.OrderId == order.Id)
                     .Select(
                         item =>
                             new OrderItemDTO
@@ -89,13 +92,20 @@ public class UserController : BaseController
 
                 return new OrderDTO
                 {
-                    OrderID = order.OrderID,
+                    OrderID = order.Id,
                     OrderDate = order.OrderDate,
                     OrderStatus = order.OrderStatus,
-                    DeliveryAddress = order.DeliveryAddress,
-                    DeliveryContact = order.DeliveryContact,
                     DeliveryInvoice = order.DeliveryInvoice,
                     DeliveryTrace = order.DeliveryTrace,
+                    Address = new AddressDTO
+                    {
+                        FullName = user.Address.FullName,
+                        ContactNumber = user.Address.ContactNumber,
+                        Country = user.Address.Country,
+                        City = user.Address.City,
+                        AddressLine = user.Address.AddressLine,
+                        AddressLineSecond = user.Address.AddressLineSecond
+                    },
                     OrderItems = orderItemDTOs
                 };
             })

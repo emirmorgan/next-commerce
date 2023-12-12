@@ -4,15 +4,19 @@ import { useState, useEffect } from "react";
 
 import { type StripePaymentElementOptions } from "@stripe/stripe-js";
 import {
-  AddressElement,
   PaymentElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
 
+import { useAuth } from "@/context/AuthContext";
+
+import UserAddress from "../Home/Profile/UserAddress";
+
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
+  const { user } = useAuth();
 
   const [message, setMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
@@ -51,6 +55,10 @@ export default function CheckoutForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!user?.address) {
+      return toast.error("You need to set an address first.");
+    }
+
     if (!stripe || !elements) {
       // Stripe.js hasn't yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -87,12 +95,14 @@ export default function CheckoutForm() {
       className="max-h-[600px] p-1 scrollbar-cart overflow-y-auto"
     >
       <div className="flex flex-col gap-2">
-        <div className="flex justify-center items-center whitespace-nowrap text-gray-700 text-sm gap-2">
-          <div className="w-full h-[1px] bg-gray-200" />
-          <span>Shipping Information</span>
-          <div className="w-full h-[1px] bg-gray-200" />
-        </div>
-        <AddressElement id="address-element" options={{ mode: "shipping" }} />
+        <UserAddress
+          fullName={user?.address?.fullName as string}
+          contactNumber={user?.address?.contactNumber as string}
+          country={user?.address?.country as string}
+          city={user?.address?.city as string}
+          addressLine={user?.address?.addressLine as string}
+          addressLineSecond={user?.address?.addressLineSecond as string}
+        />
         <div className="flex justify-center items-center whitespace-nowrap text-gray-700 text-sm gap-2">
           <div className="w-full h-[1px] bg-gray-200" />
           <span>Payment Information</span>

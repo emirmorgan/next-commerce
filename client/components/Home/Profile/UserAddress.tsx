@@ -12,17 +12,20 @@ import { useAuth } from "@/context/AuthContext";
 import { useModal } from "@/context/ModalContext";
 
 export default function UserAddress({
-  title,
+  fullName,
   contactNumber,
-  details,
+  country,
+  city,
+  addressLine,
+  addressLineSecond,
 }: UserAddress) {
   const { updateAddress } = useAuth();
   const { openModal, setAddressType } = useModal();
 
   if (
-    title === (null || undefined) ||
+    fullName === (null || undefined) ||
     contactNumber === (null || undefined) ||
-    details === (null || undefined)
+    addressLine === (null || undefined)
   ) {
     return (
       <div className="flex flex-col gap-1">
@@ -51,10 +54,10 @@ export default function UserAddress({
     <div className="flex flex-col gap-1">
       <span className="font-semibold">Address</span>
       <div className="w-full border p-3">
-        <span className="font-semibold">{title}</span>
+        <span className="font-semibold">{fullName}</span>
         <div className="flex items-center gap-2 whitespace-break-spaces break-words">
           <AiOutlineHome size={22} />
-          <p>{details}</p>
+          <p>{addressLine + " " + addressLineSecond ?? addressLineSecond}</p>
         </div>
         <div className="flex items-center gap-2">
           <AiOutlinePhone size={22} min={22} />
@@ -71,7 +74,7 @@ export default function UserAddress({
             <AiOutlineEdit size={20} />
           </div>
           <div
-            onClick={() => updateAddress("delete", "", "", "")}
+            onClick={() => updateAddress("delete", "")}
             className="border p-2 cursor-pointer hover:border-red-500 hover:text-red-500"
           >
             <AiOutlineDelete size={20} />

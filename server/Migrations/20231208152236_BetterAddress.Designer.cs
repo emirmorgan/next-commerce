@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.Data;
 
@@ -10,9 +11,11 @@ using server.Data;
 namespace server.Migrations
 {
     [DbContext(typeof(CommerceContext))]
-    partial class CommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20231208152236_BetterAddress")]
+    partial class BetterAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
@@ -188,15 +191,11 @@ namespace server.Migrations
 
             modelBuilder.Entity("Order", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OrderID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AddressID")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("DeliveryInvoice")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("DeliveryTrace")
@@ -210,15 +209,14 @@ namespace server.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("OrderTotal")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("UserID")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddressID");
+                    b.HasKey("OrderID");
 
                     b.HasIndex("UserID");
 
@@ -604,19 +602,11 @@ namespace server.Migrations
 
             modelBuilder.Entity("Order", b =>
                 {
-                    b.HasOne("Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("User", "User")
                         .WithMany()
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Address");
 
                     b.Navigation("User");
                 });
