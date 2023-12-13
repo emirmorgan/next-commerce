@@ -7,10 +7,12 @@ import { useEffect, useState } from "react";
 import CheckoutFailed from "@/components/Checkout/CheckoutComplete/Failed";
 import CheckoutCompleteSkeleton from "@/components/Checkout/CheckoutComplete/Skeleton";
 import CheckoutSucceeded from "@/components/Checkout/CheckoutComplete/Succeeded";
+import { useShoppingCart } from "@/context/ShoppingCartContext";
 
 export default function CheckoutComplete() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { removeAll } = useShoppingCart();
 
   const paymentIntent = searchParams.get("payment_intent");
   const clientSecret = searchParams.get("payment_intent_client_secret");
@@ -31,6 +33,7 @@ export default function CheckoutComplete() {
         })
         .then((res) => {
           setStatus("succeeded");
+          removeAll();
         })
         .catch((err) => {
           setStatus("failed");

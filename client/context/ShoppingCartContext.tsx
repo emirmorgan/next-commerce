@@ -21,6 +21,7 @@ type CartContextType = {
   increaseQuantity: (id: number) => void;
   decreaseQuantity: (id: number) => void;
   removeItem: (id: number) => void;
+  removeAll: () => void;
   cartItems: Cart[];
   cartQuantity: number;
   addToCart: (product: CartItem) => void;
@@ -107,6 +108,10 @@ export function ShoppingCartProvider({ children }: CartProvider) {
     });
   }
 
+  function removeAll() {
+    setCartItems();
+  }
+
   function goCheckout() {
     closeCart();
 
@@ -130,6 +135,7 @@ export function ShoppingCartProvider({ children }: CartProvider) {
         increaseQuantity,
         decreaseQuantity,
         removeItem,
+        removeAll,
         addToCart,
         openCart,
         closeCart,
