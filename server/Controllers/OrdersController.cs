@@ -92,7 +92,10 @@ public class OrdersController : BaseController
             var paymentIntentService = new PaymentIntentService();
             var paymentIntentData = await paymentIntentService.GetAsync(paymentIntent);
 
-            if (paymentIntentData.Metadata.TryGetValue("products", out var productsJson))
+            if (
+                paymentIntentData.Metadata.TryGetValue("products", out var productsJson)
+                && paymentIntentData.Amount == paymentIntentData.AmountReceived
+            )
             {
                 var user = await userManager.Users
                     .Include(u => u.Address)
@@ -116,6 +119,9 @@ public class OrdersController : BaseController
                     productsJson
                 );
 
+                double totalAmountDouble = paymentIntentData.Amount / 100.0;
+                string totalAmount = totalAmountDouble.ToString("0.00");
+
                 var order = new Order
                 {
                     UserID = user.Id,
@@ -123,6 +129,7 @@ public class OrdersController : BaseController
                     OrderDate = DateTime.Now,
                     AddressID = user.Address.Id,
                     OrderItems = products,
+                    OrderTotal = totalAmount
                 };
 
                 _context.Orders.Add(order);

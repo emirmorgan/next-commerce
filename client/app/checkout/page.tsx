@@ -27,8 +27,8 @@ export default function OrderPage() {
     }
 
     const productsData = cartItems.map(
-      ({ id, brand, name, price, quantity, size, color }) => ({
-        productId: id,
+      ({ productId, brand, name, price, quantity, size, color }) => ({
+        productId: productId,
         brand,
         name,
         price,
