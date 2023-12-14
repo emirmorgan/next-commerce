@@ -49,5 +49,9 @@ export default function CheckoutComplete() {
     failed: <CheckoutFailed />,
   }[status];
 
-  return <div>{payment}</div>;
+  return (
+    <div className="flex flex-col justify-center items-center min-h-screen">
+      {payment}
+    </div>
+  );
 }
