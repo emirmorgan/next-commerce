@@ -195,14 +195,12 @@ namespace server.Migrations
                     b.Property<int>("AddressID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("DeliveryInvoice")
+                    b.Property<string>("OrderDate")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("DeliveryTrace")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("OrderDate")
+                    b.Property<string>("OrderInvoice")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("OrderStatus")
@@ -210,6 +208,9 @@ namespace server.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("OrderTotal")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OrderTrace")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("UserID")
@@ -231,18 +232,7 @@ namespace server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Brand")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Color")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("OrderId")
@@ -264,6 +254,8 @@ namespace server.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
                 });
@@ -383,30 +375,6 @@ namespace server.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("server.Models.Cart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Color")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Size")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cart");
-                });
-
             modelBuilder.Entity("server.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -492,37 +460,6 @@ namespace server.Migrations
                     b.HasIndex("SubcategoryId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("server.Models.Review", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("ReviewDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("server.Models.Subcategory", b =>
@@ -629,7 +566,15 @@ namespace server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("server.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ProductImage", b =>
@@ -684,25 +629,6 @@ namespace server.Migrations
                     b.Navigation("Subcategory");
                 });
 
-            modelBuilder.Entity("server.Models.Review", b =>
-                {
-                    b.HasOne("server.Models.Product", "Product")
-                        .WithMany("Reviews")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Order", b =>
                 {
                     b.Navigation("OrderItems");
@@ -725,8 +651,6 @@ namespace server.Migrations
                     b.Navigation("Images");
 
                     b.Navigation("ProductVariants");
-
-                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("server.Models.Subcategory", b =>

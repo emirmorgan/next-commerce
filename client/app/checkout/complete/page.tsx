@@ -4,10 +4,12 @@ import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { Order } from "@/lib/types";
+import { useShoppingCart } from "@/context/ShoppingCartContext";
+
 import CheckoutFailed from "@/components/Checkout/CheckoutComplete/Failed";
 import CheckoutCompleteSkeleton from "@/components/Checkout/CheckoutComplete/Skeleton";
 import CheckoutSucceeded from "@/components/Checkout/CheckoutComplete/Succeeded";
-import { useShoppingCart } from "@/context/ShoppingCartContext";
 
 export default function CheckoutComplete() {
   const router = useRouter();
@@ -19,7 +21,7 @@ export default function CheckoutComplete() {
   const paymentStatus = searchParams.get("redirect_status");
 
   const [status, setStatus] = useState("loading");
-  const [order, setOrder] = useState();
+  const [order, setOrder] = useState<Order>({} as Order);
 
   if (!paymentIntent || !clientSecret || !paymentStatus) {
     return router.push("/");
@@ -32,10 +34,12 @@ export default function CheckoutComplete() {
           headers: { "Content-type": "application/json" },
         })
         .then((res) => {
+          setOrder(res.data);
           setStatus("succeeded");
           removeAll();
         })
         .catch((err) => {
+          console.log(err);
           setStatus("failed");
         });
     } else {
@@ -45,7 +49,7 @@ export default function CheckoutComplete() {
 
   const payment = {
     loading: <CheckoutCompleteSkeleton />,
-    succeeded: <CheckoutSucceeded />,
+    succeeded: <CheckoutSucceeded order={order} />,
     failed: <CheckoutFailed />,
   }[status];
 

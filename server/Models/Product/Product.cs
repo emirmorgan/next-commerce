@@ -25,7 +25,6 @@ public class Product
     public string Date { get; set; }
 
     public List<ProductImage>? Images { get; set; }
-    public List<Review>? Reviews { get; set; }
     public List<Favorite>? Favorites { get; set; }
     public List<ProductVariant>? ProductVariants { get; set; }
 

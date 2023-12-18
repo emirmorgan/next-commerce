@@ -106,18 +106,28 @@ export type UserAddress = {
 export type Order = {
   orderID: number;
   orderDate: string;
+  orderTotal: string;
   orderStatus: string;
-  deliveryAddress: string;
-  deliveryContact: string;
-  deliveryInvoice: string;
-  deliveryTrace: string;
-  orderItems: OrderItem[];
+  orderInvoice: string;
+  orderTrace?: string;
+  address: OrderAddress;
+  orderItems: OrderProduct[];
 };
 
-type OrderItem = {
+type OrderAddress = {
+  fullName: string;
+  contactNumber: string;
+  country: string;
+  city: string;
+  addressLine: string;
+  addressLineSecond?: string;
+};
+
+type OrderProduct = {
   brand: string;
   name: string;
-  image: string;
+  imageSrc: string;
+  imageAlt: string;
   color?: string;
   size?: string;
   price: string;

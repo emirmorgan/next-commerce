@@ -28,7 +28,7 @@ public class OrdersController : BaseController
     }
 
     // api/orders/
-    public async Task<ActionResult<OrderDTO>> GetOrders(
+    public async Task<ActionResult> GetOrders(
         [FromQuery] int? orderId,
         [FromQuery] string? sort,
         [FromQuery] int pn = 1
@@ -83,7 +83,7 @@ public class OrdersController : BaseController
 
     // api/orders/add
     [HttpPost("add")]
-    public async Task<ActionResult<string>> AddOrder([FromBody] string paymentIntent)
+    public async Task<ActionResult<OrderDTO>> AddOrder([FromBody] string paymentIntent)
     {
         try
         {
@@ -107,7 +107,7 @@ public class OrdersController : BaseController
                 }
 
                 var invoiceExist = await _context.Orders.AnyAsync(
-                    o => o.DeliveryInvoice == paymentIntent
+                    o => o.OrderInvoice == paymentIntent
                 );
 
                 if (invoiceExist)
@@ -122,26 +122,73 @@ public class OrdersController : BaseController
                 double totalAmountDouble = paymentIntentData.Amount / 100.0;
                 string totalAmount = totalAmountDouble.ToString("0.00");
 
+                DateTime orderDate = DateTime.Now;
+                string date = orderDate.ToString("dd/MM/yyyy HH:mm:ss");
+
                 var order = new Order
                 {
                     UserID = user.Id,
-                    DeliveryInvoice = paymentIntent,
-                    OrderDate = DateTime.Now,
+                    OrderInvoice = paymentIntent,
+                    OrderDate = date,
                     AddressID = user.Address.Id,
                     OrderItems = products,
                     OrderTotal = totalAmount
                 };
 
                 _context.Orders.Add(order);
+                await _context.SaveChangesAsync();
+
+                var orderItemDTOs = await _context.OrderItems
+                    .Where(i => i.OrderId == order.Id)
+                    .Include(i => i.Product)
+                    .Select(
+                        item =>
+                            new OrderItemDTO
+                            {
+                                Brand = item.Product.Brand,
+                                Name = item.Product.Name,
+                                ImageSrc =
+                                    item.Product.Images != null && item.Product.Images.Any()
+                                        ? item.Product.Images.First().src
+                                        : "/assets/logo.png",
+                                ImageAlt =
+                                    item.Product.Images != null && item.Product.Images.Any()
+                                        ? item.Product.Images.First().alt
+                                        : item.Product.Brand,
+                                Color = item.Color,
+                                Size = item.Size,
+                                Price = item.Price,
+                                Quantity = item.Quantity
+                            }
+                    )
+                    .ToListAsync();
+
+                var orderDTOs = new OrderDTO
+                {
+                    OrderID = order.Id,
+                    OrderDate = order.OrderDate,
+                    OrderTotal = totalAmount,
+                    OrderStatus = order.OrderStatus,
+                    OrderInvoice = order.OrderInvoice,
+                    OrderTrace = order.OrderTrace,
+                    Address = new AddressDTO
+                    {
+                        FullName = user.Address.FullName,
+                        ContactNumber = user.Address.ContactNumber,
+                        Country = user.Address.Country,
+                        City = user.Address.City,
+                        AddressLine = user.Address.AddressLine,
+                        AddressLineSecond = user.Address.AddressLineSecond
+                    },
+                    OrderItems = orderItemDTOs
+                };
+
+                return Ok(orderDTOs);
             }
             else
             {
                 return BadRequest("bad-payment-intent");
             }
-
-            await _context.SaveChangesAsync();
-
-            return Ok("succeeded");
         }
         catch (System.Exception)
         {

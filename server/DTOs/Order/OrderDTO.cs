@@ -1,17 +1,29 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace server.DTOs
 {
     public class OrderDTO
     {
+        [Required]
         public int OrderID { get; set; }
-        public string UserID { get; set; }
 
-        public DateTime OrderDate { get; set; }
+        [Required]
+        public string OrderDate { get; set; }
+
+        [Required]
         public string OrderStatus { get; set; } = "preparing";
 
-        public string? DeliveryInvoice { get; set; }
-        public string? DeliveryTrace { get; set; }
+        [Required]
+        public string OrderTotal { get; set; }
 
+        [Required]
+        public string OrderInvoice { get; set; }
+        public string? OrderTrace { get; set; }
+
+        [Required]
         public AddressDTO Address { get; set; }
+
+        [Required]
         public virtual ICollection<OrderItemDTO> OrderItems { get; set; }
     }
 }

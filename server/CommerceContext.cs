@@ -7,11 +7,8 @@ namespace server.Data;
 
 public class CommerceContext : IdentityDbContext<User>
 {
-    public DbSet<Cart> Cart { get; set; }
     public DbSet<Favorite> Favorites { get; set; }
-    public DbSet<Review> Reviews { get; set; }
     public DbSet<Address> Address { get; set; }
-
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductVariant> ProductVariants { get; set; }
     public DbSet<ProductImage> ProductImages { get; set; }

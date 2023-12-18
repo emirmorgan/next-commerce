@@ -75,13 +75,21 @@ public class UserController : BaseController
             {
                 var orderItemDTOs = await _context.OrderItems
                     .Where(i => i.OrderId == order.Id)
+                    .Include(i => i.Product)
                     .Select(
                         item =>
                             new OrderItemDTO
                             {
-                                Brand = item.Brand,
-                                Name = item.Name,
-                                Image = item.Image,
+                                Brand = item.Product.Brand,
+                                Name = item.Product.Name,
+                                ImageSrc =
+                                    item.Product.Images != null && item.Product.Images.Any()
+                                        ? item.Product.Images.First().src
+                                        : "/assets/logo.png",
+                                ImageAlt =
+                                    item.Product.Images != null && item.Product.Images.Any()
+                                        ? item.Product.Images.First().alt
+                                        : item.Product.Brand,
                                 Color = item.Color,
                                 Size = item.Size,
                                 Price = item.Price,
@@ -95,8 +103,8 @@ public class UserController : BaseController
                     OrderID = order.Id,
                     OrderDate = order.OrderDate,
                     OrderStatus = order.OrderStatus,
-                    DeliveryInvoice = order.DeliveryInvoice,
-                    DeliveryTrace = order.DeliveryTrace,
+                    OrderInvoice = order.OrderInvoice,
+                    OrderTrace = order.OrderTrace,
                     Address = new AddressDTO
                     {
                         FullName = user.Address.FullName,

@@ -4,12 +4,11 @@ public class Order
 {
     [Key]
     public int Id { get; set; }
-    public DateTime OrderDate { get; set; }
+    public string OrderDate { get; set; }
     public string? OrderTotal { get; set; }
     public string OrderStatus { get; set; } = "preparing";
-
-    public string? DeliveryTrace { get; set; }
-    public string DeliveryInvoice { get; set; }
+    public string? OrderTrace { get; set; }
+    public string OrderInvoice { get; set; }
 
     public string UserID { get; set; }
     public User User { get; set; }

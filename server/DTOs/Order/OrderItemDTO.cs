@@ -9,12 +9,20 @@ namespace server.DTOs
 
         [Required]
         public string Name { get; set; }
-        public string? Image { get; set; }
-        public string? Color { get; set; }
-        public string? Size { get; set; }
+
+        [Required]
+        public string ImageSrc { get; set; }
+
+        [Required]
+        public string ImageAlt { get; set; }
 
         [Required]
         public string Price { get; set; }
+
+        [Required]
         public int Quantity { get; set; }
+
+        public string? Color { get; set; }
+        public string? Size { get; set; }
     }
 }

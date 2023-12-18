@@ -128,8 +128,11 @@ public class ProductsController : BaseController
                             Id = p.Id,
                             Brand = p.Brand,
                             Name = p.Name,
-                            Src = p.Images.Any() ? p.Images[0].src : "/assets/logo.png",
-                            Alt = p.Images.Any() ? p.Images[0].alt : p.Brand,
+                            Src =
+                                p.Images != null && p.Images.Any()
+                                    ? p.Images[0].src
+                                    : "/assets/logo.png",
+                            Alt = p.Images != null && p.Images.Any() ? p.Images[0].alt : p.Brand,
                             Price = p.CurrentPrice,
                             DiscountPrice = p.DiscountPrice,
                             Date = p.Date,
@@ -307,6 +310,10 @@ public class ProductsController : BaseController
             }
 
             await _context.SaveChangesAsync();
+        }
+        else
+        {
+            return BadRequest();
         }
 
         return Ok(product);

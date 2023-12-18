@@ -72,8 +72,8 @@ export default function OrderModal() {
             <div className="relative w-24 h-24 border overflow-hidden mr-5">
               <Image
                 fill
-                src={orderItem.image}
-                alt={orderItem.name}
+                src={orderItem.imageSrc}
+                alt={orderItem.imageAlt}
                 className="object-cover"
               />
             </div>
@@ -103,17 +103,17 @@ export default function OrderModal() {
       <div className="flex flex-col w-full border p-3 gap-2">
         <div className="flex items-center gap-2 whitespace-break-spaces break-words">
           <AiOutlineHome size={22} />
-          <p>{currentOrder.deliveryAddress}</p>
+          <p>{currentOrder.orderAddress.addressLine}</p>
         </div>
         <div className="flex items-center gap-2">
           <AiOutlinePhone size={22} min={22} />
-          <span>{currentOrder.deliveryContact}</span>
+          <span>{currentOrder.orderAddress.contactNumber}</span>
         </div>
       </div>
       <div className="flex justify-end items-center gap-2 mt-3">
-        {currentOrder.deliveryInvoice && (
+        {currentOrder.orderInvoice && (
           <Link
-            href={currentOrder.deliveryInvoice}
+            href={currentOrder.orderInvoice}
             target="_blank"
             className="flex items-center border border-gray-700 text-gray-700 font-semibold p-2 gap-2 hover:text-white hover:bg-gray-600"
           >
@@ -121,9 +121,9 @@ export default function OrderModal() {
             <span>Invoice</span>
           </Link>
         )}
-        {currentOrder.deliveryTrace && (
+        {currentOrder.orderTrace && (
           <Link
-            href={currentOrder.deliveryTrace}
+            href={currentOrder.orderTrace}
             target="_blank"
             className="flex items-center border bg-black text-white font-semibold p-2 gap-2"
           >

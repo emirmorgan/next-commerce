@@ -11,14 +11,14 @@ using server.Data;
 namespace server.Migrations
 {
     [DbContext(typeof(CommerceContext))]
-    [Migration("20231023212205_Address")]
-    partial class Address
+    [Migration("20231216024852_DeleteCart")]
+    partial class DeleteCart
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.12");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
 
             modelBuilder.Entity("Address", b =>
                 {
@@ -26,15 +26,26 @@ namespace server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("AddressLine")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AddressLineSecond")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ContactNumber")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Details")
+                    b.Property<string>("Country")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -180,25 +191,18 @@ namespace server.Migrations
 
             modelBuilder.Entity("Order", b =>
                 {
-                    b.Property<int>("OrderID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("DeliveryAddress")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DeliveryContact")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DeliveryInvoice")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DeliveryTrace")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("AddressID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("OrderDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OrderInvoice")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("OrderStatus")
@@ -206,14 +210,18 @@ namespace server.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("OrderTotal")
-                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OrderTrace")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("UserID")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("OrderID");
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressID");
 
                     b.HasIndex("UserID");
 
@@ -226,19 +234,7 @@ namespace server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Brand")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Color")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("OrderId")
@@ -261,6 +257,8 @@ namespace server.Migrations
 
                     b.HasIndex("OrderId");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("OrderItems");
                 });
 
@@ -270,7 +268,7 @@ namespace server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("alt")
@@ -379,30 +377,6 @@ namespace server.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("server.Models.Cart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Color")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Size")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cart");
-                });
-
             modelBuilder.Entity("server.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -457,11 +431,11 @@ namespace server.Migrations
                     b.Property<decimal>("CurrentPrice")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<string>("Date")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Desc")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<decimal?>("DiscountPrice")
@@ -488,37 +462,6 @@ namespace server.Migrations
                     b.HasIndex("SubcategoryId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("server.Models.Review", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("ReviewDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("server.Models.Subcategory", b =>
@@ -600,11 +543,19 @@ namespace server.Migrations
 
             modelBuilder.Entity("Order", b =>
                 {
+                    b.HasOne("Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("User", "User")
                         .WithMany()
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Address");
 
                     b.Navigation("User");
                 });
@@ -617,14 +568,24 @@ namespace server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("server.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ProductImage", b =>
                 {
                     b.HasOne("server.Models.Product", "Product")
                         .WithMany("Images")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
                 });
@@ -670,25 +631,6 @@ namespace server.Migrations
                     b.Navigation("Subcategory");
                 });
 
-            modelBuilder.Entity("server.Models.Review", b =>
-                {
-                    b.HasOne("server.Models.Product", "Product")
-                        .WithMany("Reviews")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Order", b =>
                 {
                     b.Navigation("OrderItems");
@@ -696,8 +638,7 @@ namespace server.Migrations
 
             modelBuilder.Entity("User", b =>
                 {
-                    b.Navigation("Address")
-                        .IsRequired();
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("server.Models.Category", b =>
@@ -712,8 +653,6 @@ namespace server.Migrations
                     b.Navigation("Images");
 
                     b.Navigation("ProductVariants");
-
-                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("server.Models.Subcategory", b =>
