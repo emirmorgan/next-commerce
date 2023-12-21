@@ -1,21 +1,20 @@
+"use client";
+
 import { AiOutlineUser } from "react-icons/ai";
 
-export default function UserInfo({ email }: { email: string }) {
+import { useAuth } from "@/context/AuthContext";
+
+export default function UserInfo() {
+  const { user } = useAuth();
+
   return (
-    <div className="flex flex-col">
-      <div className="inline-flex mx-auto border border-black rounded-full p-4 mt-3">
-        <AiOutlineUser size={42} />
+    <div className="flex flex-col p-4 mt-3 gap-1">
+      <div className="w-16 h-16 flex items-center justify-center bg-gray-200 rounded-full">
+        <AiOutlineUser color="gray" size={26} />
       </div>
-      <div className="flex flex-col gap-1 mt-3">
+      <div className="flex flex-col mt-3">
         <span className="font-semibold">E-mail</span>
-        <div className="border p-2">
-          <input
-            className="w-full focus-within:outline-none"
-            type="email"
-            value={email}
-            readOnly
-          />
-        </div>
+        <span>{user?.email}</span>
       </div>
     </div>
   );

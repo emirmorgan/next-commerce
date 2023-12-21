@@ -106,7 +106,7 @@ export type UserAddress = {
 export type Order = {
   orderID: number;
   orderDate: string;
-  orderTotal: string;
+  orderTotal: number;
   orderStatus: string;
   orderInvoice: string;
   orderTrace?: string;
@@ -134,20 +134,10 @@ type OrderProduct = {
   quantity: number;
 };
 
-export type OrderListProps = {
-  orderId: number;
-  name: string;
-  contact: string;
-  orderStatus: string;
-  orderTotal: number;
-  orderDate: string;
-};
-
 export type OrderProps = {
-  totalOrders: number;
   pageSize: number;
   pageNumber: number;
-  orders: OrderListProps[];
+  orders: Order[];
 };
 
 export type StatisticsProps = {

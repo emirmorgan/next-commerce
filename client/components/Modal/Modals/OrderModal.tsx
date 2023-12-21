@@ -1,18 +1,17 @@
 import {
+  AiOutlineAim,
   AiOutlineClose,
-  AiOutlineEnvironment,
-  AiOutlineFileText,
-  AiOutlineHome,
   AiOutlineLoading,
   AiOutlinePhone,
 } from "react-icons/ai";
 
 import Image from "next/image";
 
+import formatDate from "@/lib/formatDate";
+
 import { useAuth } from "@/context/AuthContext";
 import { useModal } from "@/context/ModalContext";
 import { useOrder } from "@/context/OrderContext";
-import Link from "next/link";
 
 export default function OrderModal() {
   const { closeModal } = useModal();
@@ -42,10 +41,7 @@ export default function OrderModal() {
           Order ID: {currentOrder?.orderID}
         </h1>
         <div className="flex justify-end w-full h-full">
-          <div
-            onClick={closeModal}
-            className="border p-1 group hover:border-gray-800 hover:bg-black/5 cursor-pointer transition-all ease-linear"
-          >
+          <div onClick={closeModal} className="commerce-button">
             <AiOutlineClose
               size={18}
               className="text-gray-900 transition-all ease-linear"
@@ -61,7 +57,7 @@ export default function OrderModal() {
         <span className="text-gray-500">
           Order date:{" "}
           <span className="text-gray-800">
-            {new Date(currentOrder.orderDate).toLocaleDateString()}
+            {formatDate(currentOrder.orderDate)}
           </span>
         </span>
       </div>
@@ -98,38 +94,27 @@ export default function OrderModal() {
           </li>
         ))}
       </ul>
-      <div className="w-full h-[1px] bg-slate-200 mb-3" />
       <h1 className="font-semibold mb-2">Delivery Address</h1>
-      <div className="flex flex-col w-full border p-3 gap-2">
-        <div className="flex items-center gap-2 whitespace-break-spaces break-words">
-          <AiOutlineHome size={22} />
-          <p>{currentOrder.orderAddress.addressLine}</p>
+      <div className="flex flex-col bg-slate-50 rounded p-3 gap-2">
+        <div className="flex items-center text-gray-700 gap-2 whitespace-break-spaces break-words">
+          <AiOutlineAim color="gray" size={22} />
+          <p>{currentOrder.address.addressLine}</p>
         </div>
-        <div className="flex items-center gap-2">
-          <AiOutlinePhone size={22} min={22} />
-          <span>{currentOrder.orderAddress.contactNumber}</span>
+        <div className="flex items-center text-gray-700 gap-2">
+          <AiOutlinePhone color="gray" size={22} />
+          <span>{currentOrder.address.contactNumber}</span>
         </div>
       </div>
       <div className="flex justify-end items-center gap-2 mt-3">
         {currentOrder.orderInvoice && (
-          <Link
-            href={currentOrder.orderInvoice}
-            target="_blank"
-            className="flex items-center border border-gray-700 text-gray-700 font-semibold p-2 gap-2 hover:text-white hover:bg-gray-600"
-          >
-            <AiOutlineFileText size={24} />
+          <button className="commerce-button">
             <span>Invoice</span>
-          </Link>
+          </button>
         )}
         {currentOrder.orderTrace && (
-          <Link
-            href={currentOrder.orderTrace}
-            target="_blank"
-            className="flex items-center border bg-black text-white font-semibold p-2 gap-2"
-          >
-            <AiOutlineEnvironment size={24} />
+          <button className="commerce-button">
             <span>Track order</span>
-          </Link>
+          </button>
         )}
       </div>
     </div>

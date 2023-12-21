@@ -66,14 +66,11 @@ public class OrdersController : BaseController
             )
             .ToListAsync();
 
-        var totalOrders = orders.Count;
-
         orders = orders.Skip((pn - 1) * pageSize).Take(pageSize).ToList();
 
         return Ok(
             new
             {
-                TotalOrders = totalOrders,
                 PageSize = pageSize,
                 PageNumber = pn,
                 Orders = orders

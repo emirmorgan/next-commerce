@@ -1,4 +1,4 @@
-export default function OrdersSkeleton() {
+export default function OrdersGridSkeleton() {
   return (
     <div className="border rounded mt-3">
       <div className="border-b p-2">

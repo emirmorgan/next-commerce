@@ -1,7 +1,10 @@
+"use client";
+
 import {
+  AiFillEnvironment,
+  AiOutlineAim,
   AiOutlineDelete,
   AiOutlineEdit,
-  AiOutlineHome,
   AiOutlinePhone,
   AiOutlinePlus,
 } from "react-icons/ai";
@@ -11,21 +14,14 @@ import { UserAddress } from "@/lib/types";
 import { useAuth } from "@/context/AuthContext";
 import { useModal } from "@/context/ModalContext";
 
-export default function UserAddress({
-  fullName,
-  contactNumber,
-  country,
-  city,
-  addressLine,
-  addressLineSecond,
-}: UserAddress) {
-  const { updateAddress } = useAuth();
+export default function UserAddress() {
+  const { user, updateAddress } = useAuth();
   const { openModal, setAddressType } = useModal();
 
   if (
-    fullName === (null || undefined) ||
-    contactNumber === (null || undefined) ||
-    addressLine === (null || undefined)
+    user?.address.fullName === (null || undefined) ||
+    user?.address.contactNumber === (null || undefined) ||
+    user?.address.addressLine === (null || undefined)
   ) {
     return (
       <div className="flex flex-col gap-1">
@@ -51,17 +47,22 @@ export default function UserAddress({
   }
 
   return (
-    <div className="flex flex-col gap-1">
-      <span className="font-semibold">Address</span>
-      <div className="w-full border p-3">
-        <span className="font-semibold">{fullName}</span>
-        <div className="flex items-center gap-2 whitespace-break-spaces break-words">
-          <AiOutlineHome size={22} />
-          <p>{addressLine + " " + addressLineSecond ?? addressLineSecond}</p>
+    <div className="flex flex-col p-4 gap-1">
+      <span className="text-lg font-semibold">Address</span>
+      <div className="flex flex-col w-full bg-slate-50 rounded p-3 gap-2">
+        <span className="font-semibold">{user?.address.fullName}</span>
+        <div className="flex items-center gap-2 text-gray-700 whitespace-break-spaces break-words">
+          <AiOutlineAim color="gray" size={22} />
+          <p>
+            {user?.address.addressLine +
+              " " +
+              user?.address.addressLineSecond ??
+              user?.address.addressLineSecond}
+          </p>
         </div>
-        <div className="flex items-center gap-2">
-          <AiOutlinePhone size={22} min={22} />
-          <span>{contactNumber}</span>
+        <div className="flex items-center gap-2 text-gray-700">
+          <AiOutlinePhone color="gray" size={22} />
+          <span>{user?.address.contactNumber}</span>
         </div>
         <div className="flex justify-end gap-2">
           <div
@@ -69,13 +70,13 @@ export default function UserAddress({
               openModal("address");
               setAddressType("update");
             }}
-            className="border p-2 cursor-pointer hover:border-black"
+            className="commerce-button"
           >
             <AiOutlineEdit size={20} />
           </div>
           <div
             onClick={() => updateAddress("delete", "")}
-            className="border p-2 cursor-pointer hover:border-red-500 hover:text-red-500"
+            className="commerce-button"
           >
             <AiOutlineDelete size={20} />
           </div>

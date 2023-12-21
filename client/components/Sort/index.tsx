@@ -1,3 +1,5 @@
+"use client";
+
 import { AiFillCaretDown } from "react-icons/ai";
 
 import { usePathname, useRouter } from "next/navigation";

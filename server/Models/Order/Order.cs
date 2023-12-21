@@ -5,7 +5,7 @@ public class Order
     [Key]
     public int Id { get; set; }
     public string OrderDate { get; set; }
-    public string? OrderTotal { get; set; }
+    public string OrderTotal { get; set; }
     public string OrderStatus { get; set; } = "preparing";
     public string? OrderTrace { get; set; }
     public string OrderInvoice { get; set; }
