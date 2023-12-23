@@ -38,7 +38,7 @@ public class OrdersController : BaseController
 
         var query = _context.Orders.AsQueryable();
 
-        if (orderId != null || orderId == 0)
+        if (orderId.HasValue)
         {
             query = query.Where(q => q.Id == orderId);
         }
@@ -60,20 +60,71 @@ public class OrdersController : BaseController
                 break;
         }
 
+        var totalOrders = await query.CountAsync();
+
         var orders = await query
-            .Select(
-                order => new Order { OrderDate = order.OrderDate, OrderStatus = order.OrderStatus }
-            )
+            .Skip((pn - 1) * pageSize)
+            .Take(pageSize)
+            .Include(o => o.Address)
             .ToListAsync();
 
-        orders = orders.Skip((pn - 1) * pageSize).Take(pageSize).ToList();
+        var orderDTOs = await Task.WhenAll(
+            orders.Select(async order =>
+            {
+                var orderItemDTOs = await _context.OrderItems
+                    .Where(i => i.OrderId == order.Id)
+                    .Include(i => i.Product)
+                    .Select(
+                        item =>
+                            new OrderItemDTO
+                            {
+                                Brand = item.Product.Brand,
+                                Name = item.Product.Name,
+                                ImageSrc =
+                                    item.Product.Images != null && item.Product.Images.Any()
+                                        ? item.Product.Images.First().src
+                                        : "/assets/logo.png",
+                                ImageAlt =
+                                    item.Product.Images != null && item.Product.Images.Any()
+                                        ? item.Product.Images.First().alt
+                                        : item.Product.Brand,
+                                Color = item.Color,
+                                Size = item.Size,
+                                Price = item.Price,
+                                Quantity = item.Quantity
+                            }
+                    )
+                    .ToListAsync();
+
+                return new OrderDTO
+                {
+                    OrderID = order.Id,
+                    OrderDate = order.OrderDate,
+                    OrderStatus = order.OrderStatus,
+                    OrderTotal = order.OrderTotal,
+                    OrderInvoice = order.OrderInvoice,
+                    OrderTrace = order.OrderTrace,
+                    Address = new AddressDTO
+                    {
+                        FullName = order.Address.FullName,
+                        ContactNumber = order.Address.ContactNumber,
+                        Country = order.Address.Country,
+                        City = order.Address.City,
+                        AddressLine = order.Address.AddressLine,
+                        AddressLineSecond = order.Address.AddressLineSecond
+                    },
+                    OrderItems = orderItemDTOs
+                };
+            })
+        );
 
         return Ok(
             new
             {
                 PageSize = pageSize,
                 PageNumber = pn,
-                Orders = orders
+                TotalOrders = totalOrders,
+                Orders = orderDTOs
             }
         );
     }

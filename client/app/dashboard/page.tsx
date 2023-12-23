@@ -2,7 +2,6 @@
 import SalesChart from "@/components/Dashboard/Main/SalesChart";
 import Statistics from "@/components/Dashboard/Main/Statistics";
 import VisitorChart from "@/components/Dashboard/Main/VisitorChart";
-import OrderList from "@/components/Grids/OrdersGrid";
 
 export default function DashboardPage() {
   return (
@@ -19,7 +18,6 @@ export default function DashboardPage() {
           <VisitorChart />
         </div>
       </div>
-      <OrderList />
     </div>
   );
 }

@@ -166,9 +166,9 @@ public class ProductsController : BaseController
         {
             var totalProducts = await query.CountAsync();
 
-            query = query.Skip((pn - 1) * pageSize).Take(pageSize);
-
             var products = await query
+                .Skip((pn - 1) * pageSize)
+                .Take(pageSize)
                 .Select(
                     p =>
                         new ProductDTO

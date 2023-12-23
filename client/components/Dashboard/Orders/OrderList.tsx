@@ -12,7 +12,7 @@ export default function OrderList() {
     <div className="rounded-lg border bg-card text-card-foreground shadow-sm mt-3">
       <div className="flex flex-col space-y-1.5 p-6">
         <h3 className="text-2xl font-semibold leading-none tracking-tight">
-          Orders
+          Orders {`(${ordersResponse?.totalOrders})`}
         </h3>
       </div>
       {ordersResponse && (

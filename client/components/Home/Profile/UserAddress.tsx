@@ -19,14 +19,14 @@ export default function UserAddress() {
   const { openModal, setAddressType } = useModal();
 
   if (
-    user?.address.fullName === (null || undefined) ||
-    user?.address.contactNumber === (null || undefined) ||
-    user?.address.addressLine === (null || undefined)
+    user?.address?.fullName === (null || undefined) ||
+    user?.address?.contactNumber === (null || undefined) ||
+    user?.address?.addressLine === (null || undefined)
   ) {
     return (
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col p-4 gap-1">
         <span className="font-semibold">Address</span>
-        <div className="w-full border p-3">
+        <div className="flex flex-col w-full bg-slate-50 rounded p-3 gap-2">
           <div className="flex items-center gap-2 whitespace-break-spaces break-words">
             <p>We couldn&apos;t find any address.</p>
           </div>
@@ -36,7 +36,7 @@ export default function UserAddress() {
                 openModal("address");
                 setAddressType("add");
               }}
-              className="border p-2 cursor-pointer hover:border-black"
+              className="commerce-button"
             >
               <AiOutlinePlus size={20} />
             </div>

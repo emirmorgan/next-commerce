@@ -5,7 +5,7 @@ import Sort from "@/components/Sort";
 export default function DashboardOrders() {
   return (
     <div className="flex flex-col">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center gap-2">
         <FindOrderById />
         <Sort />
       </div>

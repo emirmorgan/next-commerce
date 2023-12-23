@@ -137,6 +137,8 @@ type OrderProduct = {
 export type OrderProps = {
   pageSize: number;
   pageNumber: number;
+  totalPages: number;
+  totalOrders: number;
   orders: Order[];
 };
 
