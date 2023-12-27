@@ -9,7 +9,7 @@ public class OrderItem
     public int OrderId { get; set; }
 
     [Required]
-    public string Price { get; set; }
+    public decimal Price { get; set; }
 
     [Required]
     public int Quantity { get; set; }

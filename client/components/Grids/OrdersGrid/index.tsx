@@ -11,11 +11,6 @@ export default function OrdersGrid(data: { orders: Order[] }) {
 
   return (
     <table className="w-full">
-      {data.orders?.length === 0 && (
-        <div className="flex justify-center items-center font-semibold text-lg p-3">
-          <span>😵 Couldn&apos;t find any order.</span>
-        </div>
-      )}
       <thead>
         <tr className="border-b">
           <th className="h-12 px-4 text-left font-medium">Order ID</th>

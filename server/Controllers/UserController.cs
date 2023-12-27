@@ -74,35 +74,37 @@ public class UserController : BaseController
                 .Include(i => i.OrderItems)
                 .ToListAsync();
 
-            var orderDTOs = await Task.WhenAll(
-                orders.Select(async order =>
-                {
-                    var orderItemDTOs = await _context.OrderItems
-                        .Where(i => i.OrderId == order.Id)
-                        .Include(i => i.Product)
-                        .Select(
-                            item =>
-                                new OrderItemDTO
-                                {
-                                    Brand = item.Product.Brand,
-                                    Name = item.Product.Name,
-                                    ImageSrc =
-                                        item.Product.Images != null && item.Product.Images.Any()
-                                            ? item.Product.Images.First().src
-                                            : "/assets/logo.png",
-                                    ImageAlt =
-                                        item.Product.Images != null && item.Product.Images.Any()
-                                            ? item.Product.Images.First().alt
-                                            : item.Product.Brand,
-                                    Color = item.Color,
-                                    Size = item.Size,
-                                    Price = item.Price,
-                                    Quantity = item.Quantity
-                                }
-                        )
-                        .ToListAsync();
+            var orderDTOs = new List<OrderDTO>();
 
-                    return new OrderDTO
+            foreach (var order in orders)
+            {
+                var orderItemDTOs = await _context.OrderItems
+                    .Where(i => i.OrderId == order.Id)
+                    .Include(i => i.Product)
+                    .Select(
+                        item =>
+                            new OrderItemDTO
+                            {
+                                Brand = item.Product.Brand,
+                                Name = item.Product.Name,
+                                ImageSrc =
+                                    item.Product.Images != null && item.Product.Images.Any()
+                                        ? item.Product.Images.First().src
+                                        : "/assets/logo.png",
+                                ImageAlt =
+                                    item.Product.Images != null && item.Product.Images.Any()
+                                        ? item.Product.Images.First().alt
+                                        : item.Product.Brand,
+                                Color = item.Color,
+                                Size = item.Size,
+                                Price = item.Price,
+                                Quantity = item.Quantity
+                            }
+                    )
+                    .ToListAsync();
+
+                orderDTOs.Add(
+                    new OrderDTO
                     {
                         OrderID = order.Id,
                         OrderDate = order.OrderDate,
@@ -120,9 +122,9 @@ public class UserController : BaseController
                             AddressLineSecond = user.Address.AddressLineSecond
                         },
                         OrderItems = orderItemDTOs
-                    };
-                })
-            );
+                    }
+                );
+            }
 
             return Ok(orderDTOs);
         }

@@ -14,7 +14,7 @@ namespace server.DTOs
         public string OrderStatus { get; set; } = "preparing";
 
         [Required]
-        public string OrderTotal { get; set; }
+        public decimal OrderTotal { get; set; }
 
         [Required]
         public string OrderInvoice { get; set; }

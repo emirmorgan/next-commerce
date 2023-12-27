@@ -9,7 +9,6 @@ using Stripe;
 
 namespace server.Controllers;
 
-[Authorize(Roles = "ADMIN")]
 public class OrdersController : BaseController
 {
     private readonly CommerceContext _context;
@@ -28,6 +27,7 @@ public class OrdersController : BaseController
     }
 
     // api/orders/
+    [Authorize(Roles = "ADMIN")]
     public async Task<ActionResult> GetOrders(
         [FromQuery] int? orderId,
         [FromQuery] string? sort,
@@ -68,35 +68,37 @@ public class OrdersController : BaseController
             .Include(o => o.Address)
             .ToListAsync();
 
-        var orderDTOs = await Task.WhenAll(
-            orders.Select(async order =>
-            {
-                var orderItemDTOs = await _context.OrderItems
-                    .Where(i => i.OrderId == order.Id)
-                    .Include(i => i.Product)
-                    .Select(
-                        item =>
-                            new OrderItemDTO
-                            {
-                                Brand = item.Product.Brand,
-                                Name = item.Product.Name,
-                                ImageSrc =
-                                    item.Product.Images != null && item.Product.Images.Any()
-                                        ? item.Product.Images.First().src
-                                        : "/assets/logo.png",
-                                ImageAlt =
-                                    item.Product.Images != null && item.Product.Images.Any()
-                                        ? item.Product.Images.First().alt
-                                        : item.Product.Brand,
-                                Color = item.Color,
-                                Size = item.Size,
-                                Price = item.Price,
-                                Quantity = item.Quantity
-                            }
-                    )
-                    .ToListAsync();
+        var orderDTOs = new List<OrderDTO>();
 
-                return new OrderDTO
+        foreach (var order in orders)
+        {
+            var orderItemDTOs = await _context.OrderItems
+                .Where(i => i.OrderId == order.Id)
+                .Include(i => i.Product)
+                .Select(
+                    item =>
+                        new OrderItemDTO
+                        {
+                            Brand = item.Product.Brand,
+                            Name = item.Product.Name,
+                            ImageSrc =
+                                item.Product.Images != null && item.Product.Images.Any()
+                                    ? item.Product.Images.First().src
+                                    : "/assets/logo.png",
+                            ImageAlt =
+                                item.Product.Images != null && item.Product.Images.Any()
+                                    ? item.Product.Images.First().alt
+                                    : item.Product.Brand,
+                            Color = item.Color,
+                            Size = item.Size,
+                            Price = item.Price,
+                            Quantity = item.Quantity
+                        }
+                )
+                .ToListAsync();
+
+            orderDTOs.Add(
+                new OrderDTO
                 {
                     OrderID = order.Id,
                     OrderDate = order.OrderDate,
@@ -114,9 +116,9 @@ public class OrdersController : BaseController
                         AddressLineSecond = order.Address.AddressLineSecond
                     },
                     OrderItems = orderItemDTOs
-                };
-            })
-        );
+                }
+            );
+        }
 
         return Ok(
             new
@@ -167,8 +169,8 @@ public class OrdersController : BaseController
                     productsJson
                 );
 
-                double totalAmountDouble = paymentIntentData.Amount / 100.0;
-                string totalAmount = totalAmountDouble.ToString("0.00");
+                double doubleTotalAmount = paymentIntentData.Amount / 100.0;
+                decimal totalAmount = (decimal)doubleTotalAmount;
 
                 DateTime orderDate = DateTime.Now;
                 string date = orderDate.ToString("dd/MM/yyyy HH:mm:ss");

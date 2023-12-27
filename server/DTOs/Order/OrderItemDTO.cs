@@ -17,7 +17,7 @@ namespace server.DTOs
         public string ImageAlt { get; set; }
 
         [Required]
-        public string Price { get; set; }
+        public decimal Price { get; set; }
 
         [Required]
         public int Quantity { get; set; }

@@ -26,7 +26,7 @@ builder.Services
 
 // DB Connection
 builder.Services.AddDbContext<CommerceContext>(
-    options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
 // Identity
