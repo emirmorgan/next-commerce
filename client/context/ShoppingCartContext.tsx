@@ -1,12 +1,11 @@
 "use client";
 
 import { toast } from "react-toastify";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "./AuthContext";
 
 import { Cart, CartItem } from "@/lib/types";
-import useLocalStorage from "@/hooks/useLocalStorage";
 import ShoppingCart from "@/components/Home/Layout/ShoppingCart";
 
 type CartProvider = {
@@ -39,10 +38,22 @@ export function ShoppingCartProvider({ children }: CartProvider) {
   const { user, authenticated } = useAuth();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [cartItems, setCartItems] = useLocalStorage("shop/cart", []);
+
+  const [cartItems, setCartItems] = useState(() => {
+    try {
+      const storedCart = localStorage.getItem("shop/cart");
+      return storedCart ? JSON.parse(storedCart) : [];
+    } catch (error) {
+      return [];
+    }
+  });
 
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
+
+  useEffect(() => {
+    localStorage.setItem("shop/cart", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const cartQuantity = cartItems?.reduce(
     (quantity: number, item: Cart) => item.quantity + quantity,
@@ -109,7 +120,7 @@ export function ShoppingCartProvider({ children }: CartProvider) {
   }
 
   function removeAll() {
-    setCartItems();
+    setCartItems([]);
   }
 
   function goCheckout() {

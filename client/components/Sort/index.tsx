@@ -25,7 +25,7 @@ export default function Sort() {
           <span className="text-xs text-gray-600">Sort by</span>
           <span>
             {sorts.find((item) => item.name === sort)?.value ||
-              "Posted: newest first"}
+              "Date: newest first"}
           </span>
         </div>
         <AiFillCaretDown

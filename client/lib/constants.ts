@@ -32,8 +32,8 @@ export const colors = [
 ];
 
 export const sorts = [
-  { name: "dateDesc", value: "Posted: newest first" },
-  { name: "dateAsc", value: "Posted: oldest first" },
+  { name: "dateDesc", value: "Date: newest first" },
+  { name: "dateAsc", value: "Date: oldest first" },
   { name: "priceAsc", value: "Price: lowest first" },
   { name: "priceDesc", value: "Price: highest first" },
 ];

@@ -20,20 +20,18 @@ export default function OrdersGrid(data: { orders: Order[] }) {
         </tr>
       </thead>
       <tbody>
-        {data.orders
-          ?.toReversed()
-          .map((order, index) => (
-            <OrdersGridItem
-              key={index}
-              orderID={order.orderID}
-              orderStatus={order.orderStatus}
-              orderTotal={order.orderTotal}
-              orderDate={order.orderDate}
-              address={order.address}
-              orderInvoice={order.orderInvoice}
-              orderItems={order.orderItems}
-            />
-          ))}
+        {data.orders.map((order, index) => (
+          <OrdersGridItem
+            key={index}
+            orderID={order.orderID}
+            orderStatus={order.orderStatus}
+            orderTotal={order.orderTotal}
+            orderDate={order.orderDate}
+            address={order.address}
+            orderInvoice={order.orderInvoice}
+            orderItems={order.orderItems}
+          />
+        ))}
       </tbody>
     </table>
   );
