@@ -2,9 +2,9 @@
 
 import { useProducts } from "@/context/ProductsContext";
 
-import PaginationBar from "@/components/Home/Products/PaginationBar";
 import ProductsListItem from "./ProductListItem";
 import ProductListSkeleton from "./Skeleton";
+import PaginationBar from "@/components/PaginationBar";
 
 export default function ProductList() {
   const { productsResponse, isLoading } = useProducts();
@@ -42,7 +42,11 @@ export default function ProductList() {
           })}
         </ul>
       </div>
-      <PaginationBar />
+      <PaginationBar
+        totalItems={productsResponse.totalProducts}
+        pageSize={productsResponse.pageSize}
+        pageNumber={productsResponse.pageNumber}
+      />
     </>
   );
 }

@@ -1,21 +1,27 @@
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
-
-import { useProducts } from "@/context/ProductsContext";
-
-import PaginationBox from "./PaginationBox";
-import { useURLParams } from "@/context/ParamsContext";
 import { usePathname, useRouter } from "next/navigation";
 
-export default function PaginationBar() {
+import { useURLParams } from "@/context/ParamsContext";
+
+import PaginationBox from "./PaginationBox";
+
+interface PaginationProps {
+  totalItems: number;
+  pageSize: number;
+  pageNumber: number;
+}
+
+export default function PaginationBar({
+  totalItems,
+  pageSize,
+  pageNumber,
+}: PaginationProps) {
   const router = useRouter();
   const pathname = usePathname();
 
   const { pn, createQueryString } = useURLParams();
-  const { productsResponse } = useProducts();
 
-  const boxCount = Math.ceil(
-    productsResponse.totalProducts / productsResponse.pageSize
-  );
+  const totalPageCount = Math.ceil(totalItems / pageSize);
 
   const handlePrevious = () => {
     if (pn && Number(pn) > 1) {
@@ -28,7 +34,7 @@ export default function PaginationBar() {
   const handleNext = () => {
     if (!pn) {
       router.replace(pathname + "?" + createQueryString("pn", String(2)));
-    } else if (Number(pn) < boxCount) {
+    } else if (Number(pn) < totalPageCount) {
       router.replace(
         pathname + "?" + createQueryString("pn", String(Number(pn) + 1))
       );
@@ -46,20 +52,18 @@ export default function PaginationBar() {
           <span>Previous</span>
         </div>
       )}
-      {Array.from({ length: boxCount }).map((_, index) => (
-        <PaginationBox key={index} productNumber={String(index + 1)} />
+      {Array.from({ length: totalPageCount }).map((_, index) => (
+        <PaginationBox key={index} pageNumber={String(index + 1)} />
       ))}
-      {pn &&
-        productsResponse.pageSize * productsResponse.pageNumber <
-          productsResponse.totalProducts && (
-          <div
-            onClick={handleNext}
-            className="flex justify-center items-center cursor-pointer gap-1 ml-2"
-          >
-            <span>Next</span>
-            <AiFillCaretRight />
-          </div>
-        )}
+      {pn && pageSize * pageNumber < totalItems && (
+        <div
+          onClick={handleNext}
+          className="flex justify-center items-center cursor-pointer gap-1 ml-2"
+        >
+          <span>Next</span>
+          <AiFillCaretRight />
+        </div>
+      )}
     </div>
   );
 }
