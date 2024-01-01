@@ -10,9 +10,10 @@ import { useURLParams } from "@/context/ParamsContext";
 import FilterTab from "@/components/Home/Products/FilterTab";
 import ProductCardSkeleton from "@/components/Home/ProductCard/Skeleton";
 import ProductCard from "@/components/Home/ProductCard";
-import PaginationBar from "@/components/Home/Products/PaginationBar";
+
 import MobileFilterTab from "@/components/Home/Products/FilterTab/Mobile";
 import Sort from "@/components/Sort";
+import PaginationBar from "@/components/PaginationBar";
 
 export default function ProductsPage() {
   const { q } = useURLParams();
@@ -63,7 +64,11 @@ export default function ProductsPage() {
                 />
               ))}
         </div>
-        <PaginationBar />
+        <PaginationBar
+          totalItems={productsResponse.totalProducts}
+          pageNumber={productsResponse.pageNumber}
+          pageSize={productsResponse.pageSize}
+        />
       </div>
       <MobileFilterTab isOpen={isOpen} setIsOpen={setIsOpen} />
       <div

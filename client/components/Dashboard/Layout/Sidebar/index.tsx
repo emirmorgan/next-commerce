@@ -89,16 +89,6 @@ export default function Sidebar() {
             </span>
           </li>
         </Link>
-        <Link href="/dashboard/payments">
-          <li className="flex items-center w-full h-[42px] cursor-pointer select-none px-3 gap-2 hover:bg-neutral-100 ">
-            <div className="min-w-[24px]">
-              <AiOutlineCreditCard size={24} />
-            </div>
-            <span className={toggleSidebar ? " hidden md:block" : " hidden"}>
-              Payments
-            </span>
-          </li>
-        </Link>
       </ul>
     </div>
   );

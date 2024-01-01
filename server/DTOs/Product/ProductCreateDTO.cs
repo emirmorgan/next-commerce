@@ -5,30 +5,30 @@ namespace server.DTOs
     public class ProductCreateDTO
     {
         [Required]
-        public required string Brand { get; set; }
+        public string Brand { get; set; }
 
         [Required]
-        public required string Name { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [Range(0, double.MaxValue, ErrorMessage = "Price must be greater than or equal to 0.")]
-        public required decimal Price { get; set; }
+        public decimal Price { get; set; }
 
         [Required]
-        public required string Date { get; set; }
+        public string Date { get; set; }
 
         [Required]
-        public required string Slug { get; set; }
+        public string Slug { get; set; }
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Quantity must be greater than or equal to 0.")]
-        public required int Quantity { get; set; } = 0;
+        public int Quantity { get; set; } = 0;
 
         [Required]
-        public required int CategoryId { get; set; }
+        public int CategoryId { get; set; }
 
         [Required]
-        public required int SubcategoryId { get; set; }
+        public int SubcategoryId { get; set; }
 
         public decimal? DiscountPrice { get; set; }
 

@@ -91,3 +91,24 @@ input[type="number"] {
 .scrollbar-cart::-webkit-scrollbar-track {
   background: transparent;
 }
+
+.commerce-button {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+
+  background-color: white;
+  color: black;
+
+  border: solid 1px rgb(228, 228, 231);
+  border-radius: 6px;
+
+  transition: all ease-in-out 150ms;
+}
+
+.commerce-button:hover {
+  background-color: rgb(240, 240, 240);
+}

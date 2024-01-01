@@ -44,9 +44,12 @@ public class UserController : BaseController
                 user.Address != null
                     ? new AddressDTO
                     {
-                        Title = user.Address.Title,
-                        Details = user.Address.Details,
+                        FullName = user.Address.FullName,
                         ContactNumber = user.Address.ContactNumber,
+                        Country = user.Address.Country,
+                        City = user.Address.City,
+                        AddressLine = user.Address.AddressLine,
+                        AddressLineSecond = user.Address.AddressLineSecond
                     }
                     : null,
         };
@@ -55,30 +58,43 @@ public class UserController : BaseController
     [HttpGet("order")] // api/user/order
     public async Task<ActionResult<OrderDTO>> GetUserOrders()
     {
-        var user = await userManager.GetUserAsync(User);
+        var user = await userManager.Users
+            .Include(u => u.Address)
+            .SingleOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
         if (user == null)
         {
             return Unauthorized();
         }
 
-        var orders = await _context.Orders
-            .Where(o => o.UserID == user.Id)
-            .Include(i => i.OrderItems)
-            .ToListAsync();
+        try
+        {
+            var orders = await _context.Orders
+                .Where(o => o.UserID == user.Id)
+                .Include(i => i.OrderItems)
+                .ToListAsync();
 
-        var orderDTOs = await Task.WhenAll(
-            orders.Select(async order =>
+            var orderDTOs = new List<OrderDTO>();
+
+            foreach (var order in orders)
             {
                 var orderItemDTOs = await _context.OrderItems
-                    .Where(i => i.OrderId == order.OrderID)
+                    .Where(i => i.OrderId == order.Id)
+                    .Include(i => i.Product)
                     .Select(
                         item =>
                             new OrderItemDTO
                             {
-                                Brand = item.Brand,
-                                Name = item.Name,
-                                Image = item.Image,
+                                Brand = item.Product.Brand,
+                                Name = item.Product.Name,
+                                ImageSrc =
+                                    item.Product.Images != null && item.Product.Images.Any()
+                                        ? item.Product.Images.First().src
+                                        : "/assets/logo.png",
+                                ImageAlt =
+                                    item.Product.Images != null && item.Product.Images.Any()
+                                        ? item.Product.Images.First().alt
+                                        : item.Product.Brand,
                                 Color = item.Color,
                                 Size = item.Size,
                                 Price = item.Price,
@@ -87,21 +103,35 @@ public class UserController : BaseController
                     )
                     .ToListAsync();
 
-                return new OrderDTO
-                {
-                    OrderID = order.OrderID,
-                    OrderDate = order.OrderDate,
-                    OrderStatus = order.OrderStatus,
-                    DeliveryAddress = order.DeliveryAddress,
-                    DeliveryContact = order.DeliveryContact,
-                    DeliveryInvoice = order.DeliveryInvoice,
-                    DeliveryTrace = order.DeliveryTrace,
-                    OrderItems = orderItemDTOs
-                };
-            })
-        );
+                orderDTOs.Add(
+                    new OrderDTO
+                    {
+                        OrderID = order.Id,
+                        OrderDate = order.OrderDate,
+                        OrderStatus = order.OrderStatus,
+                        OrderTotal = order.OrderTotal,
+                        OrderInvoice = order.OrderInvoice,
+                        OrderTrace = order.OrderTrace,
+                        Address = new AddressDTO
+                        {
+                            FullName = user.Address.FullName,
+                            ContactNumber = user.Address.ContactNumber,
+                            Country = user.Address.Country,
+                            City = user.Address.City,
+                            AddressLine = user.Address.AddressLine,
+                            AddressLineSecond = user.Address.AddressLineSecond
+                        },
+                        OrderItems = orderItemDTOs
+                    }
+                );
+            }
 
-        return Ok(orderDTOs);
+            return Ok(orderDTOs);
+        }
+        catch (System.Exception)
+        {
+            return BadRequest();
+        }
     }
 
     [HttpPost("password/update")] // POST: api/user/password/update

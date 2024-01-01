@@ -1,10 +1,17 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace server.DTOs
 {
     public class UserDTO
     {
-        public required string UserID { get; set; }
-        public required string Email { get; set; }
-        public required string Role { get; set; }
+        [Required]
+        public string UserID { get; set; }
+
+        [Required]
+        public string Email { get; set; }
+
+        [Required]
+        public string Role { get; set; }
         public AddressDTO? Address { get; set; }
     }
 }

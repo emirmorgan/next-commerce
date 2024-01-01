@@ -37,5 +37,6 @@ export const config = {
     "/profile/:path*",
     "/dashboard/:path*",
     "/favorites/:path*",
+    "/checkout/:path*",
   ],
 };

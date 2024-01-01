@@ -1,13 +1,28 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace server.DTOs
 {
     public class OrderItemDTO
     {
-        public required string Brand { get; set; }
-        public required string Name { get; set; }
-        public string? Image { get; set; }
+        [Required]
+        public string Brand { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string ImageSrc { get; set; }
+
+        [Required]
+        public string ImageAlt { get; set; }
+
+        [Required]
+        public decimal Price { get; set; }
+
+        [Required]
+        public int Quantity { get; set; }
+
         public string? Color { get; set; }
         public string? Size { get; set; }
-        public required string Price { get; set; }
-        public int Quantity { get; set; }
     }
 }

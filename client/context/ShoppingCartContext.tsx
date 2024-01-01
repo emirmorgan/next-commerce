@@ -1,11 +1,11 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { toast } from "react-toastify";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "./AuthContext";
 
 import { Cart, CartItem } from "@/lib/types";
-
-import useLocalStorage from "@/hooks/useLocalStorage";
-
 import ShoppingCart from "@/components/Home/Layout/ShoppingCart";
 
 type CartProvider = {
@@ -20,9 +20,11 @@ type CartContextType = {
   increaseQuantity: (id: number) => void;
   decreaseQuantity: (id: number) => void;
   removeItem: (id: number) => void;
+  removeAll: () => void;
   cartItems: Cart[];
   cartQuantity: number;
   addToCart: (product: CartItem) => void;
+  goCheckout: () => void;
 };
 
 const ShoppingCartContext = createContext({} as CartContextType);
@@ -32,11 +34,26 @@ export function useShoppingCart() {
 }
 
 export function ShoppingCartProvider({ children }: CartProvider) {
+  const router = useRouter();
+  const { user, authenticated } = useAuth();
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [cartItems, setCartItems] = useLocalStorage("shop/cart", []);
+
+  const [cartItems, setCartItems] = useState(() => {
+    try {
+      const storedCart = localStorage.getItem("shop/cart");
+      return storedCart ? JSON.parse(storedCart) : [];
+    } catch (error) {
+      return [];
+    }
+  });
 
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
+
+  useEffect(() => {
+    localStorage.setItem("shop/cart", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const cartQuantity = cartItems?.reduce(
     (quantity: number, item: Cart) => item.quantity + quantity,
@@ -102,6 +119,24 @@ export function ShoppingCartProvider({ children }: CartProvider) {
     });
   }
 
+  function removeAll() {
+    setCartItems([]);
+  }
+
+  function goCheckout() {
+    closeCart();
+
+    if (!user || !authenticated) {
+      return router.push("/login");
+    }
+
+    if (cartItems.length != 0) {
+      router.push("/checkout/");
+    } else {
+      toast.error("Your cart is empty.");
+    }
+  }
+
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -111,10 +146,12 @@ export function ShoppingCartProvider({ children }: CartProvider) {
         increaseQuantity,
         decreaseQuantity,
         removeItem,
+        removeAll,
         addToCart,
         openCart,
         closeCart,
         cartQuantity,
+        goCheckout,
       }}
     >
       {children}

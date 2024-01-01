@@ -15,7 +15,7 @@ import {
 import { useRouter } from "next/navigation";
 
 import setCookies from "@/lib/setCookies";
-import { User } from "@/lib/types";
+import { User, UserAddress } from "@/lib/types";
 import verifyToken from "@/lib/verifyToken";
 
 import LoadingScreen from "@/components/Loading/LoadingScreen";
@@ -32,12 +32,7 @@ type IAuthContext = {
   authLogout: () => void;
   setUser: Dispatch<SetStateAction<User | null>>;
   updatePassword: (currentPassword: string, newPassword: string) => void;
-  updateAddress: (
-    type: string,
-    title: string,
-    details: string,
-    contactNumber: string
-  ) => void;
+  updateAddress: (type: string, address: UserAddress | string) => void;
 };
 
 const AuthContext = createContext({} as IAuthContext);
@@ -142,12 +137,7 @@ export function AuthProvider({ children }: AuthContextProvider) {
       .catch((err) => toast.error(err.response.data));
   }
 
-  async function updateAddress(
-    type: string,
-    title: string,
-    details: string,
-    contactNumber: string
-  ) {
+  async function updateAddress(type: string, address: UserAddress | string) {
     const updateType = {
       add: "/address/add",
       update: "/address/update",
@@ -161,11 +151,7 @@ export function AuthProvider({ children }: AuthContextProvider) {
     }[type];
 
     await axios
-      .post((process.env.NEXT_PUBLIC_API_URL as string) + updateType, {
-        title,
-        details,
-        contactNumber,
-      })
+      .post((process.env.NEXT_PUBLIC_API_URL as string) + updateType, address)
       .then((res) => {
         fetchUser();
         toast.success(toastMessage);

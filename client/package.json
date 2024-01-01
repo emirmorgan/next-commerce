@@ -1,6 +1,6 @@
 {
-  "name": "fullstack-ecommerce",
-  "version": "0.1.0",
+  "name": "next-commerce",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^2.4.0",
+    "@stripe/stripe-js": "^2.2.0",
     "@types/node": "20.3.1",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
@@ -16,10 +18,10 @@
     "axios": "^1.5.0",
     "chart.js": "^4.4.0",
     "eslint": "8.43.0",
-    "eslint-config-next": "^14.0.3",
+    "eslint-config-next": "^14.0.4",
     "formik": "^2.4.3",
     "jose": "^4.14.4",
-    "next": "^14.0.3",
+    "next": "^14.0.4",
     "postcss": "^8.4.31",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",

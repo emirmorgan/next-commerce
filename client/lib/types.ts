@@ -95,46 +95,51 @@ export type User = {
 };
 
 export type UserAddress = {
-  title: string;
+  fullName: string;
   contactNumber: string;
-  details: string;
+  country: string;
+  city: string;
+  addressLine: string;
+  addressLineSecond: string | null;
 };
 
 export type Order = {
   orderID: number;
   orderDate: string;
+  orderTotal: number;
   orderStatus: string;
-  deliveryAddress: string;
-  deliveryContact: string;
-  deliveryInvoice: string;
-  deliveryTrace: string;
-  orderItems: OrderItem[];
+  orderInvoice: string;
+  orderTrace?: string;
+  address: OrderAddress;
+  orderItems: OrderProduct[];
 };
 
-type OrderItem = {
+type OrderAddress = {
+  fullName: string;
+  contactNumber: string;
+  country: string;
+  city: string;
+  addressLine: string;
+  addressLineSecond?: string;
+};
+
+type OrderProduct = {
   brand: string;
   name: string;
-  image: string;
+  imageSrc: string;
+  imageAlt: string;
   color?: string;
   size?: string;
   price: string;
   quantity: number;
 };
 
-export type OrderListProps = {
-  orderId: number;
-  name: string;
-  contact: string;
-  orderStatus: string;
-  orderTotal: number;
-  orderDate: string;
-};
-
 export type OrderProps = {
-  totalOrders: number;
   pageSize: number;
   pageNumber: number;
-  orders: OrderListProps[];
+  totalPages: number;
+  totalOrders: number;
+  orders: Order[];
 };
 
 export type StatisticsProps = {

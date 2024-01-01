@@ -1,42 +1,23 @@
-import { AiOutlineFileText } from "react-icons/ai";
+"use client";
+
+import { useEffect } from "react";
 
 import { Order } from "@/lib/types";
-
-import { useModal } from "@/context/ModalContext";
 import { useOrder } from "@/context/OrderContext";
 
+import OrdersGrid from "@/components/Grids/OrdersGrid";
+
 export default function UserOrders() {
-  const { orders, getOrder } = useOrder();
-  const { openModal } = useModal();
+  const { orders, fetchOrders } = useOrder();
 
-  const handleOrder = async (orderID: number) => {
-    try {
-      await getOrder(orderID);
-    } catch (error) {
-      console.error("Error fetching order:", error);
-    }
-
-    openModal("order");
-  };
+  useEffect(() => {
+    fetchOrders();
+  }, []);
 
   return (
-    <ul className="flex flex-col gap-2">
-      {orders?.map((order: Order, index: number) => (
-        <li className="flex items-center gap-1" key={index}>
-          <div className="w-full border p-2">
-            <span>
-              Order Id: {order.orderID} -{" "}
-              {new Date(order.orderDate).toLocaleDateString()}
-            </span>
-          </div>
-          <div
-            onClick={() => handleOrder(order.orderID)}
-            className="border p-2 cursor-pointer hover:border-black transition-all ease-linear"
-          >
-            <AiOutlineFileText size={24} />
-          </div>
-        </li>
-      ))}
-    </ul>
+    <div className="flex flex-col w-full rounded shadow max-h-[400px] overflow-auto scrollbar-cart p-4 gap-3 lg:w-2/3">
+      <h1 className="text-xl font-bold">Orders {"(" + orders.length + ")"}</h1>
+      <OrdersGrid orders={orders as Order[]} />
+    </div>
   );
 }

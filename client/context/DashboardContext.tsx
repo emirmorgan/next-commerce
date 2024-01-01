@@ -14,8 +14,8 @@ type DashboardContextProvider = {
 };
 
 type IDashboardContext = {
-  orders: OrderProps | undefined;
-  statistics: StatisticsProps | undefined;
+  ordersResponse: OrderProps | null;
+  statistics: StatisticsProps | null;
   createProduct: (data: ProductRequest, formData: FormData) => void;
   deleteProduct: (productId: number) => void;
 };
@@ -30,8 +30,8 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
   const { fetchProducts } = useProducts();
   const { orderId, sort, pn } = useURLParams();
 
-  const [statistics, setStatistics] = useState<StatisticsProps>();
-  const [orders, setOrders] = useState<OrderProps>();
+  const [statistics, setStatistics] = useState<StatisticsProps | null>(null);
+  const [ordersResponse, setOrdersResponse] = useState<OrderProps | null>(null);
 
   useEffect(() => {
     fetchStatistics();
@@ -53,7 +53,7 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
         },
       })
       .then((response) => {
-        setOrders(response.data);
+        setOrdersResponse(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -114,7 +114,7 @@ export function DashboardProvider({ children }: DashboardContextProvider) {
 
   return (
     <DashboardContext.Provider
-      value={{ orders, statistics, createProduct, deleteProduct }}
+      value={{ ordersResponse, statistics, createProduct, deleteProduct }}
     >
       {children}
     </DashboardContext.Provider>
