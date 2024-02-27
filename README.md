@@ -1,5 +1,9 @@
 <ul align="center">
-  <image width="360" height="90" src="https://gcdnb.pbrd.co/images/r7OBbplt7cSm.png"/>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="client\public\github-images\logo-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="client\public\github-images\logo-light.png">
+    <img width="430" height="85" src="client\public\github-images\logo-light.png">
+  </picture>
 </ul>
 
 <br>
@@ -127,9 +131,11 @@ Website will be active after run client and server, open [http://localhost:3000]
 
 ## Screenshots
 
-![Home Page](https://gcdnb.pbrd.co/images/kC8t0EEu54Hz.webp)
-![Product](https://gcdnb.pbrd.co/images/Has6k54JMzP2.webp)
-![Products](https://gcdnb.pbrd.co/images/AELzjUjva4jS.webp)
-![Dashboard](https://gcdnb.pbrd.co/images/aWmFRqRFzooX.webp)
-![Dashboard/Products](https://gcdnb.pbrd.co/images/5EEKMRIM92Ls.webp)
-![Product/Create](https://gcdnb.pbrd.co/images/yaWxvMkxDs1G.webp)
+![Home Page](client\public\github-images\home.jpg)
+![Product](client\public\github-images\product.jpg)
+![Products](client\public\github-images\products.jpg)
+![Profile](client\public\github-images\profile.jpg)
+![Payment](client\public\github-images\payment.jpg)
+![Dashboard](client\public\github-images\dashboard.jpg)
+![Dashboard/Orders](client\public\github-images\orders.jpg)
+![Product/Create](client\public\github-images\add-product.jpg)
