@@ -131,11 +131,13 @@ Website will be active after run client and server, open [http://localhost:3000]
 
 ## Screenshots
 
-![Home Page](client\public\github-images\home.jpg)
-![Product](client\public\github-images\product.jpg)
-![Products](client\public\github-images\products.jpg)
-![Profile](client\public\github-images\profile.jpg)
-![Payment](client\public\github-images\payment.jpg)
-![Dashboard](client\public\github-images\dashboard.jpg)
-![Dashboard/Orders](client\public\github-images\orders.jpg)
-![Product/Create](client\public\github-images\add-product.jpg)
+<ul>
+  <img src="client\public\github-images\home.jpg">
+  <img src="client\public\github-images\product.jpg">
+  <img src="client\public\github-images\products.jpg">
+  <img src="client\public\github-images\profile.jpg">
+  <img src="client\public\github-images\payment.jpg">
+  <img src="client\public\github-images\dashboard.jpg">
+  <img src="client\public\github-images\orders.jpg">
+  <img src="client\public\github-images\add-product.jpg">
+</ul>
